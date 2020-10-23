@@ -1,3 +1,5 @@
+
+
 class UpdateButton extends React.Component {
   render() {
     return (
@@ -48,7 +50,7 @@ class SnippetInfo extends React.Component {
   }
 }
 
-ReactDOM.render(
+ ReactDOM.render(
   <SnippetInfo />,
-  document.getElementById('snippetinfo')
+  document.getElementById("snippetinfo")
 );
