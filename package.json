@@ -1,0 +1,24 @@
+{
+  "name": "Urania",
+  "version": "1.0.0",
+  "description": "<html> <head> <style> /************************************* GENERAL *************************************/ body {     margin: 15;     padding: 0;     font: 12px/1.4em \"Lucida Grande\", Verdana, sans-serif;     color: #333;     overflow-y: scroll;     text-rendering: optimizeLegibility;     background-color: #F2F2F2; }",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhyuen/urania.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhyuen/urania/issues"
+  },
+  "homepage": "https://github.com/jhyuen/urania#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
+}
