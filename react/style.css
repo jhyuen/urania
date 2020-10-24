@@ -12,3 +12,50 @@
   float: left;
   width: 33%;
 }
+
+.snippetInfo {
+  display: grid;
+  grid-gap: 2%;
+  grid-template-columns: 80% 18%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "header buttons"
+    "textarea textarea";
+  padding: 10px 10px 10px 10px;
+  border: 3px solid #73AD21;
+}
+
+.infoArea {
+  border-radius: 5px;
+  height: 50px;
+  width: 100%;
+  grid-area: textarea;
+}
+
+.infoTextArea {
+  grid-area: textarea;
+  justify-self: stretch;
+}
+
+.viewerText {
+  background-color: #8ff;
+  border-radius: 5px;
+  grid-area: textarea;
+  height: 50px;
+}
+
+.infoHeader {
+  vertical-align: middle;
+  border-radius: 5px;
+  grid-area: header;
+  align-self: stretch;
+}
+
+.submitButton {
+  background-color: #8ca0ff;
+  border-radius: 5px;
+  justify-self: end;
+  width: 60px;
+  height: 30px;
+  grid-area: buttons;
+}
