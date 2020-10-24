@@ -1,18 +1,30 @@
+function CreatorButton () {
+  return (
+    <input className='submitButton' type='submit' value='Submit' form='infoForm'/>
+  );
+}
 
+function CreatorForm (props) {
+  return (
+    <form className='infoTextArea' id='infoForm' onSubmit={props.onSubmit}>
+      <textarea className='infoArea' placeholder='Some snippet info...' onChange={props.onChange}/>
+    </form>
+  );
+}
 
-class UpdateButton extends React.Component {
-  render() {
-    return (
-      <button className='Update'>Update Info</button>
-    );
-  }
+function ViewerArea(props) {
+  return (
+    <div className='viewerText'>{props.value}</div>
+  );
 }
 
 class SnippetInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Snippet Info Here...',
+      isCreator: true,
+      value: 'Default Snippet Text...',
+      id: 'ABCDEF123',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,29 +34,22 @@ class SnippetInfo extends React.Component {
   handleChange(event) {
     this.setState({value: event.target.value});
   }
-
    
   handleSubmit(event) {
-    alert('Snippet Info was updated');
     event.preventDefault();
+    {/*alert('Snippet Info was updated' + this.state.value);*/}
   }
-  
 
   render () {
-    const status = 'Next player: Joe';
-    
     return (
-      <div>
-        <div className='status'>{status}</div>
-        <div className='form'>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Snippet Info:
-              <textarea value={this.state.value} onChange={this.handleChange}/>
-            </label>
-            <input type='submit' value='Submit' />
-          </form>
-        </div>
+      <div className='snippetInfo'>
+        <div className='infoHeader'>Snippet Info:</div>
+        { this.state.isCreator ? <CreatorButton/> : null }
+        { this.state.isCreator 
+          ? <CreatorForm value={this.state.value} 
+                         onSubmit={ (event) => this.handleSubmit(event)} 
+                         onChange={ (event) => this.handleChange(event)}/> 
+          : <ViewerArea value={this.state.value}/> }
       </div>
     );
   }
