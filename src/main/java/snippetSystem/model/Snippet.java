@@ -1,6 +1,8 @@
 package snippetSystem.model;
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Snippet {
 	public final String snippetID;
@@ -11,13 +13,13 @@ public class Snippet {
 	private final String viewerPassword;
 	public boolean viewerPasswordEnabled;
 	
-	public Snippet () {
-		this.snippetID = UUID.randomUUID().toString();
+	public Snippet(String uuid) {
+		this.snippetID = uuid;
 		this.viewerPassword = UUID.randomUUID().toString();
 		this.viewerPasswordEnabled = false;
 		this.snippetText = "";
 		this.snippetInfo = "";
-		// Need to do something about time stamp
+		this.timeStamp = generateTimestamp();
 	}
 	
 	public Snippet (String snippetText, String snippetInfo) {
@@ -26,6 +28,15 @@ public class Snippet {
 		this.viewerPasswordEnabled = false;
 		this.snippetText = snippetText;
 		this.snippetInfo = snippetInfo;
+		this.timeStamp = generateTimestamp();
+	}
+	
+	private String generateTimestamp () {
+		String timestamp;
+		LocalDateTime ldt = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm-dd-uuuu HH:mm:ss");
+		timestamp = ldt.format(formatter);
+		return timestamp;
 	}
 	
 //	public boolean getSystem() { return system; }

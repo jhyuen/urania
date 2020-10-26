@@ -31,25 +31,25 @@ public class SnippetDAO {
     	}
     }
 
-    public Snippet getSnippet(String name) throws Exception {
-//        try {
-//            Constant constant = null;
-//            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name=?;");
-//            ps.setString(1,  name);
-//            ResultSet resultSet = ps.executeQuery();
-//            
-//            while (resultSet.next()) {
-//                constant = generateConstant(resultSet);
-//            }
-//            resultSet.close();
-//            ps.close();
-//            
-//            return constant;
-//
-//        } catch (Exception e) {
-//        	e.printStackTrace();
-//            throw new Exception("Failed in getting constant: " + e.getMessage());
-//        }
+    public Snippet getSnippet(String uuid) throws Exception {
+        try {
+            Snippet snippet = null;
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name=?;");
+            ps.setString(1,  name);
+            ResultSet resultSet = ps.executeQuery();
+            
+            while (resultSet.next()) {
+                constant = generateConstant(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+            
+            return constant;
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new Exception("Failed in getting constant: " + e.getMessage());
+        }
 		return null;
     }
     
