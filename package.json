@@ -17,18 +17,19 @@
     "url": "https://github.com/jhyuen/urania/issues"
   },
   "homepage": "https://github.com/jhyuen/urania#readme",
-  "devDependencies":{
-      "babel-cli": "^6.26.0",
-      "babel-preset-react-app": "^3.1.2",
-      "babel-core": "^6.1.*",
-      "babel-loader": "^6.2.*",
-      "babel-preset-es2015": "^6.16.*",
-      "babel-preset-react": "^6.16.*",
-      "webpack": "^1.13.*",
-      "webpack-dev-server": "^1.16.*"
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.1.*",
+    "babel-loader": "^6.2.*",
+    "babel-preset-es2015": "^6.16.*",
+    "babel-preset-react": "^6.16.*",
+    "babel-preset-react-app": "^3.1.2",
+    "webpack": "^1.13.*",
+    "webpack-dev-server": "^1.16.*"
   },
-  "dependencies":{
-      "react": "^16.11.0",
-      "react-dom": "^16.11.0"
+  "dependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "uuid": "^8.3.1"
   }
 }

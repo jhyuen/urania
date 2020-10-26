@@ -92,4 +92,4 @@ var SnippetInfo = function (_React$Component2) {
   return SnippetInfo;
 }(React.Component);
 
-ReactDOM.render(React.createElement(SnippetInfo, null), document.getElementById('snippetinfo'));
+ReactDOM.render(React.createElement(SnippetInfo, null), document.getElementById("snippetinfo"));

@@ -1,6 +1,7 @@
 package snippetSystem.model;
 
 import java.util.UUID;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,9 +9,9 @@ public class Snippet {
 	public final String snippetID;
 	public String snippetText;
 	public String snippetInfo;
-	public final String timeStamp;
+	public final Instant timeStamp;
 	public String languageSelected;
-	private final String viewerPassword;
+	public final String viewerPassword;
 	public boolean viewerPasswordEnabled;
 	
 	public Snippet(String uuid) {
@@ -19,7 +20,7 @@ public class Snippet {
 		this.viewerPasswordEnabled = false;
 		this.snippetText = "";
 		this.snippetInfo = "";
-		this.timeStamp = generateTimestamp();
+		this.timeStamp = Instant.now();
 	}
 	
 	public Snippet (String snippetText, String snippetInfo) {
@@ -28,16 +29,26 @@ public class Snippet {
 		this.viewerPasswordEnabled = false;
 		this.snippetText = snippetText;
 		this.snippetInfo = snippetInfo;
-		this.timeStamp = generateTimestamp();
+		this.timeStamp = Instant.now();
+	}
+
+	public Snippet (String snippetID, String snippetText, String snippetInfo, Instant datetime, String lang, String pass, int passStatus) {
+		this.snippetID = snippetID;
+		this.snippetText = snippetText;
+		this.snippetInfo = snippetInfo;
+		this.timeStamp = datetime;
+		this.languageSelected = lang;
+		this.viewerPassword = pass;
+		this.viewerPasswordEnabled = (passStatus == 1) ? true : false;
 	}
 	
-	private String generateTimestamp () {
-		String timestamp;
-		LocalDateTime ldt = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm-dd-uuuu HH:mm:ss");
-		timestamp = ldt.format(formatter);
-		return timestamp;
-	}
+//	private String generateTimestamp () {
+//		String timestamp;
+//		Instant time = Instant.now();
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm-dd-uuuu HH:mm:ss");
+//		timestamp = time.format(formatter);
+//		return timestamp;
+//	}
 	
 //	public boolean getSystem() { return system; }
 //	public void setSystem(boolean s) { system = s; }

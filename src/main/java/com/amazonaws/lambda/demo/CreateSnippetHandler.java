@@ -22,6 +22,7 @@ public class CreateSnippetHandler implements RequestHandler<CreateRequest, Creat
 		Snippet exist = dao.getSnippet(newUUID);
 		if (exist == null) {
 			Snippet snippet = new Snippet(newUUID);
+			return dao.createSnippet(snippet);
 		} else {
 			return false;
 		}

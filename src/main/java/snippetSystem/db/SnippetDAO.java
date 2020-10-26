@@ -1,6 +1,7 @@
 package snippetSystem.db;
 
 import java.sql.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class SnippetDAO {
 
 	java.sql.Connection conn;
 	
-	final String tblName = "Snippet";   // Exact capitalization
+	final String tblName = "UraniaSchema.Snippet";   // Exact capitalization
 
     public SnippetDAO () {
     	try  {
@@ -34,23 +35,22 @@ public class SnippetDAO {
     public Snippet getSnippet(String uuid) throws Exception {
         try {
             Snippet snippet = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name=?;");
-            ps.setString(1,  name);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE snippetId=?;");
+            ps.setString(1,  uuid);
             ResultSet resultSet = ps.executeQuery();
             
             while (resultSet.next()) {
-                constant = generateConstant(resultSet);
+                snippet = generateSnippet(resultSet);
             }
             resultSet.close();
             ps.close();
             
-            return constant;
+            return snippet;
 
         } catch (Exception e) {
         	e.printStackTrace();
-            throw new Exception("Failed in getting constant: " + e.getMessage());
+            throw new Exception("Failed in finding the snippet: " + e.getMessage());
         }
-		return null;
     }
     
     public boolean updateSnippetInfo (Snippet snippet) throws Exception {
@@ -86,28 +86,33 @@ public class SnippetDAO {
 
 
     public boolean createSnippet (Snippet snippet) throws Exception {
-//        try {
-//            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name = ?;");
-//            ps.setString(1, constant.name);
-//            ResultSet resultSet = ps.executeQuery();
-//            
-//            // already present?
-//            while (resultSet.next()) {
-//                Constant c = generateConstant(resultSet);
-//                resultSet.close();
-//                return false;
-//            }
-//
-//            ps = conn.prepareStatement("INSERT INTO " + tblName + " (name,value) values(?,?);");
-//            ps.setString(1,  constant.name);
-//            ps.setDouble(2,  constant.value);
-//            ps.execute();
-//            return true;
-//
-//        } catch (Exception e) {
-//            throw new Exception("Failed to insert constant: " + e.getMessage());
-//        }
-    	return false;
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name = ?;");
+            ps.setString(1, snippet.snippetID);
+            ResultSet resultSet = ps.executeQuery();
+            
+            // already present?
+            while (resultSet.next()) {
+                //Constant c = generateConstant(resultSet);
+                resultSet.close();
+                return false;
+            }
+
+            ps = conn.prepareStatement("INSERT INTO " + tblName + " (snippetId,snippetText,snippetInfo,timeStamp,languageSelected,viewerPassword,viewerPasswordStatus) values(?,?,?,?,?,?,?);");
+            ps.setString(1,  snippet.snippetID);
+            ps.setString(2,  snippet.snippetText);
+            ps.setString(3,  snippet.snippetInfo);
+            ps.setObject(4,  snippet.timeStamp);
+            ps.setString(5,  snippet.languageSelected);
+            ps.setString(6,  snippet.viewerPassword);
+            int passStatus = snippet.viewerPasswordEnabled ? 1 : 0;
+            ps.setObject(7,  passStatus);
+            ps.execute();
+            return true;
+
+        } catch (Exception e) {
+            throw new Exception("Failed to insert constant: " + e.getMessage());
+        }
     }
 
     public List<Snippet> getAllSnippets() throws Exception {
@@ -132,10 +137,19 @@ public class SnippetDAO {
     	return null;
     }
     
-//    private Constant generateConstant(ResultSet resultSet) throws Exception {
-//        String name  = resultSet.getString("name");
-//        Double value = resultSet.getDouble("value");
-//        return new Constant (name, value);
-//    }
+    private Snippet generateSnippet(ResultSet resultSet) throws Exception {
+        String uuid  = resultSet.getString("snippetId");
+//        String text = resultSet.getObject("snippetText", String.class);
+//        String info = resultSet.getObject("snippetInfo", String.class);
+        String text = resultSet.getString("snippetText");
+        String info = resultSet.getString("snippetInfo");
+        Instant datetime = resultSet.getObject("timeStamp", Instant.class);
+        String language = resultSet.getString("languageSelected");
+        String password = resultSet.getString("viewerPassword");
+        int passStatus = resultSet.getInt("viewerPasswordStatus");
+
+
+        return new Snippet (uuid, text, info, datetime, language, password, passStatus);
+    }
 
 }
