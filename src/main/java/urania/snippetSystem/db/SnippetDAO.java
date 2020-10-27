@@ -1,4 +1,4 @@
-package snippetSystem.db;
+package urania.snippetSystem.db;
 
 import java.sql.*;
 import java.time.Instant;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
-import snippetSystem.model.Snippet;
+import urania.snippetSystem.model.Snippet;
 
 /**
  * Snippet Data Access Object
