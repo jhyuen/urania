@@ -1,4 +1,4 @@
-package snippetSystem.db;
+package urania.snippetSystem.db;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package snippetSystem.model;
+package urania.snippetSystem.model;
 
 import java.util.UUID;
 import java.time.Instant;
