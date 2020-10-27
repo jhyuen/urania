@@ -1,4 +1,4 @@
-package com.amazonaws.lambda.demo;
+package urania.snippetSystem;
 
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;

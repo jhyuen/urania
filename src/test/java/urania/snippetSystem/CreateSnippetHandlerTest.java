@@ -1,4 +1,4 @@
-package com.amazonaws.lambda.demo;
+package urania.snippetSystem;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import urania.snippetSystem.LambdaFunctionHandler;
 /**
  * A simple test harness for locally invoking your Lambda function handler.
  */
-public class LambdaFunctionHandlerTest {
+public class CreateSnippetHandlerTest {
 
     private static Object input;
 
