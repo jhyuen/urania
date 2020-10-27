@@ -1,0 +1,1 @@
+File to prevent Git from removing it.

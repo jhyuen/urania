@@ -1,11 +1,12 @@
 package urania.snippetSystem.model;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public class Comment {
 	public final String snippetID;
 	public final String commentID;
-	public final String timeStamp;
+	public final Instant timeStamp;
 	public int startLine;
 	public int startIndex;
 	public int endLine;
@@ -14,6 +15,7 @@ public class Comment {
 	public Comment (String snippetID, int sL, int sI, int eL, int eI) {
 		this.snippetID = snippetID;
 		this.commentID = UUID.randomUUID().toString();
+		this.timeStamp = Instant.now();
 		this.startLine = sL;
 		this.startIndex = sI;
 		this.endLine = eL;

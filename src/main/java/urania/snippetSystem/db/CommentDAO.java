@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
-import edu.wpi.cs.heineman.demo.model.Constant;
+import urania.snippetSystem.model.Comment;
 
 /**
  * Comment Data Access Object
@@ -67,6 +67,7 @@ public class CommentDAO {
 //        } catch (Exception e) {
 //            throw new Exception("Failed to update report: " + e.getMessage());
 //        }
+    	return false;
     }
     
     public boolean deleteComment(Comment comment) throws Exception {
