@@ -13,6 +13,18 @@
   width: 33%;
 }
 
+.snippetHeader {
+  padding: 5px 5px 5px 5px;
+}
+
+.snippetID {
+  font-size: 20px;
+}
+
+.snippetTimestamp {
+  font-size: 15px;
+}
+
 .snippetInfo {
   display: grid;
   grid-gap: 2%;
