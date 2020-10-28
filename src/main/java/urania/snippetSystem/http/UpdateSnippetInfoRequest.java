@@ -7,8 +7,8 @@ public class UpdateSnippetInfoRequest {
 	public String getID() { return id; }
 	public void setID(String uuid) { this.id = uuid; }
 	
-	public String getText() { return info; }
-	public void setText(String info) { this.info = info; }
+	public String getInfo() { return info; }
+	public void setInfo(String info) { this.info = info; }
 	
 	public UpdateSnippetInfoRequest (String uuid, String info) {
 		this.id = uuid;
