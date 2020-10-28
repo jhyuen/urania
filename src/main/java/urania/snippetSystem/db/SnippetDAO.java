@@ -87,7 +87,7 @@ public class SnippetDAO {
 
     public boolean createSnippet (Snippet snippet) throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name = ?;");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE snippetId = ?;");
             ps.setString(1, snippet.snippetID);
             ResultSet resultSet = ps.executeQuery();
             
@@ -102,7 +102,7 @@ public class SnippetDAO {
             ps.setString(1,  snippet.snippetID);
             ps.setString(2,  snippet.snippetText);
             ps.setString(3,  snippet.snippetInfo);
-            ps.setObject(4,  snippet.timeStamp);
+            ps.setObject(4,  Timestamp.from(snippet.timeStamp));
             ps.setString(5,  snippet.languageSelected);
             ps.setString(6,  snippet.viewerPassword);
             int passStatus = snippet.viewerPasswordEnabled ? 1 : 0;
@@ -111,7 +111,7 @@ public class SnippetDAO {
             return true;
 
         } catch (Exception e) {
-            throw new Exception("Failed to insert constant: " + e.getMessage());
+            throw new Exception("Failed to create snippet: " + e.getMessage());
         }
     }
 
@@ -143,7 +143,7 @@ public class SnippetDAO {
 //        String info = resultSet.getObject("snippetInfo", String.class);
         String text = resultSet.getString("snippetText");
         String info = resultSet.getString("snippetInfo");
-        Instant datetime = resultSet.getObject("timeStamp", Instant.class);
+        Instant datetime = resultSet.getTimestamp("timeStamp").toInstant();
         String language = resultSet.getString("languageSelected");
         String password = resultSet.getString("viewerPassword");
         int passStatus = resultSet.getInt("viewerPasswordStatus");
