@@ -15,7 +15,7 @@ public class CreateSnippetHandler implements RequestHandler<CreateSnippetRequest
 	
 	LambdaLogger logger;
 	
-	String createSnippet () throws Exception {
+	Snippet createSnippet () throws Exception {
 		if (logger != null) { logger.log("in createSnippet"); }
 		SnippetDAO dao = new SnippetDAO();
 		
@@ -25,7 +25,7 @@ public class CreateSnippetHandler implements RequestHandler<CreateSnippetRequest
 		if (exist == null) {
 			Snippet snippet = new Snippet(newUUID);
 			if (dao.createSnippet(snippet)) {
-				return newUUID;
+				return snippet;
 			} else {
 				return null;
 			}
@@ -43,9 +43,9 @@ public class CreateSnippetHandler implements RequestHandler<CreateSnippetRequest
 
         CreateSnippetResponse response;
         try {
-        	String id = createSnippet();
-        	if (id != null) {
-				response = new CreateSnippetResponse(id);
+        	Snippet snippet = createSnippet();
+        	if (snippet != null) {
+				response = new CreateSnippetResponse(snippet);
         	} else {
         		response = new CreateSnippetResponse(422);
         	}

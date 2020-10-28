@@ -5,12 +5,8 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import urania.snippetSystem.db.SnippetDAO;
-import urania.snippetSystem.http.CreateSnippetRequest;
-import urania.snippetSystem.http.CreateSnippetResponse;
 import urania.snippetSystem.http.UpdateSnippetInfoRequest;
 import urania.snippetSystem.http.UpdateSnippetInfoResponse;
-import urania.snippetSystem.http.UpdateSnippetTextRequest;
-import urania.snippetSystem.http.UpdateSnippetTextResponse;
 import urania.snippetSystem.model.Snippet;
 
 import java.util.UUID;
