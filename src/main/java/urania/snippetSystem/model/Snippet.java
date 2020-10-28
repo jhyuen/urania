@@ -20,6 +20,7 @@ public class Snippet {
 		this.viewerPasswordEnabled = false;
 		this.snippetText = "";
 		this.snippetInfo = "";
+		this.languageSelected = "Python";
 		this.timeStamp = Instant.now();
 	}
 	
@@ -29,6 +30,7 @@ public class Snippet {
 		this.viewerPasswordEnabled = false;
 		this.snippetText = snippetText;
 		this.snippetInfo = snippetInfo;
+		this.languageSelected = "Python";
 		this.timeStamp = Instant.now();
 	}
 
