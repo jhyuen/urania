@@ -1,0 +1,18 @@
+h1 {
+	float: left;
+}
+
+SnippetText {
+	float: right;
+}
+
+.snippetTextBtns {
+	float: right;
+}
+
+.snippetHeader {
+	display: inline-flex;
+}
+
+AceEditor {
+}
