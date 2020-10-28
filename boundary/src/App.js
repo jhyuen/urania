@@ -18,7 +18,7 @@ class App extends Component {
 				<div class="snippetText">
 					<SnippetText />
 				</div>
-				<div class="commentPanel" className="container">
+				<div class="commentPanel">
 					<CommentPanel />
 				</div>
 				<div class="controlPanel">

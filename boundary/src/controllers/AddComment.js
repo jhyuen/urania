@@ -33,7 +33,6 @@ export class AddComment extends Component {
 					type="submit"
 					value="Add"
 					className="btn"
-					style={{ flex: '1' }}
 				/>
 			</form>
 		)

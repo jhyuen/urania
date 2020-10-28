@@ -1,10 +1,17 @@
-.snippetTextBtns {
-	float: right;
+.snippetTextButton {
+	float: left;
+	padding: 10px;
 }
 
 .snippetTextHeader {
-	display: inline-flex;
+}
+
+.ace_editor {
+	height: 50%;
 }
 
 .editor {
+	height: 80%;
+	width: 100%;
+	background-color: pink;
 }

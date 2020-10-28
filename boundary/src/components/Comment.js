@@ -18,7 +18,7 @@ class Comment extends Component {
 			<div style={this.getStyle()}>
 				<p>
 					{ text }
-					<button onClick={ this.props.delComment.bind(this, id) } style={ btnStyle }>x</button>
+					<button onClick={ this.props.delComment.bind(this, id) } class="deleteButton" >x</button>
 				</p>
 			</div>
 		)
@@ -29,18 +29,6 @@ class Comment extends Component {
 Comment.propTypes = {
 	comment : PropTypes.object.isRequired,
 	delComment : PropTypes.func.isRequired
-}
-
-// style variables
-const btnStyle = {
-	background		: '#ff0000',
-	color			: '#fff',
-	border			: 'none',
-	padding			: '5px 9px',	// top&bottom left&right
-	borderRadius	: '50%',
-	cursor			: 'pointer',
-	float			: 'right',
-	//icon: ???
 }
 
 export default Comment;

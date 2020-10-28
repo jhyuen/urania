@@ -1,0 +1,18 @@
+.commentHeader{
+	background: black;
+	color: white;
+	text-align: center;
+	padding: 10px;
+}
+
+.deleteButton {
+	background: red;
+	color: white;
+	padding: 5px;
+	width: 40px;
+	height: 40px;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	float: right;
+}

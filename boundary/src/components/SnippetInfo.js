@@ -41,7 +41,7 @@ class SnippetInfo extends React.Component {
    
   handleSubmit(event) {
     event.preventDefault();
-    {/*alert('Snippet Info was updated' + this.state.value);*/}
+    /*{alert('Snippet Info was updated' + this.state.value);}*/
   }
 
   render () {

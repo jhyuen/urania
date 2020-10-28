@@ -12,15 +12,16 @@ class SnippetText extends Component {
 			<>
 			<div class="snippetTextHeader">
 				<h1>Snippet</h1>
-				<div class="snippetTextBtns">
-		  			<Button variant="primary" onClick={this.save}>Save</Button>{' '}
-				</div>
+				
 			</div>
 			<div class="editor">
 				<AceEditor
 					theme="monokai"
 					placeholder="Type in code to have a fun time"
 				/>
+			</div>
+			<div class="snippetTextButton">
+		  		<Button variant="primary" onClick={this.save}>Save</Button>{' '}
 			</div>
 			</>
 			

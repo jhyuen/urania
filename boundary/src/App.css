@@ -8,10 +8,6 @@ a {
 	text-decoration: none;
 }
 
-.container {
-	padding: 0 1rem;
-}
-
 .btn {
 	display: inline-block;
 	border: none;
@@ -26,8 +22,9 @@ a {
 }
 
 .app {
+	background-color: pink;
 	display: grid;
-	grid-template-columns: 200px auto 400px;
+	grid-template-columns: 200px auto 350px;
 	grid-template-rows: 80px auto 150px;
 	border: 5px black;
 	width: 100vw;
@@ -35,7 +32,7 @@ a {
 }
 
 .commentPanel {
-	background-color: lightblue;
+	background-color: blue;
 	grid-column-start: 3;
 	grid-column-end: 4;
 	grid-row-start: 2;

@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import './CommentPanel.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
-import CommentHeader from './CommentHeader'
 import Comments from './Comments'
-import Comment from './Comment'
 import AddComment from './../controllers/AddComment.js'
 
 //uuidv4 generates random ids 
@@ -16,7 +14,7 @@ const { v4: uuidv4 } = require('uuid');
 class CommentPanel extends Component {
 	
 	state = {
-			comments:[]
+		comments:[]
 		//comments: JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))	// DEBUG
 	}
 	
@@ -45,7 +43,9 @@ class CommentPanel extends Component {
 	render() {
 		return(
 			<>
-				<CommentHeader />
+				<div class="commentHeader">
+					<h1>Comments</h1>
+				</div>
 				<Comments comments={this.state.comments} delComment={ this.delComment }/>
 				<AddComment addComment={ this.addComment } />
 			</>
