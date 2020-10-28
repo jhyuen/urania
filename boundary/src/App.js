@@ -8,6 +8,8 @@ import SnippetHeader from './components/SnippetHeader';
 import SnippetInfo from './components/SnippetInfo';
 import ControlPanel from './components/ControlPanel';
 
+export * from './api.js';
+
 
 // uuidv4 generates random ids 
 const { v4: uuidv4 } = require('uuid');	
