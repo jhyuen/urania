@@ -27,19 +27,12 @@
 
 .snippetInfo {
   display: grid;
-  grid-gap: 2%;
-  grid-template-columns: 80% 18%;
-  grid-template-rows: auto;
   grid-template-areas:
     "header buttons"
     "textarea textarea";
-  padding: 10px 10px 10px 10px;
-  border: 3px solid #73AD21;
 }
 
 .infoArea {
-  border-radius: 5px;
-  height: 50px;
   width: 100%;
   grid-area: textarea;
 }
@@ -58,7 +51,6 @@
 
 .infoHeader {
   vertical-align: middle;
-  border-radius: 5px;
   grid-area: header;
   align-self: stretch;
 }
@@ -67,7 +59,7 @@
   background-color: #8ca0ff;
   border-radius: 5px;
   justify-self: end;
-  width: 60px;
+  width: 100px;
   height: 30px;
   grid-area: buttons;
 }

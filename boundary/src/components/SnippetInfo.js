@@ -47,12 +47,14 @@ class SnippetInfo extends React.Component {
   render () {
     return (
       <div className='snippetInfo'>
-        <div className='infoHeader'>Snippet Info:</div>
+        <div className='infoHeader'>
+        	<h1>Snippet Info</h1>
+        </div>
         { this.state.isCreator ? <CreatorButton/> : null }
         { this.state.isCreator 
           ? <CreatorForm value={this.state.value} 
-                         onSubmit={ (event) => this.handleSubmit(event)} 
-                         onChange={ (event) => this.handleChange(event)}/> 
+        		onSubmit={ (event) => this.handleSubmit(event)} 
+        		onChange={ (event) => this.handleChange(event)}/> 
           : <ViewerArea value={this.state.value}/> }
       </div>
     );

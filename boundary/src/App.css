@@ -28,8 +28,10 @@ a {
 .app {
 	display: grid;
 	grid-template-columns: 200px auto 400px;
-	grid-template-rows: 100px auto 250px;
+	grid-template-rows: 80px auto 150px;
 	border: 5px black;
+	width: 100vw;
+  	height: 100vh;
 }
 
 .comments {
