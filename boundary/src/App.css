@@ -27,8 +27,8 @@ a {
 
 .app {
 	display: grid;
-	grid-template-columns: 100px auto 100px;
-	grid-template-rows: 50px auto 50px;
+	grid-template-columns: 200px auto 400px;
+	grid-template-rows: 100px auto 250px;
 	border: 5px black;
 	column-gap: 10px;
 }
