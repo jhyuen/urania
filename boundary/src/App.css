@@ -34,7 +34,7 @@ a {
   	height: 100vh;
 }
 
-.comments {
+.commentPanel {
 	background-color: lightblue;
 	grid-column-start: 3;
 	grid-column-end: 4;
