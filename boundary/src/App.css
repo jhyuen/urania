@@ -30,7 +30,6 @@ a {
 	grid-template-columns: 200px auto 400px;
 	grid-template-rows: 100px auto 250px;
 	border: 5px black;
-	column-gap: 10px;
 }
 
 .comments {
