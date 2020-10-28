@@ -28,21 +28,64 @@ public class TestSnippetThings {
 	    SnippetDAO sd = new SnippetDAO();
 	    try {
 	    	// can add it
-//	    	String id = UUID.randomUUID().toString().substring(0, 20); // no more than 20 because of DB restrictions...
-//	    	Constant constant = new Constant(id, 14);
 	    	String id = UUID.randomUUID().toString();
 	    	Snippet snippet = new Snippet(id);
 	    	boolean b = sd.createSnippet(snippet);
 	    	System.out.println("add constant: " + b);
+	    	assertTrue (b);
 	    	
 	    	// can retrieve it
 	    	Snippet s2 = sd.getSnippet(snippet.snippetID);
 	    	System.out.println("C2:" + s2.snippetID);
 	    	
 	    	// can delete it
-//	    	assertTrue (cd.deleteConstant(c2));
+	    	assertTrue (sd.deleteSnippet(id));
 	    } catch (Exception e) {
 	    	fail ("didn't work:" + e.getMessage());
 	    }
+	}
+	
+	@Test
+	public void testUpdateSnippetText() {
+		SnippetDAO sd = new SnippetDAO();
+		try {
+			// change snippet "abcd123" to have snippet text "updated text"
+			boolean b = sd.updateSnippetText("abcd123", "updated text");
+	    	assertTrue (b);
+	    	
+	    	// Check that text is changed
+	    	Snippet snippet = sd.getSnippet("abcd123");
+	    	System.out.println("Updated Snippet: " + snippet.snippetID + " - text => " + snippet.snippetText);
+	    	assertEquals ("updated text", snippet.snippetText);
+	    	
+	    	// change snippet "abcd123" back to "original text"
+			b = sd.updateSnippetText("abcd123", "original text");
+	    	assertTrue (b);
+			
+		} catch (Exception e) {
+			fail ("couldn't update snippet text: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void testUpdateSnippetInfo() {
+		SnippetDAO sd = new SnippetDAO();
+		try {
+			// change snippet "abcd123" to have snippet text "updated text"
+			boolean b = sd.updateSnippetInfo("abcd123", "updated info");
+	    	assertTrue (b);
+	    	
+	    	// Check that text is changed
+	    	Snippet snippet = sd.getSnippet("abcd123");
+	    	System.out.println("Updated Snippet: " + snippet.snippetID + " - text => " + snippet.snippetInfo);
+	    	assertEquals ("updated info", snippet.snippetInfo);
+	    	
+	    	// change snippet "abcd123" back to "original text"
+			b = sd.updateSnippetText("abcd123", "original info");
+	    	assertTrue (b);
+			
+		} catch (Exception e) {
+			fail ("couldn't update snippet text: " + e.getMessage());
+		}
 	}
 }

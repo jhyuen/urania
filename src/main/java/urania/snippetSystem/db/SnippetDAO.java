@@ -53,35 +53,48 @@ public class SnippetDAO {
         }
     }
     
-    public boolean updateSnippetInfo (Snippet snippet) throws Exception {
-//        try {
-//        	String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";
-//        	PreparedStatement ps = conn.prepareStatement(query);
-//            ps.setDouble(1, constant.value);
-//            ps.setString(2, constant.name);
-//            int numAffected = ps.executeUpdate();
-//            ps.close();
-//            
-//            return (numAffected == 1);
-//        } catch (Exception e) {
-//            throw new Exception("Failed to update report: " + e.getMessage());
-//        }
-		return false;
+    public boolean updateSnippetText (String snippetID, String snippetText) throws Exception {
+        try {
+        	String query = "UPDATE " + tblName + " SET snippetText=? WHERE snippetId=?;";
+        	PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, snippetText);
+            ps.setString(2, snippetID);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return (numAffected == 1);
+        } catch (Exception e) {
+            throw new Exception("Failed to update snippet text: " + e.getMessage());
+        }
+    }
+
+    public boolean updateSnippetInfo (String snippetID, String snippetInfo) throws Exception {
+        try {
+        	String query = "UPDATE " + tblName + " SET snippetInfo=? WHERE snippetId=?;";
+        	PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, snippetInfo);
+            ps.setString(2, snippetID);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return (numAffected == 1);
+        } catch (Exception e) {
+            throw new Exception("Failed to update snippet info: " + e.getMessage());
+        }
     }
     
-    public boolean deleteSnippet (Snippet snippet) throws Exception {
-//        try {
-//            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE name = ?;");
-//            ps.setString(1, constant.name);
-//            int numAffected = ps.executeUpdate();
-//            ps.close();
-//            
-//            return (numAffected == 1);
-//
-//        } catch (Exception e) {
-//            throw new Exception("Failed to insert constant: " + e.getMessage());
-//        }
-    	return false;
+    public boolean deleteSnippet (String uuid) throws Exception {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE snippetId = ?;");
+            ps.setString(1, uuid);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return (numAffected == 1);
+
+        } catch (Exception e) {
+            throw new Exception("Failed to delete snippet: " + e.getMessage());
+        }
     }
 
 
