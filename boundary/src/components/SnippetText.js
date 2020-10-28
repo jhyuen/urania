@@ -10,15 +10,13 @@ class SnippetText extends Component {
 	render() {
 		return(
 			<>
-			<div class="snippetHeader">
+			<div class="snippetTextHeader">
 				<h1>Snippet</h1>
 				<div class="snippetTextBtns">
-		  			<Button variant="success" onClick={this.save}>Save</Button>{' '}
-		 			<Button variant="danger" onClick={this.cancel}>Cancel</Button>{' '}
-		 			<Button variant="primary" onClick={this.edit}>Edit</Button>{' '}
+		  			<Button variant="primary" onClick={this.save}>Save</Button>{' '}
 				</div>
 			</div>
-			<div>
+			<div class="editor">
 				<AceEditor
 					theme="monokai"
 					placeholder="Type in code to have a fun time"
@@ -31,14 +29,6 @@ class SnippetText extends Component {
 	
 	save() {
 		console.log("save");
-	}
-	
-	cancel() {
-		console.log("cancel");
-	}
-	
-	edit() {
-		console.log("edit");
 	}
 }
 

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import Header from './components/layout/Header'
+import CommentHeader from './components/layout/CommentHeader'
 import Comments from './components/Comments'
 import AddComment from './controllers/AddComment'
 import './App.css';
-import SnippetText from './components/SnippetText';
+import SnippetText from './components/SnippetText.js';
 import SnippetHeader from './components/SnippetHeader';
 import SnippetInfo from './components/SnippetInfo';
+import ControlPanel from './components/ControlPanel';
+
 
 // uuidv4 generates random ids 
 const { v4: uuidv4 } = require('uuid');	
@@ -43,11 +45,23 @@ class App extends Component {
 	
 	render() {
 		return (
-			<div className="App">
-				<div className="Container">
-					<Header />
+			<div class="app">
+				<div class="snippetHeader">
+					<SnippetHeader />
+				</div>
+				<div class="snippetText">
+					<SnippetText />
+				</div>
+				<div class="comments" className="container">
+					<CommentHeader />
 					<Comments comments={this.state.comments} delComment={ this.delComment }/>
 					<AddComment addComment={ this.addComment } />
+				</div>
+				<div class="controlPanel">
+					<ControlPanel />
+				</div>
+				<div class="snippetInfo">
+					<SnippetInfo />
 				</div>
 			</div>
 		);

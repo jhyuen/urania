@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Header() {
+function CommentHeader() {
 	return (
 		<header style={ headerStyle }>
 			<h1>Comments</h1>
@@ -16,4 +16,4 @@ const headerStyle = {
 }
 
 
-export default Header;
+export default CommentHeader;

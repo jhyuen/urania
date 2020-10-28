@@ -1,18 +1,10 @@
-h1 {
-	float: left;
-}
-
-SnippetText {
-	float: right;
-}
-
 .snippetTextBtns {
 	float: right;
 }
 
-.snippetHeader {
+.snippetTextHeader {
 	display: inline-flex;
 }
 
-AceEditor {
+.editor {
 }
