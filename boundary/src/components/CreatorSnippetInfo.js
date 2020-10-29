@@ -22,7 +22,7 @@ function ViewerArea(props) {
   );
 }
 
-class SnippetInfo extends React.Component {
+class CreatorSnippetInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,4 +61,4 @@ class SnippetInfo extends React.Component {
   }
 }
   
-export default SnippetInfo;
+export default CreatorSnippetInfo;

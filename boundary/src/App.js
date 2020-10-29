@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import CommentPanel from './components/CommentPanel'
-import SnippetText from './components/SnippetText.js';
-import SnippetHeader from './components/SnippetHeader';
-import SnippetInfo from './components/SnippetInfo';
-import ControlPanel from './components/ControlPanel';	
-export * from './api.js';
+import CreatorView from './components/CreatorView';
+import ViewerView from './components/ViewerView';
+import AdminView from './components/AdminView';
 
+export * from './api.js';
 
 // uuidv4 generates random ids 
 const { v4: uuidv4 } = require('uuid');	
@@ -19,23 +17,7 @@ class App extends Component {
 	
 	render() {
 		return (
-			<div class="app">
-				<div class="snippetHeader">
-					<SnippetHeader />
-				</div>
-				<div class="snippetText">
-					<SnippetText />
-				</div>
-				<div class="commentPanel">
-					<CommentPanel />
-				</div>
-				<div class="controlPanel">
-					<ControlPanel />
-				</div>
-				<div class="snippetInfo">
-					<SnippetInfo />
-				</div>
-			</div>
+			<CreatorView />
 		);
 	}
 }
