@@ -3,7 +3,7 @@ import './ControlPanel.css';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-import * as urls from '../api.js';
+import * as urls from '../../api.js';
 
 class CreatorControlPanel extends Component {
 	state = {}

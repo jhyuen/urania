@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import CommentPanel from './CommentPanel'
-import SnippetText from './SnippetText.js';
-import SnippetHeader from './SnippetHeader';
-import CreatorSnippetInfo from './CreatorSnippetInfo';
-import CreatorControlPanel from './CreatorControlPanel';
-
+import CommentPanel from '../elements/CommentPanel'
+import SnippetText from '../elements/SnippetText.js';
+import SnippetHeader from '../elements/SnippetHeader';
+import CreatorSnippetInfo from '../elements/CreatorSnippetInfo';
+import CreatorControlPanel from '../elements/CreatorControlPanel';
 
 class CreatorView extends Component {
 	state = {}

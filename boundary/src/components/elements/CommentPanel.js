@@ -3,7 +3,7 @@ import './CommentPanel.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Comments from './Comments'
-import AddComment from './../controllers/AddComment.js'
+import AddComment from '../../controllers/AddComment.js'
 
 //uuidv4 generates random ids 
 const { v4: uuidv4 } = require('uuid');	

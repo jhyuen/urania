@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
-import CreatorView from './components/CreatorView';
-import ViewerView from './components/ViewerView';
-import AdminView from './components/AdminView';
+import CreatorView from './components/views/CreatorView';
+import ViewerView from './components/views/ViewerView';
+import AdminView from './components/views/AdminView';
 
 export * from './api.js';
 
@@ -17,7 +18,23 @@ class App extends Component {
 	
 	render() {
 		return (
-			<CreatorView />
+			<Router>
+				<Route exact path="/" render={props => (
+					<React.Fragment>
+						<ViewerView />
+					</React.Fragment>
+				)} />
+				<Route path="/creator" render={props => (
+					<React.Fragment>
+						<CreatorView />
+					</React.Fragment>
+				)} />
+				<Route path="/admin" render={props => (
+					<React.Fragment>
+						<AdminView />
+					</React.Fragment>
+				)} />
+			</Router>
 		);
 	}
 }

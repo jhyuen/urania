@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import CommentPanel from './CommentPanel'
-import SnippetText from './SnippetText.js';
-import SnippetHeader from './SnippetHeader';
-import ViewerSnippetInfo from './ViewerSnippetInfo';
-import ViewerControlPanel from './ViewerControlPanel';
-
+import CommentPanel from '../elements/CommentPanel'
+import SnippetText from '../elements/SnippetText.js';
+import SnippetHeader from '../elements/SnippetHeader';
+import ViewerSnippetInfo from '../elements/ViewerSnippetInfo';
+import ViewerControlPanel from '../elements/ViewerControlPanel';
 
 class ViewerView extends Component {
 	state = {}
