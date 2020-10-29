@@ -20,7 +20,7 @@ class App extends Component {
 		return (
 			<Router>
 				<Switch>
-					<Route exact path="/" 	component={ ViewerView } />
+					<Route path="/" exact 	component={ ViewerView } />
 					<Route path="/creator" 	component={ CreatorView } />
 					<Route path="/admin" 	component={ AdminView } />
 				</Switch>
