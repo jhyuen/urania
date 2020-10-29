@@ -2,17 +2,17 @@ package urania.snippetSystem.http;
 
 public class GetSnippetRequest {
 	
-	public String id;
+	public String SnippetID;
 	
-	public String getID () { return id; }
-	public void setID (String newID) { this.id = newID; }
+	public String getID () { return SnippetID; }
+	public void setID (String newID) { this.SnippetID = newID; }
 	
 	public GetSnippetRequest (String uuid) {
-		this.id = uuid;
+		this.SnippetID = uuid;
 	}
 	
 	public String toString() {
-		return "CreateSnippet(" + id + ")";
+		return "CreateSnippet(" + SnippetID + ")";
 	}
 
 	public GetSnippetRequest () {

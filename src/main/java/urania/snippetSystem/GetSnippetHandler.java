@@ -33,7 +33,7 @@ public class GetSnippetHandler implements RequestHandler<GetSnippetRequest, GetS
 
         GetSnippetResponse response;
         try {
-        	Snippet snippet = getSnippet(req.id);
+        	Snippet snippet = getSnippet(req.SnippetID);
         	if (snippet != null) {
 				response = new GetSnippetResponse(snippet);
         	} else {

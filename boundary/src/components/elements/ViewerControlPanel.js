@@ -33,6 +33,34 @@ class ViewerControlPanel extends Component {
 	
 	viewSnippet() {
 		console.log("view snippet");
+	    const base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+        const tempID = "abcd123/"
+	    const get_snippet_url = base_url + tempID + "snippet";    // GET
+	    console.log(get_snippet_url);
+	    var xhr = new XMLHttpRequest();
+	    xhr.open("GET", get_snippet_url, true);
+	    var sender = JSON.stringify();
+		xhr.send(sender);
+
+      console.log("sent");
+      // This will process results and update HTML as appropriate.
+      xhr.onloadend = function () {
+	      if (xhr.readyState === XMLHttpRequest.DONE) {
+	          console.log ("XHR: " + xhr.responseText);
+	          var js = JSON.parse(xhr.responseText);
+	          var snippetID = js["snippetId"];
+	          var snippetText = js["snippetText"];
+	          var snippetInfo = js["snippetInfo"];
+	          console.log ("Got snippet: " + snippetID);
+            console.log ("Text: " + snippetText);
+            console.log ("Info: " + snippetInfo);
+        } else {
+          console.log("actual: " + xhr.responseText);
+          var js = JSON.parse(xhr.responseText);
+          var err = js["response"];
+          alert (err);
+	    }
+      }
 	}
 	
 	createSnippet() {

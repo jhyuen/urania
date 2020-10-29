@@ -42,10 +42,11 @@ class CreatorControlPanel extends Component {
 	viewSnippet() {
       console.log("view snippet");
 	    const base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
-      const tempID = "abcd123/"
-	    const create_snippet_url = base_url + tempID + "snippet";    // GET
+        const tempID = "abcd123/"
+	    const get_snippet_url = base_url + tempID + "snippet";    // GET
+	    console.log(get_snippet_url);
 	    var xhr = new XMLHttpRequest();
-	    xhr.open("GET", create_snippet_url, true);
+	    xhr.open("GET", get_snippet_url, true);
       xhr.send();
 
       console.log("sent");
