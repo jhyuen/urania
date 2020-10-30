@@ -1,25 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 class SnippetHeader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: 'ABCDEF123',
-      timestamp: 'Oct. 27 11:30:03AM',
-    };
-  }
-
   render () {
-    const header = "Snippet #: " + (this.state.id);
-    const timestamp = "Created on: " + (this.state.timestamp)
-    return (
+	var idText 			= "Snippet ID: ";
+	var timestampText 	= "Created on: ";
+	
+	return (
       <div className='snippetHeader'>
-        <div className='snippetID'>{header}</div>
-        <div className='snippetTimestamp'>{timestamp}</div>
+		<h5>{idText}{this.props.id}</h5>
+		<h5>{timestampText}{this.props.timestamp}</h5>
       </div>
     );
   }
 }
  
+// validate prop types
+SnippetHeader.propTypes = {
+	id			: PropTypes.string.isRequired,
+	timestamp	: PropTypes.string.isRequired
+};
+
 export default SnippetHeader;
