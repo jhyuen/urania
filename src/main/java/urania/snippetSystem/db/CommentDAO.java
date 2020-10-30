@@ -1,12 +1,14 @@
 package urania.snippetSystem.db;
 
 import java.sql.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 import urania.snippetSystem.model.Comment;
+import urania.snippetSystem.model.Snippet;
 
 /**
  * Comment Data Access Object
@@ -21,7 +23,7 @@ public class CommentDAO {
 
 	java.sql.Connection conn;
 	
-	final String tblName = "Comment";   // Exact capitalization
+	final String tblName = "UraniaSchema.Comment";   // Exact capitalization
 
     public CommentDAO () {
     	try  {
@@ -31,27 +33,26 @@ public class CommentDAO {
     	}
     }
 
-    public Comment getComment(String name) throws Exception {
+    public Comment getComment(String commentId) throws Exception {
         
-//        try {
-//            Comment comment = null;
-//            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name=?;");
-//            ps.setString(1,  name);
-//            ResultSet resultSet = ps.executeQuery();
-//            
-//            while (resultSet.next()) {
-//                comment = generateComment(resultSet);
-//            }
-//            resultSet.close();
-//            ps.close();
-//            
-//            return comment;
-//
-//        } catch (Exception e) {
-//        	e.printStackTrace();
-//            throw new Exception("Failed in getting comment: " + e.getMessage());
-//        }
-        return null;
+        try {
+            Comment comment = null;
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE commentId=?;");
+            ps.setString(1,  commentId);
+            ResultSet resultSet = ps.executeQuery();
+            
+            while (resultSet.next()) {
+                comment = generateComment(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+            
+            return comment;
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new Exception("Failed in getting comment: " + e.getMessage());
+        }
     }
     
     public boolean updateComment(Comment comment) throws Exception {
@@ -86,29 +87,35 @@ public class CommentDAO {
     }
 
 
-    public boolean addComment(Comment comment) throws Exception {
-//        try {
-//            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE name = ?;");
-//            ps.setString(1, comment.name);
-//            ResultSet resultSet = ps.executeQuery();
-//            
-//            // already present?
-//            while (resultSet.next()) {
-//                Comment c = generateComment(resultSet);
-//                resultSet.close();
-//                return false;
-//            }
-//
-//            ps = conn.prepareStatement("INSERT INTO " + tblName + " (name,value) values(?,?);");
-//            ps.setString(1,  comment.name);
-//            ps.setDouble(2,  comment.value);
-//            ps.execute();
-//            return true;
-//
-//        } catch (Exception e) {
-//            throw new Exception("Failed to insert comment: " + e.getMessage());
-//        }
-    	return false;
+    public boolean createComment(Comment comment) throws Exception {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE commentId = ?;");
+            ps.setString(1, comment.commentID);
+            ResultSet resultSet = ps.executeQuery();
+            
+            // already present?
+            while (resultSet.next()) {
+                Comment c = generateComment(resultSet);
+                resultSet.close();
+                return false;
+            }
+
+            ps = conn.prepareStatement("INSERT INTO " + tblName + " (snippetId,commentId,timeStamp,commentText,startLine,startChar,endLine,endChar) values(?,?,?,?,?,?,?,?);");
+            
+            ps.setString(1,  comment.snippetID);
+            ps.setString(2,  comment.commentID);
+            ps.setObject(3,  Timestamp.from(comment.timeStamp));
+            ps.setString(4, comment.commentText);
+            ps.setInt(5, comment.startLine);
+            ps.setInt(6, comment.startIndex);
+            ps.setInt(7, comment.endLine);
+            ps.setInt(8, comment.endIndex);
+            ps.execute();
+            return true;
+
+        } catch (Exception e) {
+            throw new Exception("Failed to insert comment: " + e.getMessage());
+        }
     }
 
     public List<Comment> getAllComments() throws Exception {
@@ -133,10 +140,16 @@ public class CommentDAO {
     	return null;
     }
     
-//    private Comment generateComment(ResultSet resultSet) throws Exception {
-//        String name  = resultSet.getString("name");
-//        Double value = resultSet.getDouble("value");
-//        return new Comment (name, value);
-//    }
-
+    private Comment generateComment(ResultSet resultSet) throws Exception {
+      
+      String snippetID    = resultSet.getString("snippetId");
+      String commentID    = resultSet.getString("commentId");
+      Instant timeStamp   = resultSet.getTimestamp("timeStamp").toInstant();;
+      String commentText  = resultSet.getString("commentText");
+      int startLine       = resultSet.getInt("startLine");
+      int startIndex      = resultSet.getInt("startChar");
+      int endLine         = resultSet.getInt("endLine");
+      int endIndex        = resultSet.getInt("endChar");
+      return new Comment (snippetID, commentID, timeStamp, commentText, startLine, startIndex, endLine, endIndex);
+  }
 }
