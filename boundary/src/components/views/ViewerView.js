@@ -6,13 +6,19 @@ import ViewerSnippetInfo from '../elements/ViewerSnippetInfo';
 import ViewerControlPanel from '../elements/ViewerControlPanel';
 
 class ViewerView extends Component {
-	state = {}
+	state = {
+		snippetID: ""		
+	}
 	
+	updSnippetIdCallback = (id) => {
+		this.setState({snippetID : id});
+	}
+
 	render() {
 		return(
 			<div class="app">
 				<div class="snippetHeader">
-					<SnippetHeader />
+					<SnippetHeader timestamp={ "Oct. 27 11:30:03AM" } id={ this.state.snippetID } />
 				</div>
 				<div class="snippetText">
 					<SnippetText />
@@ -21,7 +27,7 @@ class ViewerView extends Component {
 					<CommentPanel />
 				</div>
 				<div class="controlPanel">
-					<ViewerControlPanel />
+					<ViewerControlPanel updSnippetIdCallback={this.updSnippetIdCallback} />
 				</div>
 				<div class="snippetInfo">
 					<ViewerSnippetInfo />

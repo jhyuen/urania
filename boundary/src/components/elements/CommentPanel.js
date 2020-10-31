@@ -5,30 +5,22 @@ import Button from 'react-bootstrap/Button';
 import Comments from './Comments'
 import AddComment from '../../controllers/AddComment.js'
 
-//uuidv4 generates random ids 
 const { v4: uuidv4 } = require('uuid');	
-
-// local storage key (DEBUG)
-//const LOCAL_STORAGE_KEY = 'SnippetApp.comments'	
 
 class CommentPanel extends Component {
 	
 	state = {
 		comments:[]
-		//comments: JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))	// DEBUG
 	}
 	
-	// delete comment
 	delComment = (id) => {
 		this.setState({ comments: [...this.state.comments.filter(comment => comment.id !== id)] });
-		//localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([...this.state.comments.filter(comment => comment.id !== id)]));	// DEBUG
 	}
-	
-	// add comment
+		
 	addComment = (text) => {
 		const newComment = {	
 				id				: uuidv4(),				// generate a random unique id
-				timestamp		: Date.now(),		// grab the current time
+				timestamp		: Date.now(),			// grab the current time
 				text			: text,
 				startLine		: 0,
 				startCharIndex	: 0,
@@ -36,8 +28,6 @@ class CommentPanel extends Component {
 				endCharIndex	: 0
 		}
 		this.setState({ comments: [...this.state.comments, newComment] });
-		//localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([...this.state.comments, newComment]));	// DEBUG
-		//console.log(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(this.timestamp));
 	} 
 	
 	render() {
@@ -51,7 +41,6 @@ class CommentPanel extends Component {
 			</>
 		)
 	}
-	
 }
 
 export default CommentPanel;

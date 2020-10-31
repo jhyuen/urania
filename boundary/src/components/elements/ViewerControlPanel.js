@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import './ControlPanel.css';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import PropTypes from 'prop-types';
 
 import * as urls from '../../api.js';
 
 class ViewerControlPanel extends Component {
 	constructor(props) {
 		super(props)
+		this.updId 			= this.updId.bind(this);
+		this.viewSnippet 	= this.viewSnippet.bind(this);
 		this.state = {
 			snippet: {
 				 		"snippetId": "loading snippet id...",
@@ -46,6 +49,10 @@ class ViewerControlPanel extends Component {
 		console.log(snippetData)
 	}
 	
+	updId = (id) => {
+		this.props.updSnippetIdCallback(id);
+	}
+
 	render() {
 		return(
 			<>
@@ -71,41 +78,41 @@ class ViewerControlPanel extends Component {
 		console.log("changed password status");
 	}
 	
-	
 	viewAsViewer() {
 		console.log("view as viewer");
 	}
 	
-	viewSnippet() {
+	viewSnippet () {
 		console.log("view snippet");
-	    const base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
-        const tempID = "abcd123/"
-	    const get_snippet_url = base_url + tempID + "snippet";    // GET
-	    console.log(get_snippet_url);
-	    var xhr = new XMLHttpRequest();
-	    xhr.open("GET", get_snippet_url, true);
-	    var sender = JSON.stringify();
+		const base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+		const tempID = "abcd123/";
+		const get_snippet_url = base_url + tempID + "snippet";    // GET
+		console.log(get_snippet_url);
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", get_snippet_url, true);
+		var sender = JSON.stringify();
 		xhr.send(sender);
-
-      console.log("sent");
-      // This will process results and update HTML as appropriate.
-      xhr.onloadend = function () {
+		console.log("sent");      
+	  	
+		// This will process results and update HTML as appropriate.
+	  	xhr.onloadend = () => {
 	      if (xhr.readyState === XMLHttpRequest.DONE) {
 	          console.log ("XHR: " + xhr.responseText);
 	          var js = JSON.parse(xhr.responseText);
 	          var snippetID = js["snippetId"];
+			  this.updId(snippetID);
 	          var snippetText = js["snippetText"];
 	          var snippetInfo = js["snippetInfo"];
 	          console.log ("Got snippet: " + snippetID);
-            console.log ("Text: " + snippetText);
-            console.log ("Info: " + snippetInfo);
-        } else {
-          console.log("actual: " + xhr.responseText);
-          var js = JSON.parse(xhr.responseText);
-          var err = js["response"];
-          alert (err);
+	        console.log ("Text: " + snippetText);
+	        console.log ("Info: " + snippetInfo);
+	    } else {
+	      console.log("actual: " + xhr.responseText);
+	      var js = JSON.parse(xhr.responseText);
+	      var err = js["response"];
+	      alert (err);
 	    }
-      }
+	  }
 	}
 	
 	createSnippet() {
@@ -139,10 +146,15 @@ class ViewerControlPanel extends Component {
 		
 	    console.log("created snippet");
 	}
-	
+
 	deleteSnippet() {
 		console.log("deleted snippet");
 	}
 }
+
+// validate prop types
+ViewerControlPanel.propTypes = {
+	updSnippetIdCallback 	: PropTypes.func.isRequired
+};
 
 export default ViewerControlPanel;

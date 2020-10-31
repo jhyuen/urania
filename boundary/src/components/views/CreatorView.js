@@ -8,6 +8,23 @@ import CreatorControlPanel from '../elements/CreatorControlPanel';
 class CreatorView extends Component {
 	state = {}
 	
+	componentDidMount() {
+		this.fetchItems()
+	}
+	
+	fetchItems = async () => {
+		console.log("fetching")
+		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	    var tempID = "abcd123/"
+	    //var tempID = this.props.snippetId	
+	    var get_snippet_url = base_url + tempID + "snippet"; 
+		var data = await fetch(get_snippet_url)
+		
+		var snippetData = await data.json()
+		this.setState({ snippet: snippetData })
+		console.log(snippetData)
+	}
+	
 	render() {
 		return(
 			<div class="app">
