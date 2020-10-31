@@ -4,20 +4,18 @@ import './App.css';
 import CreatorView from './components/views/CreatorView';
 import ViewerView from './components/views/ViewerView';
 import AdminView from './components/views/AdminView';
+import NewSnippet from './components/views/NewSnippet';
 
 export * from './api.js';
 
 class App extends Component {
-	state = {}
 	
 	render() {
 		return (
 			<Router>
 				<Switch>
 					<Route path="/" exact 	component={ AdminView } />
-					<Route path="/creator" exact render={() => {
-		                return <Redirect to={{ pathname: '/123/creator' }} />
-					}} />
+					<Route path="/creator" exact component={ NewSnippet } />
 					<Route path="/:snippetId/creator" exact component={ CreatorView } />
 					<Route path="/admin" 	component={ AdminView } />
 					<Route path="/:snippetId" 	component={ ViewerView } />
