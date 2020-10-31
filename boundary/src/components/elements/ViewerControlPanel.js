@@ -6,7 +6,45 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import * as urls from '../../api.js';
 
 class ViewerControlPanel extends Component {
-	state = {}
+	constructor(props) {
+		super(props)
+		this.state = {
+			snippet: {
+				 		"snippetId": "loading snippet id...",
+				 		"snippetText": "loading snippet text..",
+				 		"snippetInfo": "loading snippet info...",
+				 		"timeStamp": "loading timestamp...",
+				 		"languageSelected": "loading language selected...",
+				 		"viewerPassword": "loading viewer password...",
+				 		"viewerPasswordStatus": "0",
+				 	 }
+		}
+	}
+	
+	componentDidMount() {
+		this.fetchItems()
+		console.log("I mounted") 
+	}
+	
+	componentDidUpdate() {
+		console.log("I updated")
+	}
+	
+	
+    
+    
+	fetchItems = async () => {
+		console.log("fetching")
+		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	    var tempID = "abcd123/"
+	    //var tempID = this.props.snippetId	
+	    var get_snippet_url = base_url + tempID + "snippet"; 
+		var data = await fetch(get_snippet_url)
+		
+		var snippetData = await data.json()
+		this.setState({ snippet: snippetData })
+		console.log(snippetData)
+	}
 	
 	render() {
 		return(
@@ -18,6 +56,13 @@ class ViewerControlPanel extends Component {
 					<Button variant="primary" onClick={this.viewSnippet}>View another Snippet</Button>{' '}
 					<Button variant="primary" onClick={this.createSnippet}>Create another Snippet</Button>{' '}
 				</ButtonGroup>
+				
+				<p>{this.state.snippet.snippetId}</p>
+				<p>{this.state.snippet.snippetText}</p>
+				<p>{this.state.snippet.snippetInfo}</p>
+				<p>{this.state.snippet.languageSelected}</p>
+				<p>{this.state.snippet.viewerPassword}</p>
+				<p>{this.state.snippet.viewerPasswordStatus}</p>
 			</>
 		)
 	}
