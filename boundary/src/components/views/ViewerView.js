@@ -56,7 +56,7 @@ class ViewerView extends Component {
 					<ViewerControlPanel updSnippetIdCallback={this.updSnippetIdCallback} />
 				</div>
 				<div class="snippetInfo">
-					<ViewerSnippetInfo info={this.state.snippet.snippetInfo}/>
+					<ViewerSnippetInfo info={this.state.snippet.snippetInfo} />
 				</div>
 			</div>
 		)

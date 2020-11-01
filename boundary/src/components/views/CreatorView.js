@@ -40,7 +40,7 @@ class CreatorView extends Component {
 		return(
 			<div class="app">
 				<div class="snippetHeader">
-					<SnippetHeader />
+					<SnippetHeader timestamp={ "Oct. 27 11:30:03AM" } id={ this.state.snippet.snippetId } />
 				</div>
 				<div class="snippetText">
 					<SnippetText />
@@ -52,7 +52,7 @@ class CreatorView extends Component {
 					<CreatorControlPanel />
 				</div>
 				<div class="snippetInfo">
-					<CreatorSnippetInfo />
+					<CreatorSnippetInfo info={this.state.snippet.snippetInfo}/>
 				</div>
 			</div>
 		)

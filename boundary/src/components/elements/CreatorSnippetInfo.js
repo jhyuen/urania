@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './SnippetInfo.css';
+import PropTypes from 'prop-types';
 
 function CreatorButton () {
   return (
@@ -16,21 +17,9 @@ function CreatorForm (props) {
   );
 }
 
-function ViewerArea(props) {
-  return (
-    <div className='viewerText'>{props.value}</div>
-  );
-}
-
 class CreatorSnippetInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isCreator: true,
-      value: 'Default Snippet Text...',
-      id: 'ABCDEF123',
-    };
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -50,15 +39,17 @@ class CreatorSnippetInfo extends React.Component {
         <div className='infoHeader'>
         	<h1>Snippet Info</h1>
         </div>
-        { this.state.isCreator ? <CreatorButton/> : null }
-        { this.state.isCreator 
-          ? <CreatorForm value={this.state.value} 
+        <CreatorButton />
+        <CreatorForm value={this.props.info} 
         		onSubmit={ (event) => this.handleSubmit(event)} 
-        		onChange={ (event) => this.handleChange(event)}/> 
-          : <ViewerArea value={this.state.value}/> }
+        		onChange={ (event) => this.handleChange(event)}/>          
       </div>
     );
   }
 }
   
+  CreatorSnippetInfo.propTypes = {
+	info : PropTypes.string.isRequired
+};
+
 export default CreatorSnippetInfo;
