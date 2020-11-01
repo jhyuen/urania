@@ -6,19 +6,45 @@ import ViewerSnippetInfo from '../elements/ViewerSnippetInfo';
 import ViewerControlPanel from '../elements/ViewerControlPanel';
 
 class ViewerView extends Component {
+	
 	state = {
-		snippetID: ""		
+		snippet: {
+			"snippetId": "loading snippet id...",
+	 		"snippetText": "loading snippet text..",		 		
+	 		"snippetInfo": "loading snippet info...",
+		 	"timeStamp": "loading timestamp...",
+		 	"languageSelected": "loading language selected...",
+		 	"viewerPassword": "loading viewer password...",
+		 	"viewerPasswordStatus": "0",
+		}	
 	}
 	
 	updSnippetIdCallback = (id) => {
-		this.setState({snippetID : id});
+		this.setState({snippetId : id});
+	}
+	
+	componentDidMount() {
+		var patt = /\/[^/]*/i
+		var result = window.location.pathname.match(patt)
+		this.fetchSnippet(result[0])
+	}
+	
+	fetchSnippet = async (path) => {
+		console.log("fetching")
+		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta";
+	    var get_snippet_url = base_url + path + "/snippet"; 
+		var data = await fetch(get_snippet_url)
+		
+		var snippetData = await data.json()
+		this.setState({ snippet: snippetData })
+		console.log(snippetData)
 	}
 
 	render() {
 		return(
 			<div class="app">
 				<div class="snippetHeader">
-					<SnippetHeader timestamp={ "Oct. 27 11:30:03AM" } id={ this.state.snippetID } />
+					<SnippetHeader timestamp={ "Oct. 27 11:30:03AM" } id={ this.state.snippet.snippetId } />
 				</div>
 				<div class="snippetText">
 					<SnippetText />
@@ -30,7 +56,7 @@ class ViewerView extends Component {
 					<ViewerControlPanel updSnippetIdCallback={this.updSnippetIdCallback} />
 				</div>
 				<div class="snippetInfo">
-					<ViewerSnippetInfo />
+					<ViewerSnippetInfo info={this.state.snippet.snippetInfo}/>
 				</div>
 			</div>
 		)

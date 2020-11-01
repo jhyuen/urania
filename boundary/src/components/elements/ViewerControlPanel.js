@@ -63,13 +63,6 @@ class ViewerControlPanel extends Component {
 					<Button variant="primary" onClick={this.viewSnippet}>View another Snippet</Button>{' '}
 					<Button variant="primary" onClick={this.createSnippet}>Create another Snippet</Button>{' '}
 				</ButtonGroup>
-				
-				<p>{this.state.snippet.snippetId}</p>
-				<p>{this.state.snippet.snippetText}</p>
-				<p>{this.state.snippet.snippetInfo}</p>
-				<p>{this.state.snippet.languageSelected}</p>
-				<p>{this.state.snippet.viewerPassword}</p>
-				<p>{this.state.snippet.viewerPasswordStatus}</p>
 			</>
 		)
 	}
