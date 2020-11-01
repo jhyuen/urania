@@ -28,12 +28,12 @@ class CreatorSnippetInfo extends React.Component {
 	  console.log(JSON.stringify({info: this.state.value}))
 	  fetch(update_url, {
 		  method: 'POST',
-		  body: JSON.stringify({info: this.state.value})
+		  body: JSON.stringify({info: this.state.value}),
+		  headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json'
+		  }
 	  })
-	    .then(response => response.json())
-	    .then(responseData => {
-	      this.setState({value: responseData.text})
-	    })
 	    .catch(error => {
 	      console.log("error", error);
 	      alert("An error occured, please try again later.");
