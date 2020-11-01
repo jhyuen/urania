@@ -14,7 +14,7 @@ class App extends Component {
 		return (
 			<Router>
 				<Switch>
-					<Route path="/" exact 	component={ AdminView } />
+					<Route path="/" exact 	component={ NewSnippet } />
 					<Route path="/creator" exact component={ NewSnippet } />
 					<Route path="/:snippetId/creator" exact component={ CreatorView } />
 					<Route path="/admin" 	component={ AdminView } />

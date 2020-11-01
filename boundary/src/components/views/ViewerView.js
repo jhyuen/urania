@@ -16,7 +16,8 @@ class ViewerView extends Component {
 		 	"languageSelected": "loading language selected...",
 		 	"viewerPassword": "loading viewer password...",
 		 	"viewerPasswordStatus": "0",
-		}	
+		},
+		dataFetched: false
 	}
 	
 	updSnippetIdCallback = (id) => {
@@ -36,30 +37,34 @@ class ViewerView extends Component {
 		var data = await fetch(get_snippet_url)
 		
 		var snippetData = await data.json()
-		this.setState({ snippet: snippetData })
+		this.setState({ snippet: snippetData, dataFetched : true  })
 		console.log(snippetData)
 	}
 
 	render() {
-		return(
-			<div class="app">
-				<div class="snippetHeader">
-					<SnippetHeader timestamp={ "Oct. 27 11:30:03AM" } id={ this.state.snippet.snippetId } />
+		if (this.state.dataFetched) {
+			return(
+				<div class="app">
+					<div class="snippetHeader">
+						<SnippetHeader timestamp={ "Oct. 27 11:30:03AM" } id={ this.state.snippet.snippetId } />
+					</div>
+					<div class="snippetText">
+						<SnippetText />
+					</div>
+					<div class="commentPanel">
+						<CommentPanel />
+					</div>
+					<div class="controlPanel">
+						<ViewerControlPanel updSnippetIdCallback={this.updSnippetIdCallback} />
+					</div>
+					<div class="snippetInfo">
+						<ViewerSnippetInfo info={this.state.snippet.snippetInfo} />
+					</div>
 				</div>
-				<div class="snippetText">
-					<SnippetText />
-				</div>
-				<div class="commentPanel">
-					<CommentPanel />
-				</div>
-				<div class="controlPanel">
-					<ViewerControlPanel updSnippetIdCallback={this.updSnippetIdCallback} />
-				</div>
-				<div class="snippetInfo">
-					<ViewerSnippetInfo info={this.state.snippet.snippetInfo} />
-				</div>
-			</div>
-		)
+			)
+		} else {
+			return <p>Loading Snippet...</p>
+		}
 	}
 }
 

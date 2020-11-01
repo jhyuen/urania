@@ -3,33 +3,50 @@ import ReactDOM from 'react-dom';
 import './SnippetInfo.css';
 import PropTypes from 'prop-types';
 
-function CreatorButton () {
-  return (
-    <input className='submitButton' type='submit' value='Submit' form='infoForm'/>
-  );
-}
-
-function CreatorForm (props) {
-  return (
-    <form className='infoTextArea' id='infoForm' onSubmit={props.onSubmit}>
-      <textarea className='infoArea' placeholder='Some snippet info...' onChange={props.onChange}/>
-    </form>
-  );
-}
-
 class CreatorSnippetInfo extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+    	value: ""
+    }
+    
+    this.updateSnippetInfo = this.updateSnippetInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+	  this.setState({ value: this.props.info })
+  }
+  
+  updateSnippetInfo = async () => {
+	  console.log("fetching")
+	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	  var update_url = base_url + this.props.id + "/info";
+	  console.log(update_url)
+	  console.log(this.state.value)
+	  console.log(JSON.stringify({info: this.state.value}))
+	  fetch(update_url, {
+		  method: 'POST',
+		  body: JSON.stringify({info: this.state.value})
+	  })
+	    .then(response => response.json())
+	    .then(responseData => {
+	      this.setState({value: responseData.text})
+	    })
+	    .catch(error => {
+	      console.log("error", error);
+	      alert("An error occured, please try again later.");
+	    });
+  }
+  
   handleChange(event) {
     this.setState({value: event.target.value});
   }
    
   handleSubmit(event) {
     event.preventDefault();
+    this.updateSnippetInfo();
     /*{alert('Snippet Info was updated' + this.state.value);}*/
   }
 
@@ -39,17 +56,18 @@ class CreatorSnippetInfo extends React.Component {
         <div className='infoHeader'>
         	<h1>Snippet Info</h1>
         </div>
-        <CreatorButton />
-        <CreatorForm value={this.props.info} 
-        		onSubmit={ (event) => this.handleSubmit(event)} 
-        		onChange={ (event) => this.handleChange(event)}/>          
+        <input className='submitButton' type='submit' value='Submit' form='infoForm'/>
+        <form className='infoTextArea' id='infoForm' onSubmit={this.handleSubmit}>
+        	<textarea className='infoArea' placeholder='Add Some snippet info...' value = {this.state.value} onChange={this.handleChange}/>
+        </form>
       </div>
     );
   }
 }
   
   CreatorSnippetInfo.propTypes = {
-	info : PropTypes.string.isRequired
+	info 	: 	PropTypes.string.isRequired,
+	id		: 	PropTypes.string.isRequired
 };
 
 export default CreatorSnippetInfo;

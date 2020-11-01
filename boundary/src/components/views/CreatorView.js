@@ -16,7 +16,8 @@ class CreatorView extends Component {
 		 	"languageSelected": "loading language selected...",
 		 	"viewerPassword": "loading viewer password...",
 		 	"viewerPasswordStatus": "0",
-		}
+		},
+		dataFetched: false
 	}
 	
 	componentDidMount() {
@@ -32,30 +33,35 @@ class CreatorView extends Component {
 		var data = await fetch(get_snippet_url)
 		
 		var snippetData = await data.json()
-		this.setState({ snippet: snippetData })
+		this.setState({ snippet: snippetData, dataFetched : true })
 		console.log(snippetData)
 	}
 	
 	render() {
-		return(
-			<div class="app">
-				<div class="snippetHeader">
-					<SnippetHeader timestamp={ "Oct. 27 11:30:03AM" } id={ this.state.snippet.snippetId } />
-				</div>
-				<div class="snippetText">
-					<SnippetText />
-				</div>
-				<div class="commentPanel">
-					<CommentPanel />
-				</div>
-				<div class="controlPanel">
-					<CreatorControlPanel />
-				</div>
-				<div class="snippetInfo">
-					<CreatorSnippetInfo info={this.state.snippet.snippetInfo}/>
-				</div>
-			</div>
-		)
+		if (this.state.dataFetched) {
+			return(
+					<div class="app">
+						<div class="snippetHeader">
+							<SnippetHeader timestamp={ "Oct. 27 11:30:03AM" } id={ this.state.snippet.snippetId } />
+						</div>
+						<div class="snippetText">
+							<SnippetText />
+						</div>
+						<div class="commentPanel">
+							<CommentPanel />
+						</div>
+						<div class="controlPanel">
+							<CreatorControlPanel />
+						</div>
+						<div class="snippetInfo">
+							<CreatorSnippetInfo info={this.state.snippet.snippetInfo} id={ this.state.snippet.snippetId } />
+						</div>
+					</div>
+			)
+		} else {
+			return <p>Loading Snippet...</p>
+		}
+		
 	}
 }
 
