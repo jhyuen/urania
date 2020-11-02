@@ -65,7 +65,7 @@ class CreatorSnippetInfo extends React.Component {
   }
 }
   
-  CreatorSnippetInfo.propTypes = {
+CreatorSnippetInfo.propTypes = {
 	info 	: 	PropTypes.string.isRequired,
 	id		: 	PropTypes.string.isRequired
 };

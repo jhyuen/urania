@@ -22,8 +22,8 @@ class NewSnippet extends Component {
 			.then(responseData => {
 				this.setState({snippetId: responseData.snippetId})
 			})
-			.then(
-				responseData => {this.setState({redirect: true})}
+			.then( responseData => {
+				this.setState({redirect: true})}
 			)
 			.catch(error => {
 		          console.log("error", error);
