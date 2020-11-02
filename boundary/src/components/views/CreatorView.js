@@ -51,7 +51,7 @@ class CreatorView extends Component {
 							<CommentPanel />
 						</div>
 						<div class="controlPanel">
-							<CreatorControlPanel />
+							<CreatorControlPanel id={this.state.snippet.snippetId} />
 						</div>
 						<div class="snippetInfo">
 							<CreatorSnippetInfo info={this.state.snippet.snippetInfo} id={ this.state.snippet.snippetId } />
