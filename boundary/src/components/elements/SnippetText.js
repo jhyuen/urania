@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import AceEditor from 'react-ace';
-import ace from 'ace-builds'
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SnippetText.css';
 import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-java";
 import PropTypes from 'prop-types';
 
 
@@ -27,12 +26,8 @@ class SnippetText extends Component {
 	}
 	
 	updateSnippetText = async () => {
-		  console.log("fetching")
 		  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
 		  var update_url = base_url + this.props.id + "/text";
-		  console.log(update_url)
-		  console.log(this.state.value)
-		  console.log(JSON.stringify({text: this.state.value}))
 		  fetch(update_url, {
 			  method: 'POST',
 			  body: JSON.stringify({text: this.state.value}),
@@ -60,22 +55,22 @@ class SnippetText extends Component {
 	render() {
 		return(
 			<>
-			<div class="snippetTextHeader">
+			<div className="snippetTextHeader">
 				<h1>Snippet</h1>
 			</div>
-			<div class="editor" id="aceEditor">
+			<div className="editor" id="aceEditor">
 				<AceEditor 
 					onChange={this.handleChange}
 					value={this.state.value}
+					theme = 'monokai'
+					mode = 'java'
 					setOptions={{
 						highlightActiveLine: true,
-						showPrintMargin: true,
-						theme: 'ace/theme/monokai',
-						mode: 'ace/mode/python'
+						showPrintMargin: true
 					}}
 				/>
 			</div>
-			<div class="snippetTextButton">
+			<div className="snippetTextButton">
 		  		<Button variant="primary" onClick={this.handleSubmit}>Save</Button>{' '}
 			</div>
 			</>

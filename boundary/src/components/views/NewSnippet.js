@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 class NewSnippet extends Component {
 	state = {
@@ -12,7 +12,6 @@ class NewSnippet extends Component {
 	}
 	
 	fetchNewSnippetId = async () => {
-		console.log("fetching")
 		var url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/new_snippet/"
 		fetch(url, {
 			method: 'POST',

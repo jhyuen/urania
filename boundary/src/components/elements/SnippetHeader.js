@@ -9,7 +9,6 @@ class SnippetHeader extends React.Component {
 	var tempSecond = this.props.time
 	var d = new Date(0)
 	d.setUTCSeconds(tempSecond)
-	console.log(d)
 	
 	return (
       <div className='snippetHeader'>

@@ -4,6 +4,6 @@ export const base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/
 
 //var add_url    = base_url + "calculator";   // POST
 //var list_url   = base_url + "constants";    // GET
-const create_snippet_url = base_url + "new_snippet";    // POST
+//const create_snippet_url = base_url + "new_snippet";    // POST
 //var delete_url = base_url + "constants";    // POST with {name} so we avoid CORS issues
  

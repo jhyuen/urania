@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './CommentPanel.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 import Comments from './Comments'
 import AddComment from '../../controllers/AddComment.js'
 
@@ -33,7 +32,7 @@ class CommentPanel extends Component {
 	render() {
 		return(
 			<>
-				<div class="commentHeader">
+				<div className="commentHeader">
 					<h1>Comments</h1>
 				</div>
 				<Comments comments={this.state.comments} delComment={ this.delComment }/>

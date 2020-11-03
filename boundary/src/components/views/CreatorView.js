@@ -27,33 +27,31 @@ class CreatorView extends Component {
 	}
 	
 	fetchSnippet = async (path) => {
-		console.log("fetching")
 		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta";
 	    var get_snippet_url = base_url + path + "/snippet"; 
 		var data = await fetch(get_snippet_url)
 		
 		var snippetData = await data.json()
 		this.setState({ snippet: snippetData, dataFetched : true })
-		console.log(snippetData)
 	}
 	
 	render() {
 		if (this.state.dataFetched) {
 			return(
-					<div class="app">
-						<div class="snippetHeader">
+					<div className="app">
+						<div className="snippetHeader">
 							<SnippetHeader time={ this.state.snippet.timeStamp.epochSecond } id={ this.state.snippet.snippetId } />
 						</div>
-						<div class="snippetText">
+						<div className="snippetText">
 							<SnippetText id={this.state.snippet.snippetId} text={this.state.snippet.snippetText}/>
 						</div>
-						<div class="commentPanel">
+						<div className="commentPanel">
 							<CommentPanel />
 						</div>
-						<div class="controlPanel">
+						<div className="controlPanel">
 							<CreatorControlPanel id={this.state.snippet.snippetId} />
 						</div>
-						<div class="snippetInfo">
+						<div className="snippetInfo">
 							<CreatorSnippetInfo id={ this.state.snippet.snippetId } info={this.state.snippet.snippetInfo} />
 						</div>
 					</div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './SnippetInfo.css';
 import PropTypes from 'prop-types';
 
@@ -20,12 +19,8 @@ class CreatorSnippetInfo extends React.Component {
   }
   
   updateSnippetInfo = async () => {
-	  console.log("fetching")
 	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
 	  var update_url = base_url + this.props.id + "/info";
-	  console.log(update_url)
-	  console.log(this.state.value)
-	  console.log(JSON.stringify({info: this.state.value}))
 	  fetch(update_url, {
 		  method: 'POST',
 		  body: JSON.stringify({info: this.state.value}),
