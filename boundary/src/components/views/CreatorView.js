@@ -45,7 +45,7 @@ class CreatorView extends Component {
 							<SnippetHeader time={ this.state.snippet.timeStamp.epochSecond } id={ this.state.snippet.snippetId } />
 						</div>
 						<div class="snippetText">
-							<SnippetText />
+							<SnippetText text={this.state.snippet.snippetText}/>
 						</div>
 						<div class="commentPanel">
 							<CommentPanel />
