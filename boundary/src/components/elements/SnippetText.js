@@ -26,7 +26,7 @@ class SnippetText extends Component {
 				<AceEditor
 					theme="monokai"
 					placeholder="Type in code to have a fun time"
-				>hey</AceEditor>
+				/>
 			</div>
 			<div class="snippetTextButton">
 		  		<Button variant="primary" onClick={this.save}>Save</Button>{' '}
