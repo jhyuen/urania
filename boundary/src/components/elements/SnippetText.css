@@ -3,9 +3,6 @@
 	padding: 10px;
 }
 
-.snippetTextHeader {
-}
-
 .ace_editor {
 	height: 50%;
 }
@@ -13,5 +10,4 @@
 .editor {
 	height: 80%;
 	width: 100%;
-	background-color: pink;
 }

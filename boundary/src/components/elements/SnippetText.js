@@ -5,40 +5,88 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SnippetText.css';
 import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/mode-python";
+import PropTypes from 'prop-types';
 
 
 class SnippetText extends Component {
 
+	constructor(props) {
+	    super(props);
+	    this.state = {
+	    	value: ""
+	    }
+	    
+	    this.updateSnippetText = this.updateSnippetText.bind(this);
+	    this.handleChange = this.handleChange.bind(this);
+	    this.handleSubmit = this.handleSubmit.bind(this);
+	}
+	
 	componentDidMount() {
-		let editor = ace.edit("aceEditor");
-		editor.setValue(this.props.text);
+		this.setState({ value: this.props.text })
+	}
+	
+	updateSnippetText = async () => {
+		  console.log("fetching")
+		  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+		  var update_url = base_url + this.props.id + "/text";
+		  console.log(update_url)
+		  console.log(this.state.value)
+		  console.log(JSON.stringify({text: this.state.value}))
+		  fetch(update_url, {
+			  method: 'POST',
+			  body: JSON.stringify({text: this.state.value}),
+			  headers: {
+				  'Accept': 'application/json',
+				  'Content-Type': 'application/json'
+			  }
+		  })
+		    .catch(error => {
+		      console.log("error", error);
+		      alert("An error occured, please try again later.");
+		    });
+	}
+	
+	handleChange(newValue) {
+	    this.setState({value: newValue})
+	}
+	   
+	
+	handleSubmit(event) {
+	    event.preventDefault();
+	    this.updateSnippetText();
 	}
 	
 	render() {
-		
 		return(
 			<>
 			<div class="snippetTextHeader">
 				<h1>Snippet</h1>
-				
 			</div>
 			<div class="editor" id="aceEditor">
-				<AceEditor
-					theme="monokai"
-					placeholder="Type in code to have a fun time"
+				<AceEditor 
+					onChange={this.handleChange}
+					value={this.state.value}
+					setOptions={{
+						highlightActiveLine: true,
+						showPrintMargin: true,
+						theme: 'ace/theme/monokai',
+						mode: 'ace/mode/python'
+					}}
 				/>
 			</div>
 			<div class="snippetTextButton">
-		  		<Button variant="primary" onClick={this.save}>Save</Button>{' '}
+		  		<Button variant="primary" onClick={this.handleSubmit}>Save</Button>{' '}
 			</div>
 			</>
 			
 		)
 	}
-	
-	save() {
-		console.log("save");
-	}
 }
+
+SnippetText.propTypes = {
+		id : PropTypes.string.isRequired,
+		text : PropTypes.string.isRequired
+};
 
 export default SnippetText;

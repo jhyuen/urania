@@ -49,16 +49,16 @@ class ViewerView extends Component {
 						<SnippetHeader time={ this.state.snippet.timeStamp.epochSecond } id={ this.state.snippet.snippetId } />
 					</div>
 					<div class="snippetText">
-						<SnippetText text={this.state.snippet.snippetText}/>
+						<SnippetText id= { this.state.snippet.snippetId } text={ this.state.snippet.snippetText } />
 					</div>
 					<div class="commentPanel">
 						<CommentPanel />
 					</div>
 					<div class="controlPanel">
-						<ViewerControlPanel updSnippetIdCallback={this.updSnippetIdCallback} />
+						<ViewerControlPanel updSnippetIdCallback={ this.updSnippetIdCallback } />
 					</div>
 					<div class="snippetInfo">
-						<ViewerSnippetInfo info={this.state.snippet.snippetInfo} />
+						<ViewerSnippetInfo info={ this.state.snippet.snippetInfo } />
 					</div>
 				</div>
 			)

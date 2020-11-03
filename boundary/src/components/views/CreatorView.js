@@ -45,7 +45,7 @@ class CreatorView extends Component {
 							<SnippetHeader time={ this.state.snippet.timeStamp.epochSecond } id={ this.state.snippet.snippetId } />
 						</div>
 						<div class="snippetText">
-							<SnippetText text={this.state.snippet.snippetText}/>
+							<SnippetText id={this.state.snippet.snippetId} text={this.state.snippet.snippetText}/>
 						</div>
 						<div class="commentPanel">
 							<CommentPanel />
@@ -54,7 +54,7 @@ class CreatorView extends Component {
 							<CreatorControlPanel id={this.state.snippet.snippetId} />
 						</div>
 						<div class="snippetInfo">
-							<CreatorSnippetInfo info={this.state.snippet.snippetInfo} id={ this.state.snippet.snippetId } />
+							<CreatorSnippetInfo id={ this.state.snippet.snippetId } info={this.state.snippet.snippetInfo} />
 						</div>
 					</div>
 			)
