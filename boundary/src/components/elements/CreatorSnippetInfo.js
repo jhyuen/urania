@@ -1,6 +1,7 @@
 import React from 'react';
 import './SnippetInfo.css';
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
 
 class CreatorSnippetInfo extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class CreatorSnippetInfo extends React.Component {
         <div className='infoHeader'>
         	<h1>Snippet Info</h1>
         </div>
-        <input className='submitButton' type='submit' value='Submit' form='infoForm'/>
+        <Button className='submitButton' type='submit' form='infoForm' variant="primary">Save</Button>{' '}
         <form className='infoTextArea' id='infoForm' onSubmit={this.handleSubmit}>
         	<textarea className='infoArea' placeholder='Add Some snippet info...' value = {this.state.value} onChange={this.handleChange}/>
         </form>

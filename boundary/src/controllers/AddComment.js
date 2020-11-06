@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
 
 export class AddComment extends Component {
 
@@ -29,11 +30,7 @@ export class AddComment extends Component {
 					value={ this.state.text }
 					onChange={ this.onChange }
 				/>
-				<input
-					type="submit"
-					value="Add"
-					className="btn"
-				/>
+				<Button type="submit" variant="primary">Add</Button>{' '}
 			</form>
 		)
 	}

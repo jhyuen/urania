@@ -8,23 +8,6 @@
   width: 66%;
 }
 
-#comments {
-  float: left;
-  width: 33%;
-}
-
-.snippetHeader {
-  padding: 5px 5px 5px 5px;
-}
-
-.snippetID {
-  font-size: 20px;
-}
-
-.snippetTimestamp {
-  font-size: 15px;
-}
-
 .snippetInfo {
   display: grid;
   grid-template-areas:
@@ -42,13 +25,6 @@
   justify-self: stretch;
 }
 
-.viewerText {
-  background-color: #8ff;
-  border-radius: 5px;
-  grid-area: textarea;
-  height: 50px;
-}
-
 .infoHeader {
   vertical-align: middle;
   grid-area: header;
@@ -56,10 +32,8 @@
 }
 
 .submitButton {
-  background-color: #8ca0ff;
-  border-radius: 5px;
   justify-self: end;
   width: 100px;
-  height: 30px;
+  height: 40px;
   grid-area: buttons;
 }

@@ -4,17 +4,24 @@ body {
 }
 
 a {
-	color: #333;
+	color: #FCFCFC;
 	text-decoration: none;
 }
 
-.btn {
-	display: inline-block;
-	border: none;
-	background: #555;
-	color: #fff;
-	padding: 7px 20px;
-	cursor: pointer;
+h1 {
+	color: #FCFCFC;
+}
+
+h5 {
+	color: #FCFCFC;	
+}
+
+p {
+	color: #FCFCFC;
+}
+
+label {
+	color: #FCFCFC;
 }
 
 .btn:hover {
@@ -24,49 +31,54 @@ a {
 .app {
 	background-color: pink;
 	display: grid;
-	grid-template-columns: 200px auto 350px;
-	grid-template-rows: 80px auto 150px;
+	grid-template-columns: 230px auto 350px;
+	grid-template-rows: 100px auto 160px;
 	border: 5px black;
 	width: 100vw;
   	height: 100vh;
 }
 
 .commentPanel {
-	background-color: blue;
+	background-color: #1E1E1E;
 	grid-column-start: 3;
 	grid-column-end: 4;
 	grid-row-start: 2;
 	grid-row-end: 3;
+	padding: 15px;
 }
 
 .controlPanel {
-	background-color: lightblue;
+	background-color: #1E1E1E;
 	grid-column-start: 1;
 	grid-column-end: 2;
 	grid-row-start: 2;
 	grid-row-end: 3;
+	padding: 15px;
 }
 
 .snippetHeader {
-	background-color: green;
+	background-color: #252526;
 	grid-column-start: 1;
 	grid-column-end: 4;
 	grid-row-start: 1;
 	grid-row-end: 2;
+	padding: 10px;
 }
 
 .snippetText {
-	background-color: red;
+	background-color:#1E1E1E;
 	grid-column-start: 2;
 	grid-column-end: 3;
 	grid-row-start: 2;
 	grid-row-end: 3;
+	padding: 15px;
 }
 
 .snippetInfo {
-	background-color: yellow;
+	background-color: #252526;
 	grid-column-start: 1;
 	grid-column-end: 4;
 	grid-row-start: 3;
 	grid-row-end: 4;
+	padding: 10px;
 }
