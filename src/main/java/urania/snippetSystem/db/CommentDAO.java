@@ -116,26 +116,24 @@ public class CommentDAO {
         }
     }
 
-    public List<Comment> getAllComments() throws Exception {
-        
-//        List<Comment> allComments = new ArrayList<>();
-//        try {
-//            Statement statement = conn.createStatement();
-//            String query = "SELECT * FROM " + tblName + ";";
-//            ResultSet resultSet = statement.executeQuery(query);
-//
-//            while (resultSet.next()) {
-//                Comment c = generateComment(resultSet);
-//                allComments.add(c);
-//            }
-//            resultSet.close();
-//            statement.close();
-//            return allComments;
-//
-//        } catch (Exception e) {
-//            throw new Exception("Failed in getting books: " + e.getMessage());
-//        }
-    	return null;
+    public List<Comment> getAllComments(String snippetID) throws Exception {
+        List<Comment> allComments = new ArrayList<>();
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE snippetId = ?;");
+            ps.setString(1, snippetID);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Comment c = generateComment(resultSet);
+                allComments.add(c);
+            }
+            resultSet.close();
+            ps.close();
+            return allComments;
+
+        } catch (Exception e) {
+            throw new Exception("Failed in getting comments: " + e.getMessage());
+        }
     }
     
     private Comment generateComment(ResultSet resultSet) throws Exception {
