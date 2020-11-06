@@ -12,7 +12,7 @@ public class GetSnippetRequest {
 	}
 	
 	public String toString() {
-		return "CreateSnippet(" + SnippetID + ")";
+		return "GetSnippet(" + SnippetID + ")";
 	}
 
 	public GetSnippetRequest () {
