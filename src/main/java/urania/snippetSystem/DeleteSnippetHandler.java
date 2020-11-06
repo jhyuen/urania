@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import urania.snippetSystem.db.CommentDAO;
 import urania.snippetSystem.db.SnippetDAO;
 import urania.snippetSystem.http.DeleteSnippetRequest;
 import urania.snippetSystem.http.DeleteSnippetResponse;
@@ -21,6 +22,12 @@ public class DeleteSnippetHandler implements RequestHandler<DeleteSnippetRequest
 		
 		return dao.deleteSnippet(uuid);
 	}
+	
+	boolean deleteComments (String uuid) throws Exception {
+		if (logger != null) { logger.log("in deleteComments"); }
+		CommentDAO dao = new CommentDAO();
+		return dao.deleteCommentSnippetID(uuid);
+	}
 
     @Override
     public DeleteSnippetResponse handleRequest(DeleteSnippetRequest req, Context context) {
@@ -31,6 +38,7 @@ public class DeleteSnippetHandler implements RequestHandler<DeleteSnippetRequest
         DeleteSnippetResponse response;
         try {
         	if (deleteSnippet(req.id)) {
+        		deleteComments(req.id);
         		response = new DeleteSnippetResponse(req.id);
         	} else {
         		response = new DeleteSnippetResponse(400);

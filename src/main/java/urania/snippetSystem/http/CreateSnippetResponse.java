@@ -1,7 +1,10 @@
 package urania.snippetSystem.http;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
+import urania.snippetSystem.model.Comment;
 import urania.snippetSystem.model.Snippet;
 
 /**
@@ -18,6 +21,7 @@ public class CreateSnippetResponse {
 	public final String viewerPassword;
 	public final boolean viewerPasswordEnabled;
 	public final String languageSelected;
+	public final List<Comment> list;
 	public final String response;
 	public final int httpCode;
 	
@@ -29,6 +33,7 @@ public class CreateSnippetResponse {
 		this.languageSelected = "";
 		this.timeStamp = Instant.now();
 		this.viewerPasswordEnabled = false;
+		this.list = new ArrayList<Comment>();
 		this.response = s;
 		this.httpCode = code;
 	}
@@ -41,6 +46,7 @@ public class CreateSnippetResponse {
 		this.languageSelected = "";
 		this.timeStamp = Instant.now();
 		this.viewerPasswordEnabled = false;
+		this.list = new ArrayList<Comment>();
 		this.response = "Failed to create a new snippet.";
 		this.httpCode = code;
 	}
@@ -54,6 +60,7 @@ public class CreateSnippetResponse {
 		this.languageSelected = snippet.languageSelected;
 		this.timeStamp = snippet.timeStamp;
 		this.viewerPasswordEnabled = snippet.viewerPasswordEnabled;
+		this.list = new ArrayList<Comment>();
 		this.response = "Created a new snippet with ID: " + snippet.snippetID;
 		this.httpCode = 201;
 	}
