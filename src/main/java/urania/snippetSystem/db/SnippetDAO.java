@@ -82,6 +82,22 @@ public class SnippetDAO {
             throw new Exception("Failed to update snippet info: " + e.getMessage());
         }
     }
+
+    public boolean enableSnippetPassword (String snippetID, Boolean enable) throws Exception {
+        try {
+        	String query = "UPDATE " + tblName + " SET viewerPasswordStatus=? WHERE snippetId=?;";
+        	int passStatus = (enable) ? 1 : 0;
+        	PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, passStatus);
+            ps.setString(2, snippetID);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return (numAffected == 1);
+        } catch (Exception e) {
+            throw new Exception("Failed to update snippet password status: " + e.getMessage());
+        }
+    }
     
     public boolean deleteSnippet (String uuid) throws Exception {
         try {
