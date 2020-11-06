@@ -17,7 +17,7 @@ class CreatorControlPanel extends Component {
 				<p>Role: Creator</p>
 				<div>
 					<label>
-						Enabled Viewer Password 
+						Enabled Viewer Password
 						<input onClick={this.setPasswordStatus} type="checkbox" />
 					</label>
 				</div>

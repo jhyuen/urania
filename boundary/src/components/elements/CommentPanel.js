@@ -32,9 +32,7 @@ class CommentPanel extends Component {
 	render() {
 		return(
 			<>
-				<div className="commentHeader">
-					<h1>Comments</h1>
-				</div>
+				<h1>Comments</h1>
 				<Comments comments={this.state.comments} delComment={ this.delComment }/>
 				<AddComment addComment={ this.addComment } />
 			</>
