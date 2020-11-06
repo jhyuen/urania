@@ -26,7 +26,7 @@ class CreatorControlPanel extends Component {
 					<Link to={'/'+this.props.id}>
 						<Button variant="primary" onClick={this.viewAsViewer}>View as Viewer</Button>{' '}
 					</Link>
-					<Button variant="primary" onClick={this.viewSnippet}>Refresh Snippet</Button>{' '}
+					<Button variant="primary" onClick={this.viewSnippet}>View Snippet</Button>{' '}
 					<Link to='/'>
 						<Button variant="primary">Create New Snippet</Button>{' '}
 					</Link>

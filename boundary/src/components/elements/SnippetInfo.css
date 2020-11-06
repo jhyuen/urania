@@ -18,11 +18,22 @@
 .infoArea {
   width: 100%;
   grid-area: textarea;
+  border-radius: 5px;
+  background-color: #3C3C3C;
+  color: #FCFCFC;
 }
 
 .infoTextArea {
   grid-area: textarea;
   justify-self: stretch;
+}
+
+.viewerText {
+  background-color: #3C3C3C;
+  color: #FCFCFC;
+  border-radius: 5px;
+  grid-area: textarea;
+  height: 50px;
 }
 
 .infoHeader {
