@@ -13,7 +13,7 @@ class CreatorControlPanel extends Component {
 	render() {
 		return(
 			<>
-				<h1>Control Panel</h1>
+				<h2>Control Panel</h2>
 				<p>Role: Creator</p>
 				<div>
 					<label>

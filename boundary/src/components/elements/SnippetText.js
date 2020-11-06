@@ -56,17 +56,20 @@ class SnippetText extends Component {
 		return(
 			<>
 			<div className="snippetTextHeader">
-				<h1>Snippet</h1>
+				<h2>Snippet</h2>
 			</div>
 			<div className="editor" id="aceEditor">
 				<AceEditor 
+					width={ '100%' }
+					height={' 56vh '}
 					onChange={this.handleChange}
 					value={this.state.value}
 					theme = 'monokai'
 					mode = 'java'
 					setOptions={{
 						highlightActiveLine: true,
-						showPrintMargin: true
+						showPrintMargin: true,
+						autoScrollEditorIntoView: true
 					}}
 				/>
 			</div>

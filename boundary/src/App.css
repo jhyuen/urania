@@ -8,7 +8,7 @@ a {
 	text-decoration: none;
 }
 
-h1 {
+h2 {
 	color: #FCFCFC;
 }
 
@@ -39,7 +39,7 @@ label {
 }
 
 .commentPanel {
-	background-color: #1E1E1E;
+	background-color: #333333;
 	grid-column-start: 3;
 	grid-column-end: 4;
 	grid-row-start: 2;
@@ -48,7 +48,7 @@ label {
 }
 
 .controlPanel {
-	background-color: #1E1E1E;
+	background-color: #333333;
 	grid-column-start: 1;
 	grid-column-end: 2;
 	grid-row-start: 2;

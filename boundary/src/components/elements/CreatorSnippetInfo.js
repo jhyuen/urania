@@ -50,7 +50,7 @@ class CreatorSnippetInfo extends React.Component {
     return (
       <div className='snippetInfo'>
         <div className='infoHeader'>
-        	<h1>Snippet Info</h1>
+        	<h2>Snippet Info</h2>
         </div>
         <Button className='submitButton' type='submit' form='infoForm' variant="primary">Save</Button>{' '}
         <form className='infoTextArea' id='infoForm' onSubmit={this.handleSubmit}>
@@ -60,7 +60,7 @@ class CreatorSnippetInfo extends React.Component {
     );
   }
 }
-  
+ 
 CreatorSnippetInfo.propTypes = {
 	info 	: 	PropTypes.string.isRequired,
 	id		: 	PropTypes.string.isRequired
