@@ -71,19 +71,17 @@ public class CommentDAO {
     	return false;
     }
     
-    public boolean deleteComment(Comment comment) throws Exception {
-//        try {
-//            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE name = ?;");
-//            ps.setString(1, comment.name);
-//            int numAffected = ps.executeUpdate();
-//            ps.close();
-//            
-//            return (numAffected == 1);
-//
-//        } catch (Exception e) {
-//            throw new Exception("Failed to insert comment: " + e.getMessage());
-//        }
-    	return false;
+    public boolean deleteComment(String commentID) throws Exception {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE commentId = ?;");
+            ps.setString(1, commentID);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            return (numAffected == 1);
+        } catch (Exception e) {
+            throw new Exception("Failed to delete comment: " + e.getMessage());
+        }
+    	//return false;
     }
 
 

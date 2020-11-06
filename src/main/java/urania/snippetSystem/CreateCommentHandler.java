@@ -15,7 +15,7 @@ public class CreateCommentHandler implements RequestHandler<CreateCommentRequest
 	
 	LambdaLogger logger;
 	
-	Comment createComment (String snippetID, String commentText, int sL, int sI, int eL, int eI) throws Exception {
+	Comment createComment (String commentID, String commentText, int sL, int sI, int eL, int eI) throws Exception {
 		if (logger != null) { logger.log("in createComment"); }
 		CommentDAO dao = new CommentDAO();
 		
@@ -23,7 +23,7 @@ public class CreateCommentHandler implements RequestHandler<CreateCommentRequest
 		String newUUID = UUID.randomUUID().toString();
 		Comment exist = dao.getComment(newUUID);
 		if (exist == null) {
-		  Comment comment = new Comment(snippetID, newUUID, commentText,  sL, sI, eL, eI);
+		  Comment comment = new Comment(commentID, newUUID, commentText,  sL, sI, eL, eI);
 			if (dao.createComment(comment)) {
 				return comment;
 			} else {
@@ -43,7 +43,7 @@ public class CreateCommentHandler implements RequestHandler<CreateCommentRequest
 
         CreateCommentResponse response;
         try {
-        	Comment comment = createComment(req.snippetID, req.commentText, req.startLine, req.startIndex, req.endLine, req.endIndex);
+        	Comment comment = createComment(req.commentID, req.commentText, req.startLine, req.startIndex, req.endLine, req.endIndex);
         	if (comment != null) {
         	  response = new CreateCommentResponse(comment);
         	} else {
