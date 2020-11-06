@@ -2,3 +2,8 @@
 	float: left;
 	padding: 10px;
 }
+
+.highlight {
+  position: absolute;
+  background-color: #595959;
+}

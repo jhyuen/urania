@@ -8,13 +8,13 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/keybinding-vim";
 import PropTypes from 'prop-types';
 
-
 class SnippetText extends Component {
 
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	    	value: ""
+	    	value: "",
+        markers: []
 	    }
 	    
 	    this.updateSnippetText = this.updateSnippetText.bind(this);
@@ -23,7 +23,17 @@ class SnippetText extends Component {
 	}
 	
 	componentDidMount() {
-		this.setState({ value: this.props.text })
+    let newMarkers = []
+		this.props.comments.map((comment) => (
+      newMarkers.push({startRow:  comment.startLine,
+                       startCol:  comment.startIndex,
+                       endRow:    comment.endLine,
+                       endCol:    comment.endIndex,
+                       className: "highlight",
+                       type:      "text" })
+		));
+		this.setState({ value: this.props.text,
+                    markers: newMarkers })
 	}
 	
 	updateSnippetText = async () => {
@@ -65,6 +75,7 @@ class SnippetText extends Component {
 					height={' 56vh '}
 					onChange={this.handleChange}
 					value={this.state.value}
+          markers={this.state.markers}
 					theme = 'monokai'
 					mode = 'java'
 					setOptions={{
@@ -84,8 +95,9 @@ class SnippetText extends Component {
 }
 
 SnippetText.propTypes = {
-		id : PropTypes.string.isRequired,
-		text : PropTypes.string.isRequired
+		id :       PropTypes.string.isRequired,
+		text :     PropTypes.string.isRequired,
+    comments : PropTypes.array.isRequired
 };
 
 export default SnippetText;

@@ -15,7 +15,7 @@ class CreatorView extends Component {
 		 	"timeStamp": "loading timestamp...",
 		 	"languageSelected": "loading language selected...",
 		 	"viewerPassword": "loading viewer password...",
-		 	"viewerPasswordStatus": "0",
+		 	"viewerPasswordStatus": "0"
 		},
 		dataFetched: false
 	}
@@ -33,6 +33,7 @@ class CreatorView extends Component {
 		
 		var snippetData = await data.json()
 		this.setState({ snippet: snippetData, dataFetched : true })
+    console.log(this.state.snippet.list)
 	}
 	
 	render() {
@@ -43,10 +44,12 @@ class CreatorView extends Component {
 							<SnippetHeader time={ this.state.snippet.timeStamp.epochSecond } id={ this.state.snippet.snippetId } />
 						</div>
 						<div className="snippetText">
-							<SnippetText id={this.state.snippet.snippetId} text={this.state.snippet.snippetText}/>
+							<SnippetText id={this.state.snippet.snippetId}
+                           text={this.state.snippet.snippetText}
+                           comments={this.state.snippet.list}/>
 						</div>
 						<div className="commentPanel">
-							<CommentPanel />
+							<CommentPanel comments={this.state.snippet.list}/>
 						</div>
 						<div className="controlPanel">
 							<CreatorControlPanel password_status={this.state.snippet.viewerPasswordEnabled}

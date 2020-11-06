@@ -6,7 +6,7 @@ class Comment extends Component {
 	// dynamic styling
 	getStyle = () => {
 		return {
-			backgroundColor	: '#f4f4f4',
+			backgroundColor	: '#3d3d5c',
 			padding			: '10px',
 			borderBottom	: '1px #ccc dotted',
 			textDecoration	: this.props.comment.delete ? 'line-through' : 'none'
@@ -14,12 +14,12 @@ class Comment extends Component {
 	}
 
 	render() {
-		const { id, text } = this.props.comment;
+		const { snippetID, commentText } = this.props.comment;
 		return (
 			<div style={this.getStyle()}>
 				<p>
-					{ text }
-					<button onClick={ this.props.delComment.bind(this, id) } class="deleteButton" >x</button>
+					{ commentText }
+					<button onClick={ this.props.delComment.bind(this, snippetID) } className="deleteButton" >x</button>
 				</p>
 			</div>
 		)
