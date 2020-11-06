@@ -59,7 +59,7 @@ class CreatorView extends Component {
 					</div>
 			)
 		} else {
-			return <p>Loading Snippet...</p>
+			return <h1>Loading Snippet...</h1>
 		}
 		
 	}

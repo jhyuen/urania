@@ -7,7 +7,7 @@ class ViewerSnippetInfo extends React.Component {
     return (
       <div className='snippetInfo'>
         <div className='infoHeader'>
-        	<h2>Snippet Info</h2>
+        	<h2>Description</h2>
         </div>
         <div className='viewerText'>{ this.props.info }</div>
       </div>

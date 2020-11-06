@@ -34,7 +34,7 @@ class NewSnippet extends Component {
 		if (this.state.redirect === true) {
 			return <Redirect to={{ pathname: '/'+ this.state.snippetId + '/creator' }} />
 		} else {
-			return <p>Creating New Snippet</p>
+			return <h1>Creating New Snippet</h1>
 		}
 	}
 }

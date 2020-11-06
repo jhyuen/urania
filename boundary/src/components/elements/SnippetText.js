@@ -67,7 +67,6 @@ class SnippetText extends Component {
 					value={this.state.value}
 					theme = 'monokai'
 					mode = 'java'
-          keyboardHandler= 'vim'
 					setOptions={{
 						highlightActiveLine: true,
 						showPrintMargin: true,

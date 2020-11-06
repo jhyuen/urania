@@ -50,11 +50,11 @@ class CreatorSnippetInfo extends React.Component {
     return (
       <div className='snippetInfo'>
         <div className='infoHeader'>
-        	<h2>Snippet Info</h2>
+        	<h2>Description</h2>
         </div>
         <Button className='submitButton' type='submit' form='infoForm' variant="primary">Save</Button>{' '}
         <form className='infoTextArea' id='infoForm' onSubmit={this.handleSubmit}>
-        	<textarea className='infoArea' placeholder='Add Some snippet info...' value = {this.state.value} onChange={this.handleChange}/>
+        	<textarea className='infoArea' placeholder="Add snippet description and don't forget to save..." value = {this.state.value} onChange={this.handleChange}/>
         </form>
       </div>
     );
