@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './SnippetText.css';
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/keybinding-vim";
 import PropTypes from 'prop-types';
 
 
@@ -64,6 +65,7 @@ class SnippetText extends Component {
 					value={this.state.value}
 					theme = 'monokai'
 					mode = 'java'
+          keyboardHandler= 'vim'
 					setOptions={{
 						highlightActiveLine: true,
 						showPrintMargin: true
