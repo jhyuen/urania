@@ -1,0 +1,45 @@
+package urania.snippetSystem;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+
+import urania.snippetSystem.db.SnippetDAO;
+import urania.snippetSystem.http.DeleteSnippetRequest;
+import urania.snippetSystem.http.DeleteSnippetResponse;
+import urania.snippetSystem.model.Snippet;
+
+import java.util.UUID;
+
+public class DeleteSnippetHandler implements RequestHandler<DeleteSnippetRequest, DeleteSnippetResponse> {
+	
+	LambdaLogger logger;
+	
+	boolean deleteSnippet (String uuid) throws Exception {
+		if (logger != null) { logger.log("in deleteSnippet"); }
+		SnippetDAO dao = new SnippetDAO();
+		
+		return dao.deleteSnippet(uuid);
+	}
+
+    @Override
+    public DeleteSnippetResponse handleRequest(DeleteSnippetRequest req, Context context) {
+        logger = context.getLogger();
+        logger.log("Trying to delete a new snippet!");
+        logger.log(req.toString());
+
+        DeleteSnippetResponse response;
+        try {
+        	if (deleteSnippet(req.id)) {
+        		response = new DeleteSnippetResponse(req.id);
+        	} else {
+        		response = new DeleteSnippetResponse(400);
+        	}
+        } catch (Exception e) {
+        	response = new DeleteSnippetResponse("Unable to delete a new snippet (" + (e.getMessage() + ")."), 400);
+        }
+
+        return response;
+    }
+
+}
