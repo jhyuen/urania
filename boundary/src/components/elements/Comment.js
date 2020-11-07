@@ -9,6 +9,7 @@ class Comment extends Component {
 			backgroundColor	: '#333333',
 			padding			: '10px',
 			marginBottom	: '10px',
+			marginTop		: '10px',	
 			borderRadius	: '10px 10px 10px 10px',
 			textDecoration	: this.props.comment.delete ? 'line-through' : 'none'
 		}

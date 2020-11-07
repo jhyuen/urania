@@ -33,8 +33,8 @@ class CommentPanel extends Component {
 		return(
 			<>
 				<h2>Comments</h2>
-				<Comments comments={this.state.comments} delComment={ this.delComment }/>
 				<AddComment addComment={ this.addComment } />
+				<Comments comments={ this.state.comments } delComment={ this.delComment }/>
 			</>
 		)
 	}
