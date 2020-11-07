@@ -53,7 +53,7 @@ class ViewerView extends Component {
 						<CommentPanel />
 					</div>
 					<div className="controlPanel">
-						<ViewerControlPanel updSnippetIdCallback={ this.updSnippetIdCallback } />
+						<ViewerControlPanel time={ this.state.snippet.timeStamp.epochSecond } updSnippetIdCallback={ this.updSnippetIdCallback } />
 					</div>
 					<div className="snippetInfo">
 						<ViewerSnippetInfo info={ this.state.snippet.snippetInfo } />

@@ -20,10 +20,16 @@ class CreatorControlPanel extends Component {
   }
 
 	render() {
+		var timestampText 	= "Created on: ";
+		
+		var tempSecond = this.props.time
+		var d = new Date(0)
+		d.setUTCSeconds(tempSecond)
 		return(
 			<>
 				<h2>Information</h2>
 				<p>Role: Creator</p>
+				<h5>{timestampText}{d.toLocaleString()}</h5>
 				<div>
 					<label>
 						Enabled Viewer Password 
@@ -85,9 +91,10 @@ class CreatorControlPanel extends Component {
 }
 
 CreatorControlPanel.propTypes = {
-		id :              PropTypes.string.isRequired,
+	id :              PropTypes.string.isRequired,
     password_status : PropTypes.bool.isRequired,
-    password :        PropTypes.string.isRequired
+    password :        PropTypes.string.isRequired,
+    time : PropTypes.number.isRequired
 };
 
 export default CreatorControlPanel;

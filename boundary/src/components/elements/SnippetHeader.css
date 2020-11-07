@@ -1,11 +1,7 @@
-.snippetTextButton {
-	width: 100px;
-  	height: 40px;
-}
-
 .rightFloat {
 	float: right;
 	width: 50%;
+	display: table;
 	text-align: right;
 }
 
@@ -18,10 +14,9 @@
 #dropdown-coding-language {
 	height: 40px;
 	width: 100px;
-	float: right;
 }
 
-.rightish {
-	float: right;
-	margin-left: 10px;
+.center {
+    display: table-cell;
+    vertical-align: middle;
 }

@@ -19,6 +19,10 @@ h2 {
 	color: #FCFCFC;
 }
 
+h6 {
+	color: #FCFCFC;
+}
+
 h5 {
 	color: #FCFCFC;	
 }
@@ -39,7 +43,7 @@ label {
 	background-color: pink;
 	display: grid;
 	grid-template-columns: 250px auto 25%;
-	grid-template-rows: 100px auto 160px;
+	grid-template-rows: 110px auto 155px;
 	border: 5px black;
 	width: 100vw;
   	height: 100vh;

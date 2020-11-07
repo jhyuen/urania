@@ -21,6 +21,7 @@
   border-radius: 5px;
   background-color: #3C3C3C;
   color: #FCFCFC;
+  padding: 10px;
 }
 
 .infoTextArea {
@@ -34,6 +35,7 @@
   border-radius: 5px;
   grid-area: textarea;
   height: 50px;
+  padding: 10px;
 }
 
 .infoHeader {

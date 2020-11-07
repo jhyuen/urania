@@ -7,6 +7,7 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/keybinding-vim";
 import PropTypes from 'prop-types';
+import { Dropdown } from 'react-bootstrap'
 
 
 class SnippetText extends Component {
@@ -14,7 +15,8 @@ class SnippetText extends Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	    	value: ""
+	    	value: "",
+	    	dropDownValue: "Java"
 	    }
 	    
 	    this.updateSnippetText = this.updateSnippetText.bind(this);
@@ -43,6 +45,10 @@ class SnippetText extends Component {
 		    });
 	}
 	
+	changeValue(text) {
+	    this.setState({dropDownValue: text})
+	}
+	
 	handleChange(newValue) {
 	    this.setState({value: newValue})
 	}
@@ -56,8 +62,23 @@ class SnippetText extends Component {
 	render() {
 		return(
 			<>
-			<div className="snippetTextHeader">
+			<div className="leftFloat">
 				<h2>Snippet</h2>
+			</div>
+			<div className="rightFloat">
+				<Button className="snippetTextButton rightish" variant="primary" onClick={this.handleSubmit}>Save</Button>{' '}
+				<Dropdown size="sm">
+					<Dropdown.Toggle variant="success" id="dropdown-coding-language">
+						{this.state.dropDownValue}
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+						<Dropdown.Header> Select Coding Language</Dropdown.Header>
+						<Dropdown.Divider />
+						<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Java </div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Python </div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> C++ </div></Dropdown.Item>
+					</Dropdown.Menu>
+				</Dropdown>
 			</div>
 			<div className="editor" id="aceEditor">
 				<AceEditor 
@@ -74,9 +95,7 @@ class SnippetText extends Component {
 					}}
 				/>
 			</div>
-			<div className="snippetTextButton">
-		  		<Button variant="primary" onClick={this.handleSubmit}>Save</Button>{' '}
-			</div>
+		  	
 			</>
 			
 		)
