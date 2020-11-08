@@ -7,6 +7,7 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/keybinding-vim";
 import PropTypes from 'prop-types';
+import Swal from "sweetalert2";
 
 class SnippetText extends Component {
 
@@ -57,10 +58,25 @@ class SnippetText extends Component {
 	    this.setState({value: newValue})
 	}
 	   
-	
+	successCallback(result) {
+      Swal.fire(
+	      'Success',
+          'Snippet Updated!',
+          'success' 
+      )
+    }
+
+    failureCallback(result) {
+      Swal.fire(
+	      'Error',
+          'Unable to Update Snippet',
+          'error' 
+      )
+    }
+
 	handleSubmit(event) {
 	    event.preventDefault();
-	    this.updateSnippetText();
+	    this.updateSnippetText().then(this.successCallback, this.failureCallback);  
 	}
 	
 	render() {

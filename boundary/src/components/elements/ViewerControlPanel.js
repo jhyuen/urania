@@ -49,7 +49,7 @@ class ViewerControlPanel extends Component {
 	}
 	
 	viewAnotherSnippet() {
-		console.log("");
+		console.log("yiii");
 	}
 }
 

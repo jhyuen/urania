@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import './ControlPanel.css';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Swal from "sweetalert2";
 
 class CreatorControlPanel extends Component {
   constructor(props) {
@@ -77,11 +79,21 @@ class CreatorControlPanel extends Component {
 	};
 	
 	viewSnippet() {
+		Swal.fire({
+            title: 'Submit Snippet ID',
+            input: 'text',
+            inputAttributes: {
+               autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Look up',
+            showLoaderOnConfirm: true,
+            preConfirm: (id) => {
+	           window.location.pathname = '/' + id + '/creator';  
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
 	}
-	
-	deleteSnippet() {
-		console.log("deleted snippet");
-	};
 }
 
 CreatorControlPanel.propTypes = {
