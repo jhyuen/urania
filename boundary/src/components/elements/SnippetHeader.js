@@ -23,7 +23,6 @@ render () {
 			<h2>{idText}{this.props.id}</h2>
 		</div>
 		<div className="rightFloat">
-			<h2>Urania Snippet Collaborator</h2>
 		</div>
       </div>
     );

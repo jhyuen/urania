@@ -103,7 +103,7 @@ class SnippetText extends Component {
 			<div className="editor" id="aceEditor">
 				<AceEditor 
 					width={ '100%' }
-					height={' 69.3vh '}
+					height={' 68.3vh '}
 					onChange={this.handleChange}
 					value={this.state.value}
 					theme = 'monokai'

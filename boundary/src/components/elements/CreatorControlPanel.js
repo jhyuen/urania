@@ -32,7 +32,7 @@ class CreatorControlPanel extends Component {
 				<p>{timestampText}{d.toLocaleString()}</p>
 				<div>
 					<label>
-						Enabled Viewer Password 
+						Enabled Viewer Password &nbsp;
 						<input onChange={this.setPasswordStatus} type="checkbox" />
 					</label>
 				</div>
@@ -43,15 +43,17 @@ class CreatorControlPanel extends Component {
 		          </div>
 		          : null}
 		        </div>
-				<ButtonGroup vertical>
-					<Link to={'/'+this.props.id}>
-						<Button variant="primary" onClick={this.viewAsViewer}>View as Viewer</Button>{' '}
+		        <br></br>
+		        <h2>Actions</h2>
+				<ButtonGroup className="actionButton" vertical>
+					<Link className="actionButton" to={'/'+this.props.id}>
+						<Button className="actionButton" variant="primary" onClick={this.viewAsViewer}>View as Viewer</Button>{' '}
 					</Link>
-					<Button variant="primary" onClick={this.viewSnippet}>View Snippet</Button>{' '}
-					<Link to='/'>
-						<Button variant="primary">Create New Snippet</Button>{' '}
+						<Button variant="info" onClick={this.viewSnippet}>View Snippet</Button>{' '}
+					<Link className="actionButton" to='/'>
+						<Button className="actionButton" variant="success">Create New Snippet</Button>{' '}
 					</Link>
-					<Button variant="primary" onClick={this.deleteSnippet}>Delete Snippet</Button>{' '}
+					<Button variant="danger" onClick={this.deleteSnippet}>Delete Snippet</Button>{' '}
 				</ButtonGroup>
 
 			</>
