@@ -19,9 +19,20 @@
 	height: 40px;
 	width: 100px;
 	float: right;
+	margin-right: 10px;
+}
+
+#dropdown-selection-type {
+	height: 40px;
+	width: 100px;
+	float: right;
+	margin-right: 10px;
 }
 
 .rightish {
 	float: right;
-	margin-left: 10px;
+}
+
+.snippetTextHeader {
+	padding: 10px;
 }

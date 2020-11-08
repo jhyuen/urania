@@ -16,7 +16,8 @@ class SnippetText extends Component {
 	    super(props);
 	    this.state = {
 	    	value: "",
-	    	dropDownValue: "Java"
+	    	dropDownValue: "Java",
+	    	codingTypeValue: "vim"
 	    }
 	    
 	    this.updateSnippetText = this.updateSnippetText.bind(this);
@@ -49,6 +50,10 @@ class SnippetText extends Component {
 	    this.setState({dropDownValue: text})
 	}
 	
+	changeSelectionValue(text) {
+		this.setState({codingTypeValue: text})
+	}
+	
 	handleChange(newValue) {
 	    this.setState({value: newValue})
 	}
@@ -62,28 +67,43 @@ class SnippetText extends Component {
 	render() {
 		return(
 			<>
-			<div className="leftFloat">
-				<h2>Snippet</h2>
-			</div>
-			<div className="rightFloat">
-				<Button className="snippetTextButton rightish" variant="primary" onClick={this.handleSubmit}>Save</Button>{' '}
-				<Dropdown size="sm">
-					<Dropdown.Toggle variant="success" id="dropdown-coding-language">
-						{this.state.dropDownValue}
+			<div className="snippetTextHeader">
+				<div className="leftFloat">
+					<h2>Snippet</h2>
+				</div>
+				<div className="rightFloat">
+					<Button className="snippetTextButton rightish" variant="primary" onClick={this.handleSubmit}>Save</Button>{' '}
+					<Dropdown size="sm">
+						<Dropdown.Toggle variant="success" id="dropdown-coding-language">
+							{this.state.dropDownValue}
+						</Dropdown.Toggle>
+						<Dropdown.Menu>
+							<Dropdown.Header> Select Coding Language</Dropdown.Header>
+							<Dropdown.Divider />
+							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Java </div></Dropdown.Item>
+							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Python </div></Dropdown.Item>
+							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> C++ </div></Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
+					
+					<Dropdown size="sm">
+					<Dropdown.Toggle variant="info" id="dropdown-selection-type">
+						{this.state.codingTypeValue}
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
-						<Dropdown.Header> Select Coding Language</Dropdown.Header>
+						<Dropdown.Header> Select Selection Type</Dropdown.Header>
 						<Dropdown.Divider />
-						<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Java </div></Dropdown.Item>
-						<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Python </div></Dropdown.Item>
-						<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> C++ </div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={(e) => this.changeSelectionValue(e.target.textContent)}> vim </div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={(e) => this.changeSelectionValue(e.target.textContent)}> emacs </div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={(e) => this.changeSelectionValue(e.target.textContent)}> normal </div></Dropdown.Item>
 					</Dropdown.Menu>
-				</Dropdown>
+					</Dropdown>
+				</div>
 			</div>
 			<div className="editor" id="aceEditor">
 				<AceEditor 
 					width={ '100%' }
-					height={' 56vh '}
+					height={' 69.3vh '}
 					onChange={this.handleChange}
 					value={this.state.value}
 					theme = 'monokai'

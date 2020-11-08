@@ -43,7 +43,7 @@ label {
 	background-color: pink;
 	display: grid;
 	grid-template-columns: 250px auto 25%;
-	grid-template-rows: 110px auto 155px;
+	grid-template-rows: 80px auto 155px;
 	border: 5px black;
 	width: 100vw;
   	height: 100vh;
@@ -82,7 +82,6 @@ label {
 	grid-column-end: 3;
 	grid-row-start: 2;
 	grid-row-end: 3;
-	padding: 15px;
 }
 
 .snippetInfo {

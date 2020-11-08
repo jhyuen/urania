@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'react-bootstrap'
 import './SnippetHeader.css';
 
 class SnippetHeader extends React.Component {
@@ -21,22 +20,10 @@ render () {
 	return (
       <div className='snippetHeader'>
 		<div className="leftFloat">
-			<h2>Urania Snippet Collaborator</h2>
-			<h6>{idText}{this.props.id}</h6>
+			<h2>{idText}{this.props.id}</h2>
 		</div>
 		<div className="rightFloat">
-				<Dropdown size="sm">
-					<Dropdown.Toggle variant="success" id="dropdown-coding-language">
-						{this.state.dropDownValue}
-					</Dropdown.Toggle>
-					<Dropdown.Menu>
-						<Dropdown.Header> Select Coding Language</Dropdown.Header>
-						<Dropdown.Divider />
-						<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Java </div></Dropdown.Item>
-						<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Python </div></Dropdown.Item>
-						<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> C++ </div></Dropdown.Item>
-					</Dropdown.Menu>
-				</Dropdown>
+			<h2>Urania Snippet Collaborator</h2>
 		</div>
       </div>
     );
