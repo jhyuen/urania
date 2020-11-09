@@ -50,7 +50,7 @@ class CreatorView extends Component {
                            comments={this.state.snippet.list}/>
 						</div>
 						<div className="commentPanel">
-							<CommentPanel comments={this.state.snippet.list}/>
+							<CommentPanel id={this.state.snippet.snippetId} comments={this.state.snippet.list}/>
 						</div>
 						<div className="controlPanel">
 							<CreatorControlPanel password_status={this.state.snippet.viewerPasswordEnabled}

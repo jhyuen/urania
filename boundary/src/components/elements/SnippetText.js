@@ -6,6 +6,7 @@ import './SnippetText.css';
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/keybinding-vim";
+import "ace-builds/src-noconflict/keybinding-emacs";
 import PropTypes from 'prop-types';
 import { Dropdown } from 'react-bootstrap'
 import Swal from "sweetalert2";
