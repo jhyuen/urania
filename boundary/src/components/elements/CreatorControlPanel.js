@@ -47,17 +47,18 @@ class CreatorControlPanel extends Component {
 		        </div>
 		        <br></br>
 		        <h2>Actions</h2>
-				<ButtonGroup className="actionButton" vertical>
-					<Link className="actionButton" to={'/'+this.props.id}>
-						<Button className="actionButton" variant="primary" onClick={this.viewAsViewer}>View as Viewer</Button>{' '}
-					</Link>
-						<Button variant="info" onClick={this.viewSnippet}>View Snippet</Button>{' '}
-					<Link className="actionButton" to='/'>
-						<Button className="actionButton" variant="success">Create New Snippet</Button>{' '}
-					</Link>
-					<Button variant="danger" onClick={this.deleteSnippet}>Delete Snippet</Button>{' '}
-				</ButtonGroup>
-
+				<Link to={'/'+this.props.id}>
+					<Button className="actionButton" variant="primary" onClick={this.viewAsViewer}>View as Viewer</Button>{' '}
+				</Link>
+				<Link>
+					<Button className="actionButton" variant="info" onClick={this.viewSnippet}>View Snippet</Button>{' '}
+				</Link>
+				<Link to='/'>
+					<Button className="actionButton" variant="success">Create New Snippet</Button>{' '}
+				</Link>
+				<Link>
+					<Button className="actionButton" variant="danger" onClick={this.deleteSnippet}>Delete Snippet</Button>{' '}
+				</Link>
 			</>
 		)
 	};
