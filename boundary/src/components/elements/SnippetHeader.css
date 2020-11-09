@@ -1,0 +1,22 @@
+.rightFloat {
+	float: right;
+	width: 50%;
+	display: table;
+	text-align: right;
+}
+
+.leftFloat {
+	float: left;
+	width: 50%;
+	text-align: left;
+}
+
+#dropdown-coding-language {
+	height: 40px;
+	width: 100px;
+}
+
+.center {
+    display: table-cell;
+    vertical-align: middle;
+}

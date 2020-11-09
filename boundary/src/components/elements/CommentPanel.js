@@ -21,7 +21,7 @@ class CommentPanel extends Component {
 	}
 	
 	delComment = (id) => {
-		this.setState({ comments: [...this.state.comments.filter(comment => comment.id !== id)] });
+		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== id)] });
 	}
 		
 	addComment = (text) => {
@@ -41,15 +41,15 @@ class CommentPanel extends Component {
 		return(
 			<>
 				<h2>Comments</h2>
-				<Comments comments={this.state.comments} delComment={ this.delComment }/>
 				<AddComment addComment={ this.addComment } />
+				<Comments comments={ this.state.comments } delComment={ this.delComment }/>
 			</>
 		)
 	}
 }
 
+export default CommentPanel;
+
 CommentPanel.propTypes = {
 	comments 	: PropTypes.array.isRequired,
 }
-
-export default CommentPanel;

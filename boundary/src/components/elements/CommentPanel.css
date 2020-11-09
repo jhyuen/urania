@@ -9,3 +9,19 @@
 	cursor: pointer;
 	float: right;
 }
+
+.addButton {
+	width: 80px;
+	height: 40px;
+}
+
+.addCommentField {
+	padding: 7px;
+	margin-right: 10px;
+	flex: 10;
+	border-radius: 5px;
+	height: 40px;
+	background-color: #3C3C3C;
+  	color: #FCFCFC;
+  	resize: none;
+}

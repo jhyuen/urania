@@ -7,6 +7,7 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/keybinding-vim";
 import PropTypes from 'prop-types';
+import { Dropdown } from 'react-bootstrap'
 import Swal from "sweetalert2";
 
 class SnippetText extends Component {
@@ -15,7 +16,9 @@ class SnippetText extends Component {
 	    super(props);
 	    this.state = {
 	    	value: "",
-        markers: []
+	    	dropDownValue: "Java",
+	    	codingTypeValue: "vim",
+	    	markers: []
 	    }
 	    
 	    this.updateSnippetText = this.updateSnippetText.bind(this);
@@ -25,7 +28,15 @@ class SnippetText extends Component {
 	
 	componentDidMount() {
     let newMarkers = []
-		this.setState({ value: this.props.text,
+    this.props.comments.map((comment) => (
+      newMarkers.push({startRow:  comment.startLine,
+                       startCol:  comment.startIndex,
+                       endRow:    comment.endLine,
+                       endCol:    comment.endIndex,
+                       className: "highlight",
+                       type:      "text" })
+		));
+		this.setState({ value: this.props.text, markers: newMarkers
                     })
 	}
 	
@@ -44,6 +55,14 @@ class SnippetText extends Component {
 		      console.log("error", error);
 		      alert("An error occured, please try again later.");
 		    });
+	}
+	
+	changeValue(text) {
+	    this.setState({dropDownValue: text})
+	}
+	
+	changeSelectionValue(text) {
+		this.setState({codingTypeValue: text})
 	}
 	
 	handleChange(newValue) {
@@ -75,12 +94,42 @@ class SnippetText extends Component {
 		return(
 			<>
 			<div className="snippetTextHeader">
-				<h2>Snippet</h2>
+				<div className="leftFloat">
+					<h2>Snippet</h2>
+				</div>
+				<div className="rightFloat">
+					<Button className="snippetTextButton rightish" variant="primary" onClick={this.handleSubmit}>Save</Button>{' '}
+					<Dropdown size="sm">
+						<Dropdown.Toggle variant="success" id="dropdown-coding-language">
+							{this.state.dropDownValue}
+						</Dropdown.Toggle>
+						<Dropdown.Menu>
+							<Dropdown.Header> Select Coding Language</Dropdown.Header>
+							<Dropdown.Divider />
+							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Java </div></Dropdown.Item>
+							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Python </div></Dropdown.Item>
+							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> C++ </div></Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
+					
+					<Dropdown size="sm">
+					<Dropdown.Toggle variant="info" id="dropdown-selection-type">
+						{this.state.codingTypeValue}
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+						<Dropdown.Header> Select Selection Type</Dropdown.Header>
+						<Dropdown.Divider />
+						<Dropdown.Item as="button"><div onClick={(e) => this.changeSelectionValue(e.target.textContent)}> vim </div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={(e) => this.changeSelectionValue(e.target.textContent)}> emacs </div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={(e) => this.changeSelectionValue(e.target.textContent)}> normal </div></Dropdown.Item>
+					</Dropdown.Menu>
+					</Dropdown>
+				</div>
 			</div>
 			<div className="editor" id="aceEditor">
 				<AceEditor 
 					width={ '100%' }
-					height={' 56vh '}
+					height={' 67.8vh '}
 					onChange={this.handleChange}
 					value={this.state.value}
           markers={this.state.markers}
@@ -93,9 +142,7 @@ class SnippetText extends Component {
 					}}
 				/>
 			</div>
-			<div className="snippetTextButton">
-		  		<Button variant="primary" onClick={this.handleSubmit}>Save</Button>{' '}
-			</div>
+		  	
 			</>
 			
 		)

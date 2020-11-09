@@ -3,11 +3,6 @@
   overflow: hidden;
 }
 
-#snippet {
-  float: left;
-  width: 66%;
-}
-
 .snippetInfo {
   display: grid;
   grid-template-areas:
@@ -21,6 +16,7 @@
   border-radius: 5px;
   background-color: #3C3C3C;
   color: #FCFCFC;
+  padding: 10px;
 }
 
 .infoTextArea {
@@ -33,7 +29,9 @@
   color: #FCFCFC;
   border-radius: 5px;
   grid-area: textarea;
-  height: 50px;
+  height: 70px;
+  width: 100%;
+  padding: 10px;
 }
 
 .infoHeader {

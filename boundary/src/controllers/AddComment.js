@@ -22,15 +22,8 @@ export class AddComment extends Component {
 	render() {
 		return (
 			<form onSubmit={ this.onSubmit } style={{ display: 'flex' }}>
-				<input
-					type="text"
-					name="text"
-					style={{ flex: '10', padding: '5px' }}
-					placeholder="Add Comment..."
-					value={ this.state.text }
-					onChange={ this.onChange }
-				/>
-				<Button type="submit" variant="primary">Add</Button>{' '}
+				<textarea type="text" name="text" className='addCommentField' placeholder="Add Comment..." value = {this.state.text} onChange={this.onChange}/>
+				<Button className="addButton" type="submit" variant="primary">Add</Button>{' '}
 			</form>
 		)
 	}

@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
+//import Button from 'react-bootstrap/Button';
 
 class Comment extends Component {
 	// dynamic styling
 	getStyle = () => {
 		return {
-			backgroundColor	: '#3d3d5c',
+			backgroundColor	: '#333333',
 			padding			: '10px',
-			borderBottom	: '1px #ccc dotted',
+			marginBottom	: '10px',
+			marginTop		: '10px',	
+			borderRadius	: '10px 10px 10px 10px',
 			textDecoration	: this.props.comment.delete ? 'line-through' : 'none'
 		}
 	}
 
 	render() {
-		const { snippetID, commentText } = this.props.comment;
+		const { commentID, commentText } = this.props.comment;			
 		return (
+			<>
 			<div style={this.getStyle()}>
 				<p>
 					{ commentText }
-					<button onClick={ this.props.delComment.bind(this, snippetID) } className="deleteButton" >x</button>
+					<button onClick={ this.props.delComment.bind(this, commentID) } className="deleteButton" >x</button>
 				</p>
 			</div>
+			</>
 		)
 	}
 }

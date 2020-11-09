@@ -17,6 +17,7 @@ class ViewerView extends Component {
 		 	"languageSelected": "loading language selected...",
 		 	"viewerPassword": "loading viewer password...",
 		 	"viewerPasswordStatus": "0",
+			"list": []
 		},
 		dataFetched: false,
 		status: '',
@@ -53,11 +54,16 @@ class ViewerView extends Component {
 						<SnippetHeader time={ this.state.snippet.timeStamp.epochSecond } id={ this.state.snippet.snippetId } />
 					</div>
 					<div className="snippetText">
-						<SnippetText id= { this.state.snippet.snippetId } text={ this.state.snippet.snippetText } />
+						<SnippetText id={this.state.snippet.snippetId}
+                           text={this.state.snippet.snippetText}
+                           comments={this.state.snippet.list}/>
 					</div>
-					
+					<div className="commentPanel">
+						<CommentPanel comments={this.state.snippet.list}/>
+					</div>
+
 					<div className="controlPanel">
-						<ViewerControlPanel updSnippetIdCallback={ this.updSnippetIdCallback } />
+						<ViewerControlPanel time={ this.state.snippet.timeStamp.epochSecond } updSnippetIdCallback={ this.updSnippetIdCallback } />
 					</div>
 					<div className="snippetInfo">
 						<ViewerSnippetInfo info={ this.state.snippet.snippetInfo } />

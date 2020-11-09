@@ -1,6 +1,41 @@
 .snippetTextButton {
+	width: 100px;
+  	height: 40px;
+}
+
+.rightFloat {
+	float: right;
+	width: 50%;
+	text-align: right;
+}
+
+.leftFloat {
 	float: left;
-	padding: 10px;
+	width: 50%;
+	text-align: left;
+}
+
+#dropdown-coding-language {
+	height: 40px;
+	width: 100px;
+	float: right;
+	margin-right: 10px;
+}
+
+#dropdown-selection-type {
+	height: 40px;
+	width: 100px;
+	float: right;
+	margin-right: 10px;
+}
+
+.rightish {
+	float: right;
+}
+
+.snippetTextHeader {
+	padding: 20px;
+	padding-bottom: 50px;
 }
 
 .highlight {
