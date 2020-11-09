@@ -8,7 +8,7 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/keybinding-vim";
 import PropTypes from 'prop-types';
 import { Dropdown } from 'react-bootstrap'
-
+import Swal from "sweetalert2";
 
 class SnippetText extends Component {
 
@@ -17,7 +17,8 @@ class SnippetText extends Component {
 	    this.state = {
 	    	value: "",
 	    	dropDownValue: "Java",
-	    	codingTypeValue: "vim"
+	    	codingTypeValue: "vim",
+	    	markers: []
 	    }
 	    
 	    this.updateSnippetText = this.updateSnippetText.bind(this);
@@ -26,7 +27,17 @@ class SnippetText extends Component {
 	}
 	
 	componentDidMount() {
-		this.setState({ value: this.props.text })
+    let newMarkers = []
+		this.props.comments.map((comment) => (
+      newMarkers.push({startRow:  comment.startLine,
+                       startCol:  comment.startIndex,
+                       endRow:    comment.endLine,
+                       endCol:    comment.endIndex,
+                       className: "highlight",
+                       type:      "text" })
+		));
+		this.setState({ value: this.props.text,
+                    markers: newMarkers })
 	}
 	
 	updateSnippetText = async () => {
@@ -58,10 +69,25 @@ class SnippetText extends Component {
 	    this.setState({value: newValue})
 	}
 	   
-	
+	successCallback(result) {
+      Swal.fire(
+	      'Success',
+          'Snippet Updated!',
+          'success' 
+      )
+    }
+
+    failureCallback(result) {
+      Swal.fire(
+	      'Error',
+          'Unable to Update Snippet',
+          'error' 
+      )
+    }
+
 	handleSubmit(event) {
 	    event.preventDefault();
-	    this.updateSnippetText();
+	    this.updateSnippetText().then(this.successCallback, this.failureCallback);  
 	}
 	
 	render() {
@@ -106,6 +132,7 @@ class SnippetText extends Component {
 					height={' 67.8vh '}
 					onChange={this.handleChange}
 					value={this.state.value}
+          markers={this.state.markers}
 					theme = 'monokai'
 					mode = 'java'
 					setOptions={{
@@ -123,8 +150,9 @@ class SnippetText extends Component {
 }
 
 SnippetText.propTypes = {
-		id : PropTypes.string.isRequired,
-		text : PropTypes.string.isRequired
+		id :       PropTypes.string.isRequired,
+		text :     PropTypes.string.isRequired,
+    comments : PropTypes.array.isRequired
 };
 
 export default SnippetText;

@@ -2,15 +2,15 @@ package urania.snippetSystem.http;
 
 public class CreateCommentRequest {
 	
-  public String commentID;
+  public String snippetID;
   public String commentText;
   public int    startLine;
   public int    startIndex;
   public int    endLine;
   public int    endIndex;
   
-  public String getCommentID() { return commentID; }
-  public void setCommentID(String uuid) { this.commentID = uuid; }
+  public String getSnippetID() { return snippetID; }
+  public void setSnippetID(String uuid) { this.snippetID = uuid; }
   
   public String getCommentText() { return commentText; }
   public void setCommentText(String text) { this.commentText = text; }
@@ -25,14 +25,14 @@ public class CreateCommentRequest {
   public void setEndIndex(int val) { this.endIndex = val; }
 
 	public String toString() {
-	    return "CreateComment(" + commentID + ", " + commentText + ", "  + startLine +
+	    return "CreateComment(" + snippetID + ", " + commentText + ", "  + startLine +
 	        ", " + startIndex + ", " + endLine + ", " + endIndex + ")";
 	}
 	
-  public CreateCommentRequest (String commentID, String commentText, int startLine,
+  public CreateCommentRequest (String snippetID, String commentText, int startLine,
                                int startIndex, int endLine, int endIndex)
   { 
-    this.commentID    = commentID; 
+    this.snippetID    = snippetID; 
     this.commentText  = commentText;
     this.startLine    = startLine; 
     this.startIndex   = startIndex;

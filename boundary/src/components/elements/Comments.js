@@ -6,7 +6,7 @@ class Comments extends Component {
 	render() {
 		return this.props.comments.map((comment) => (
 			// the key allows react to rerender only the comments which were changed
-			<Comment key={comment.id} comment={comment} delComment={ this.props.delComment }/>
+			<Comment key={comment.commentID} comment={comment} delComment={ this.props.delComment }/>
 		));
 	}
 }

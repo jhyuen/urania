@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
+//import Button from 'react-bootstrap/Button';
 
 class Comment extends Component {
 	// dynamic styling
@@ -16,13 +16,13 @@ class Comment extends Component {
 	}
 
 	render() {
-		const { id, text } = this.props.comment;
+		const { commentID, commentText } = this.props.comment;			
 		return (
 			<>
 			<div style={this.getStyle()}>
 				<p>
-					{ text }
-					<button onClick={ this.props.delComment.bind(this, id) } class="deleteButton" >x</button>
+					{ commentText }
+					<button onClick={ this.props.delComment.bind(this, commentID) } className="deleteButton" >x</button>
 				</p>
 			</div>
 			</>

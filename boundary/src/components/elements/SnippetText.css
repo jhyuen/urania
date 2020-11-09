@@ -37,3 +37,8 @@
 	padding: 20px;
 	padding-bottom: 50px;
 }
+
+.highlight {
+  position: absolute;
+  background-color: #595959;
+}

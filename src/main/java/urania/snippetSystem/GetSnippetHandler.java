@@ -4,13 +4,16 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import urania.snippetSystem.db.CommentDAO;
 import urania.snippetSystem.db.SnippetDAO;
 import urania.snippetSystem.http.CreateSnippetRequest;
 import urania.snippetSystem.http.CreateSnippetResponse;
 import urania.snippetSystem.http.GetSnippetRequest;
 import urania.snippetSystem.http.GetSnippetResponse;
+import urania.snippetSystem.model.Comment;
 import urania.snippetSystem.model.Snippet;
 
+import java.util.List;
 import java.util.UUID;
 
 public class GetSnippetHandler implements RequestHandler<GetSnippetRequest, GetSnippetResponse> {
@@ -20,9 +23,13 @@ public class GetSnippetHandler implements RequestHandler<GetSnippetRequest, GetS
 	Snippet getSnippet (String uuid) throws Exception {
 		if (logger != null) { logger.log("in getSnippet"); }
 		SnippetDAO dao = new SnippetDAO();
-		
-		// check if snippet UUID exists
 		return dao.getSnippet(uuid);
+	}
+	
+	List<Comment> getComments (String uuid) throws Exception {
+		if (logger != null) { logger.log("in getComments"); }
+		CommentDAO dao = new CommentDAO();
+		return dao.getAllComments(uuid);
 	}
 
     @Override
@@ -35,7 +42,8 @@ public class GetSnippetHandler implements RequestHandler<GetSnippetRequest, GetS
         try {
         	Snippet snippet = getSnippet(req.SnippetID);
         	if (snippet != null) {
-				response = new GetSnippetResponse(snippet);
+        		List<Comment> comments = getComments(req.SnippetID);
+				response = new GetSnippetResponse(snippet, comments);
         	} else {
         		response = new GetSnippetResponse(422);
         	}
