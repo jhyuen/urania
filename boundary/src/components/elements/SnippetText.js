@@ -70,20 +70,30 @@ class SnippetText extends Component {
 	    this.setState({value: newValue})
 	}
 	   
-	successCallback(result) {
-      Swal.fire(
-	      'Success',
-          'Snippet Updated!',
-          'success' 
-      )
+	successCallback() {
+      Swal.fire({
+	      title: 'Success',
+          html: 'Snippet Updated!',
+          icon: 'success',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })
     }
 
-    failureCallback(result) {
-      Swal.fire(
-	      'Error',
-          'Unable to Update Snippet',
-          'error' 
-      )
+    failureCallback() {
+      Swal.fire({
+	      title: 'Error',
+          html: 'Unable to Update Snippet',
+          icon: 'error',
+          background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })
     }
 
 	handleSubmit(event) {
@@ -153,7 +163,7 @@ class SnippetText extends Component {
 SnippetText.propTypes = {
 		id :       PropTypes.string.isRequired,
 		text :     PropTypes.string.isRequired,
-    comments : PropTypes.array.isRequired
+        comments : PropTypes.array.isRequired
 };
 
 export default SnippetText;

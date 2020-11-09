@@ -20,21 +20,31 @@ class CreatorSnippetInfo extends React.Component {
 	  this.setState({ value: this.props.info })
   }
   
-  successCallback(result) {
-      Swal.fire(
-	      'Success',
-          'Snippet Info Updated!',
-          'success' 
-      )
-  }
+  successCallback() {
+      Swal.fire({
+	      title: 'Success',
+          html: 'Snippet Updated!',
+          icon: 'success',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })
+    }
 
-  failureCallback(result) {
-      Swal.fire(
-	      'Error',
-          'Unable to Update Snippet Info',
-          'error' 
-      )
-  }
+    failureCallback() {
+      Swal.fire({
+	      title: 'Error',
+          html: 'Unable to Update Snippet',
+          icon: 'error',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })
+    }
 
   updateSnippetInfo = async () => {
 	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";

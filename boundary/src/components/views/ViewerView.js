@@ -72,10 +72,16 @@ class ViewerView extends Component {
 		} else if(!this.state.dataFetched){
 			return <h1>Loading Snippet...</h1>
 		} else if(this.state.dataFetched && this.state.status == 201 && this.state.passwordStatus){
+			const popup = { display: 'none' }, H1 = { marginTop: '200px' }
 			Swal.fire({
                  title: 'Submit Password',
                  icon: 'info',
                  input: 'text',
+                 background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
                  html: 'This snippet is <i>password protected.</i>',
                  inputAttributes: {
                      autocapitalize: 'off'
@@ -87,11 +93,22 @@ class ViewerView extends Component {
 		                 Swal.showValidationMessage(
                              `Incorrect Password. Try Again.`
                          )
+	                 } else {
+                         setTimeout(function(){
+	                          document.getElementById('H1').style.display = 'none'
+                         }, 1000) 
+                         setTimeout(function(){
+	                          document.getElementById('popup').style.display = 'block'
+                         }, 1000)                        	                 
 	                 }          
                  },
-                 allowOutsideClick: false
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
             })
-            return <div> {contents} </div>
+            return <div> 
+                      <div id='H1' style={H1}> <h1>One moment...</h1> </div>
+                      <div id='popup' style={popup}> {contents} </div>
+                   </div>
 		} else {
 		    return <h1>Snippet not found</h1>
 		}
