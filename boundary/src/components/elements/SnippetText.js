@@ -6,6 +6,7 @@ import './SnippetText.css';
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/keybinding-vim";
+import "ace-builds/src-noconflict/keybinding-emacs";
 import PropTypes from 'prop-types';
 import { Dropdown } from 'react-bootstrap'
 import Swal from "sweetalert2";
@@ -28,7 +29,7 @@ class SnippetText extends Component {
 	
 	componentDidMount() {
     let newMarkers = []
-		this.props.comments.map((comment) => (
+    this.props.comments.map((comment) => (
       newMarkers.push({startRow:  comment.startLine,
                        startCol:  comment.startIndex,
                        endRow:    comment.endLine,
@@ -36,8 +37,8 @@ class SnippetText extends Component {
                        className: "highlight",
                        type:      "text" })
 		));
-		this.setState({ value: this.props.text,
-                    markers: newMarkers })
+		this.setState({ value: this.props.text, markers: newMarkers
+                    })
 	}
 	
 	updateSnippetText = async () => {
@@ -131,7 +132,7 @@ class SnippetText extends Component {
 					height={ '84.2vh' }
 					onChange={this.handleChange}
 					value={this.state.value}
-          markers={this.state.markers}
+                    markers={this.state.markers}
 					theme = 'monokai'
 					mode = 'java'
 					setOptions={{

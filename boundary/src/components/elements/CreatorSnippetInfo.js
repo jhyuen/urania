@@ -2,6 +2,7 @@ import React from 'react';
 import './SnippetInfo.css';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import Swal from "sweetalert2";
 
 class CreatorSnippetInfo extends React.Component {
   constructor(props) {
@@ -19,6 +20,22 @@ class CreatorSnippetInfo extends React.Component {
 	  this.setState({ value: this.props.info })
   }
   
+  successCallback(result) {
+      Swal.fire(
+	      'Success',
+          'Snippet Info Updated!',
+          'success' 
+      )
+  }
+
+  failureCallback(result) {
+      Swal.fire(
+	      'Error',
+          'Unable to Update Snippet Info',
+          'error' 
+      )
+  }
+
   updateSnippetInfo = async () => {
 	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
 	  var update_url = base_url + this.props.id + "/info";
@@ -42,8 +59,7 @@ class CreatorSnippetInfo extends React.Component {
    
   handleSubmit(event) {
     event.preventDefault();
-    this.updateSnippetInfo();
-    /*{alert('Snippet Info was updated' + this.state.value);}*/
+    this.updateSnippetInfo().then(this.successCallback, this.failureCallback);
   }
 
   render () {

@@ -4,6 +4,7 @@ import SnippetText from '../elements/SnippetText.js';
 import SnippetHeader from '../elements/SnippetHeader';
 import ViewerSnippetInfo from '../elements/ViewerSnippetInfo';
 import ViewerControlPanel from '../elements/ViewerControlPanel';
+import Swal from "sweetalert2";
 
 class ViewerView extends Component {
 	
@@ -18,7 +19,10 @@ class ViewerView extends Component {
 		 	"viewerPasswordStatus": "0",
 			"list": []
 		},
-		dataFetched: false
+		dataFetched: false,
+		status: '',
+		passwordStatus: '',
+		password: ''
 	}
 	
 	updSnippetIdCallback = (id) => {
@@ -37,33 +41,60 @@ class ViewerView extends Component {
 		var data = await fetch(get_snippet_url)
 		
 		var snippetData = await data.json()
-		this.setState({ snippet: snippetData, dataFetched : true  })
+		console.log(snippetData.viewerPasswordEnabled)
+		console.log(snippetData)
+		this.setState({ snippet: snippetData, dataFetched : true, status: snippetData.httpCode, passwordStatus: snippetData.viewerPasswordEnabled, password: snippetData.viewerPassword  })
 	}
 
 	render() {
-		if (this.state.dataFetched) {
-			return(
-				<div className="app">
-					<div className="snippetHeader">
-						<SnippetHeader time={ this.state.snippet.timeStamp.epochSecond } id={ this.state.snippet.snippetId } />
-					</div>
-					<div className="snippetText">
-						<SnippetText id={this.state.snippet.snippetId}
-                           text={this.state.snippet.snippetText}
-                           comments={this.state.snippet.list}/>
-					</div>
-					<div className="commentPanel">
-						<CommentPanel comments={this.state.snippet.list}/>
-					</div>
-					<div className="controlPanel">
-						<ViewerControlPanel time={ this.state.snippet.timeStamp.epochSecond } 
-											updSnippetIdCallback={ this.updSnippetIdCallback } 
-											info={ this.state.snippet.snippetInfo }/>
-					</div>
-				</div>
-			)
-		} else {
+		let contents = <div className="app">
+							<div className="snippetHeader">
+								<SnippetHeader time={ this.state.snippet.timeStamp.epochSecond } id={ this.state.snippet.snippetId } />
+							</div>
+							<div className="snippetText">
+								<SnippetText id={this.state.snippet.snippetId}
+		                           text={this.state.snippet.snippetText}
+		                           comments={this.state.snippet.list}/>
+							</div>
+							<div className="commentPanel">
+								<CommentPanel comments={this.state.snippet.list}/>
+							</div>
+							<div className="controlPanel">
+								<ViewerControlPanel time={ this.state.snippet.timeStamp.epochSecond } 
+													updSnippetIdCallback={ this.updSnippetIdCallback } 
+													info={ this.state.snippet.snippetInfo }/>
+							</div>
+							<div className="snippetInfo">
+								<ViewerSnippetInfo info={ this.state.snippet.snippetInfo } />
+							</div>
+				       </div>
+		if (this.state.dataFetched && this.state.status == 201 && !this.state.passwordStatus) {
+			return <div> {contents} </div> 
+		} else if(!this.state.dataFetched){
 			return <h1>Loading Snippet...</h1>
+		} else if(this.state.dataFetched && this.state.status == 201 && this.state.passwordStatus){
+			Swal.fire({
+                 title: 'Submit Password',
+                 icon: 'info',
+                 input: 'text',
+                 html: 'This snippet is <i>password protected.</i>',
+                 inputAttributes: {
+                     autocapitalize: 'off'
+                 },
+                 confirmButtonText: 'Enter Snippet',
+                 showLoaderOnConfirm: true,
+                 preConfirm: (password) => {
+	                 if(password !== this.state.password) {
+		                 Swal.showValidationMessage(
+                             `Incorrect Password. Try Again.`
+                         )
+	                 }          
+                 },
+                 allowOutsideClick: false
+            })
+            return <div> {contents} </div>
+		} else {
+		    return <h1>Snippet not found</h1>
 		}
 	}
 }

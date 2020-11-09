@@ -2,8 +2,12 @@ package urania.snippetSystem.http;
 
 public class DeleteCommentRequest {
     
+  public String snippetID;
   public String commentID;
   
+  public String getSnippetID() { return snippetID; }
+  public void setSnippetID(String uuid) { this.snippetID = uuid; }
+
   public String getCommentID() { return commentID; }
   public void setCommentID(String uuid) { this.commentID = uuid; }
   
@@ -11,8 +15,9 @@ public class DeleteCommentRequest {
     return "DeleteComment(" + commentID + ")";
   }
     
-  public DeleteCommentRequest (String commentID)
+  public DeleteCommentRequest (String snippetID, String commentID)
   { 
+	this.snippetID    = snippetID;
     this.commentID    = commentID; 
   }
   

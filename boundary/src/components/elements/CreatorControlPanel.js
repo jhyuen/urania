@@ -14,7 +14,7 @@ class CreatorControlPanel extends Component {
     	password_enable: false,
     	value: ""
     }
-    
+    this.viewSnippet = this.viewSnippet.bind(this);
     this.setPasswordStatus = this.setPasswordStatus.bind(this);
     this.updateSnippetInfo = this.updateSnippetInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -53,7 +53,17 @@ class CreatorControlPanel extends Component {
     /*{alert('Snippet Info was updated' + this.state.value);}*/
   }
 
-  render() {
+  fetchSnippet = async (id) => {
+		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	    var get_snippet_url = base_url + id + "/snippet"; 
+		var data = await fetch(get_snippet_url)
+		
+		var snippetData = await data.json()
+		console.log(snippetData)
+        return snippetData.httpCode
+	}
+
+	render() {
 		var timestampText 	= "Created on: ";
 		
 		var tempSecond = this.props.time
@@ -116,18 +126,14 @@ class CreatorControlPanel extends Component {
 			  'Content-Type': 'application/json'
       }
     })
+
     .catch(error => {
       console.log("error", error);
       alert("An error occured, please try again later.");
     });**/}
 	};
 	
-	
-	viewAsViewer() {
-		console.log("view as viewer");
-	};
-	
-	viewSnippet() {
+	viewSnippet() {    
 		Swal.fire({
             title: 'Submit Snippet ID',
             input: 'text',
@@ -138,7 +144,17 @@ class CreatorControlPanel extends Component {
             confirmButtonText: 'Look up',
             showLoaderOnConfirm: true,
             preConfirm: (id) => {
-	           window.location.pathname = '/' + id + '/creator';  
+	           let res = this.fetchSnippet(id).then(function(result) {
+		             if(result == 201) {
+	                window.location.pathname = '/' + id + '/creator';  
+               } else {
+	                Swal.fire(
+		                'Error',
+                        'Snippet not found',
+                        'error'
+	                )
+               }	          
+              })            	                 
             },
             allowOutsideClick: () => !Swal.isLoading()
         })
