@@ -4,12 +4,13 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 class ViewerControlPanel extends Component {
 	constructor(props) {
 		super(props)
 		this.updId 			= this.updId.bind(this);
-		this.viewAnotherSnippet 	= this.viewAnotherSnippet.bind(this);
+		this.viewSnippet 	= this.viewSnippet.bind(this);
 		this.state = {
 			snippet: {
 				 		"snippetId": "loading snippet id...",
@@ -29,6 +30,16 @@ class ViewerControlPanel extends Component {
 	updId = (id) => {
 		this.props.updSnippetIdCallback(id);
 	}
+	
+	fetchSnippet = async (id) => {
+		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	    var get_snippet_url = base_url + id + "/snippet"; 
+		var data = await fetch(get_snippet_url)
+		
+		var snippetData = await data.json()
+		console.log(snippetData)
+        return snippetData.httpCode
+	}
 
 	render() {
 		var timestampText 	= "Created on: ";
@@ -47,9 +58,7 @@ class ViewerControlPanel extends Component {
 		        <div className='viewerText'>{ this.props.info }</div>
 		        <br></br>
 		        <h2>Actions</h2>
-		        <Link>
-					<Button className="actionButton" variant="info" onClick={this.viewAnotherSnippet}>View Snippet</Button>{' '}
-				</Link>
+				<Button className="actionButton" variant="info" onClick={this.viewSnippet}>View Snippet</Button>{' '}
 				<Link to='/'>
 					<Button className="actionButton" variant="success">Create New Snippet</Button>{' '}
 				</Link>
@@ -57,8 +66,37 @@ class ViewerControlPanel extends Component {
 		)
 	}
 	
-	viewAnotherSnippet() {
-		console.log("yiii");
+	viewSnippet() {
+		Swal.fire({
+            title: 'Submit Snippet ID',
+            input: 'text',
+            width: 600,
+            padding: '3em',
+            background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
+            inputAttributes: {
+               autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Look up',
+            showLoaderOnConfirm: true,
+            preConfirm: (id) => {
+	           let res = this.fetchSnippet(id).then(function(result) {
+		             if(result == 201) {
+	                 window.location.pathname = '/' + id;  
+               } else {
+	                Swal.fire({
+		                title: 'Error',
+                        html: 'Snippet not found',
+                        icon: 'error',
+                        width: 600,
+                        padding: '3em',
+                        background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)'
+	                })
+               }	          
+              })            	                 
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
 	}
 }
 

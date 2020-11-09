@@ -64,9 +64,6 @@ class ViewerView extends Component {
 													updSnippetIdCallback={ this.updSnippetIdCallback } 
 													info={ this.state.snippet.snippetInfo }/>
 							</div>
-							<div className="snippetInfo">
-								<ViewerSnippetInfo info={ this.state.snippet.snippetInfo } />
-							</div>
 				       </div>
 		if (this.state.dataFetched && this.state.status == 201 && !this.state.passwordStatus) {
 			return <div> {contents} </div> 

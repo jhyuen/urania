@@ -65,11 +65,36 @@ class CreatorControlPanel extends Component {
   handleChange(event) {
     this.setState({value: event.target.value});
   }
+
+  successCallback() {
+      Swal.fire({
+	      title: 'Success',
+          html: 'Snippet Info Updated!',
+          icon: 'success',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })
+    }
+
+   failureCallback() {
+      Swal.fire({
+	      title: 'Error',
+          html: 'Unable to Update Snippet Info',
+          icon: 'error',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })
+    }
    
   handleSubmit(event) {
     event.preventDefault();
-    this.updateSnippetInfo();
-    /*{alert('Snippet Info was updated' + this.state.value);}*/
+    this.updateSnippetInfo().then(this.successCallback, this.failureCallback);
   }
 
   fetchSnippet = async (id) => {
