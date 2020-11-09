@@ -21,7 +21,7 @@ class CommentPanel extends Component {
 	}
 	
 	delComment = (id) => {
-		this.setState({ comments: [...this.state.comments.filter(comment => comment.id !== id)] });
+		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== id)] });
 	}
 		
 	addComment = (text) => {

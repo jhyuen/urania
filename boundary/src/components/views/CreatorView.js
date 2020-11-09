@@ -15,7 +15,8 @@ class CreatorView extends Component {
 		 	"timeStamp": "loading timestamp...",
 		 	"languageSelected": "loading language selected...",
 		 	"viewerPassword": "loading viewer password...",
-		 	"viewerPasswordStatus": "0"
+		 	"viewerPasswordStatus": "0",
+			"list": []
 		},
 		dataFetched: false
 	}

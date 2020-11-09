@@ -58,7 +58,7 @@ public class CreateCommentResponse {
   }
   
 	public String toString() {
-	    return "CreateComment(" + snippetID + ", " + commentText + ", " + startLine +
+	    return "CreateComment(" + commentID + ", " + commentText + ", " + startLine +
 	        ", " + startIndex + ", " + endLine + ", " + endIndex + ")";
 	}
 }
