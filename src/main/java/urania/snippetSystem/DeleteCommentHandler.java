@@ -1,12 +1,17 @@
 package urania.snippetSystem;
 
+import java.util.List;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import urania.snippetSystem.db.CommentDAO;
+import urania.snippetSystem.db.SnippetDAO;
 import urania.snippetSystem.http.DeleteCommentRequest;
 import urania.snippetSystem.http.DeleteCommentResponse;
+import urania.snippetSystem.model.Comment;
+import urania.snippetSystem.model.Snippet;
 
 public class DeleteCommentHandler implements RequestHandler<DeleteCommentRequest, DeleteCommentResponse> {
     
@@ -23,10 +28,22 @@ public class DeleteCommentHandler implements RequestHandler<DeleteCommentRequest
         }
     }
 
+	Snippet getSnippet (String uuid) throws Exception {
+		if (logger != null) { logger.log("in getSnippet"); }
+		SnippetDAO dao = new SnippetDAO();
+		return dao.getSnippet(uuid);
+	}
+	
+	List<Comment> getComments (String uuid) throws Exception {
+		if (logger != null) { logger.log("in getComments"); }
+		CommentDAO dao = new CommentDAO();
+		return dao.getAllComments(uuid);
+	}
+
     @Override
     public DeleteCommentResponse handleRequest(DeleteCommentRequest req, Context context) {
         logger = context.getLogger();
-        logger.log("Trying to create a new comment!");
+        logger.log("Trying to delete a comment!");
         logger.log(req.toString());
 
         DeleteCommentResponse response;
@@ -34,7 +51,9 @@ public class DeleteCommentHandler implements RequestHandler<DeleteCommentRequest
             boolean success = deleteComment(req.commentID);
             
             if (success) {
-              response = new DeleteCommentResponse(req.commentID);
+            	Snippet snippet = getSnippet(req.snippetID);
+            	List<Comment> comments = getComments(req.snippetID);
+            	response = new DeleteCommentResponse(snippet, comments);
             } else {
                 response = new DeleteCommentResponse(400);
             }
