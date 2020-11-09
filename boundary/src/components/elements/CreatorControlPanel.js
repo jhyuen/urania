@@ -11,11 +11,12 @@ class CreatorControlPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    	password_enable: false,
+    	password_enable: this.props.password_status,
     	value: ""
     }
     this.viewSnippet = this.viewSnippet.bind(this);
     this.setPasswordStatus = this.setPasswordStatus.bind(this);
+    this.enableSnippetPassword = this.enableSnippetPassword.bind(this);
     this.updateSnippetInfo = this.updateSnippetInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,6 +33,24 @@ class CreatorControlPanel extends Component {
 	  fetch(update_url, {
 		  method: 'POST',
 		  body: JSON.stringify({info: this.state.value}),
+		  headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json'
+		  }
+	  })
+	    .catch(error => {
+	      console.log("error", error);
+	      alert("An error occured, please try again later.");
+	    });
+  }
+
+  enableSnippetPassword = async (val) => {
+    console.log(val)
+	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	  var update_url = base_url + this.props.id + "/set_password";
+	  fetch(update_url, {
+		  method: 'POST',
+		  body: JSON.stringify({enable: val}),
 		  headers: {
 			  'Accept': 'application/json',
 			  'Content-Type': 'application/json'
@@ -77,7 +96,7 @@ class CreatorControlPanel extends Component {
 				<div>
 					<label>
 						Enabled Viewer Password &nbsp;
-						<input onChange={this.setPasswordStatus} type="checkbox" />
+						<input defaultChecked={this.state.password_enable} onChange={this.setPasswordStatus} type="checkbox" />
 					</label>
 				</div>
 		        <div>
@@ -115,6 +134,7 @@ class CreatorControlPanel extends Component {
 	
 	setPasswordStatus(event) {
 		console.log("changed password status");
+    this.enableSnippetPassword(event.target.checked)
     this.setState({ password_enable: event.target.checked})
     {/**var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
     var update_url = base_url + this.props.id + "/passwordEnable";
@@ -162,10 +182,10 @@ class CreatorControlPanel extends Component {
 }
 
 CreatorControlPanel.propTypes = {
-	id :              PropTypes.string.isRequired,
+	  id              : PropTypes.string.isRequired,
     password_status : PropTypes.bool.isRequired,
-    password :        PropTypes.string.isRequired,
-    time : PropTypes.number.isRequired
+    password        : PropTypes.string.isRequired,
+    time            : PropTypes.number.isRequired
 };
 
 export default CreatorControlPanel;
