@@ -56,10 +56,8 @@ class CreatorView extends Component {
 							<CreatorControlPanel password_status={this.state.snippet.viewerPasswordEnabled}
                                    password={this.state.snippet.viewerPassword}
                                    id={this.state.snippet.snippetId} 
-								   time={ this.state.snippet.timeStamp.epochSecond }/>
-						</div>
-						<div className="snippetInfo">
-							<CreatorSnippetInfo id={ this.state.snippet.snippetId } info={this.state.snippet.snippetInfo} />
+								   time={ this.state.snippet.timeStamp.epochSecond }
+								   info={this.state.snippet.snippetInfo} />
 						</div>
 					</div>
 			)
