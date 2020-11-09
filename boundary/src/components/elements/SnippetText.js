@@ -133,7 +133,7 @@ class SnippetText extends Component {
 					height={' 67.8vh '}
 					onChange={this.handleChange}
 					value={this.state.value}
-          markers={this.state.markers}
+                    markers={this.state.markers}
 					theme = 'monokai'
 					mode = 'java'
 					setOptions={{
