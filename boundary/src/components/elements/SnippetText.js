@@ -122,7 +122,6 @@ class SnippetText extends Component {
 							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> C++ </div></Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown>
-					
 					<Dropdown size="sm">
 					<Dropdown.Toggle variant="info" id="dropdown-selection-type">
 						{this.state.codingTypeValue}
@@ -140,7 +139,7 @@ class SnippetText extends Component {
 			<div className="editor" id="aceEditor">
 				<AceEditor 
 					width={ '100%' }
-					height={' 67.8vh '}
+					height={ '84.2vh' }
 					onChange={this.handleChange}
 					value={this.state.value}
                     markers={this.state.markers}
