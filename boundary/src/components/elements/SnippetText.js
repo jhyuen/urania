@@ -25,16 +25,8 @@ class SnippetText extends Component {
 	
 	componentDidMount() {
     let newMarkers = []
-		this.props.comments.map((comment) => (
-      newMarkers.push({startRow:  comment.startLine,
-                       startCol:  comment.startIndex,
-                       endRow:    comment.endLine,
-                       endCol:    comment.endIndex,
-                       className: "highlight",
-                       type:      "text" })
-		));
 		this.setState({ value: this.props.text,
-                    markers: newMarkers })
+                    })
 	}
 	
 	updateSnippetText = async () => {

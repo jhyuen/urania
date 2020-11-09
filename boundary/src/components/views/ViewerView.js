@@ -4,6 +4,7 @@ import SnippetText from '../elements/SnippetText.js';
 import SnippetHeader from '../elements/SnippetHeader';
 import ViewerSnippetInfo from '../elements/ViewerSnippetInfo';
 import ViewerControlPanel from '../elements/ViewerControlPanel';
+import Swal from "sweetalert2";
 
 class ViewerView extends Component {
 	
@@ -17,7 +18,10 @@ class ViewerView extends Component {
 		 	"viewerPassword": "loading viewer password...",
 		 	"viewerPasswordStatus": "0",
 		},
-		dataFetched: false
+		dataFetched: false,
+		status: '',
+		passwordStatus: '',
+		password: ''
 	}
 	
 	updSnippetIdCallback = (id) => {
@@ -36,11 +40,13 @@ class ViewerView extends Component {
 		var data = await fetch(get_snippet_url)
 		
 		var snippetData = await data.json()
-		this.setState({ snippet: snippetData, dataFetched : true  })
+		console.log(snippetData.viewerPasswordStatus)
+		console.log(snippetData.viewerPassword)
+		this.setState({ snippet: snippetData, dataFetched : true, status: snippetData.httpCode, passwordStatus: snippetData.viewerPasswordStatus, password: snippetData.viewerPassword  })
 	}
 
 	render() {
-		if (this.state.dataFetched) {
+		if (this.state.dataFetched && this.state.status == 201) {
 			return(
 				<div className="app">
 					<div className="snippetHeader">
@@ -49,9 +55,7 @@ class ViewerView extends Component {
 					<div className="snippetText">
 						<SnippetText id= { this.state.snippet.snippetId } text={ this.state.snippet.snippetText } />
 					</div>
-					<div className="commentPanel">
-						<CommentPanel />
-					</div>
+					
 					<div className="controlPanel">
 						<ViewerControlPanel updSnippetIdCallback={ this.updSnippetIdCallback } />
 					</div>
@@ -60,8 +64,10 @@ class ViewerView extends Component {
 					</div>
 				</div>
 			)
-		} else {
+		} else if(!this.state.dataFetched){
 			return <h1>Loading Snippet...</h1>
+		} else {
+		   return <h1>Snippet not found</h1>
 		}
 	}
 }

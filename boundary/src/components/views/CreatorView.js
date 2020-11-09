@@ -17,7 +17,8 @@ class CreatorView extends Component {
 		 	"viewerPassword": "loading viewer password...",
 		 	"viewerPasswordStatus": "0"
 		},
-		dataFetched: false
+		dataFetched: false,
+		status: ''
 	}
 	
 	componentDidMount() {
@@ -25,19 +26,21 @@ class CreatorView extends Component {
 		var result = window.location.pathname.match(patt)
 		this.fetchSnippet(result[0])
 	}
-	
+
 	fetchSnippet = async (path) => {
 		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta";
 	    var get_snippet_url = base_url + path + "/snippet"; 
 		var data = await fetch(get_snippet_url)
 		
 		var snippetData = await data.json()
-		this.setState({ snippet: snippetData, dataFetched : true })
+		//console.log(snippetData.viewerPasswordStatus)
+		console.log(snippetData.viewerPassword)
+		this.setState({ snippet: snippetData, dataFetched : true, status: snippetData.httpCode })
     console.log(this.state.snippet.list)
 	}
 	
 	render() {
-		if (this.state.dataFetched) {
+		if (this.state.dataFetched && this.state.status == 201) {
 			return(
 					<div className="app">
 						<div className="snippetHeader">
@@ -61,8 +64,10 @@ class CreatorView extends Component {
 						</div>
 					</div>
 			)
-		} else {
+		} else if(!this.state.dataFetched) {
 			return <h1>Loading Snippet...</h1>
+		} else {
+			return <h1>Snippet not found</h1>
 		}
 		
 	}

@@ -13,13 +13,23 @@ class CreatorControlPanel extends Component {
     this.state = {
     	password_enable: false
     }
-    
+    this.viewSnippet = this.viewSnippet.bind(this);
     this.setPasswordStatus = this.setPasswordStatus.bind(this);
   }
 
   componentDidMount() {
 	  this.setState({ password_enable: this.props.password_status })
   }
+
+  fetchSnippet = async (id) => {
+		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	    var get_snippet_url = base_url + id + "/snippet"; 
+		var data = await fetch(get_snippet_url)
+		
+		var snippetData = await data.json()
+		console.log(snippetData)
+        return snippetData.httpCode
+	}
 
 	render() {
 		return(
@@ -41,7 +51,7 @@ class CreatorControlPanel extends Component {
         </div>
 				<ButtonGroup vertical>
 					<Link to={'/'+this.props.id}>
-						<Button variant="primary" onClick={this.viewAsViewer}>View as Viewer</Button>{' '}
+						<Button variant="primary">View as Viewer</Button>{' '}
 					</Link>
 					<Button variant="primary" onClick={this.viewSnippet}>View Snippet</Button>{' '}
 					<Link to='/'>
@@ -67,18 +77,14 @@ class CreatorControlPanel extends Component {
 			  'Content-Type': 'application/json'
       }
     })
+
     .catch(error => {
       console.log("error", error);
       alert("An error occured, please try again later.");
     });**/}
 	};
 	
-	
-	viewAsViewer() {
-		console.log("view as viewer");
-	};
-	
-	viewSnippet() {
+	viewSnippet() {    
 		Swal.fire({
             title: 'Submit Snippet ID',
             input: 'text',
@@ -89,7 +95,17 @@ class CreatorControlPanel extends Component {
             confirmButtonText: 'Look up',
             showLoaderOnConfirm: true,
             preConfirm: (id) => {
-	           window.location.pathname = '/' + id + '/creator';  
+	           let res = this.fetchSnippet(id).then(function(result) {
+		             if(result == 201) {
+	                window.location.pathname = '/' + id + '/creator';  
+               } else {
+	                Swal.fire(
+		                'Error',
+                        'Snippet not found',
+                        'error'
+	                )
+               }	          
+              })            	                 
             },
             allowOutsideClick: () => !Swal.isLoading()
         })
