@@ -4,13 +4,21 @@ import Button from 'react-bootstrap/Button';
 import Delete from '@material-ui/icons/DeleteForeverOutlined';
 
 class Comment extends Component {
+	
+	onChange = () => {}
+	
 	render() {
-		const { commentID, commentText } = this.props.comment;			
 		return (
 			<div className='comment'>
 				<p>
-					{ commentText }
-					<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, commentID) }>
+					<textarea
+						className='displayCommentTextArea'
+						type="text"
+						name="text"
+						value={ this.props.comment.commentText }
+						onChange={ this.onChange }
+					/>
+					<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
 						<Delete/>
 					</Button>
 				</p>

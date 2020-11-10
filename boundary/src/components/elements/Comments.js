@@ -5,8 +5,11 @@ import PropTypes from 'prop-types';
 class Comments extends Component {
 	render() {
 		return this.props.comments.map((comment) => (
-			// the key allows react to rerender only the comments which were changed
-			<Comment key={comment.commentID} comment={comment} delComment={ this.props.delComment }/>
+			<Comment
+				key={ comment.commentID }		// the key allows react to rerender only the comments which were changed
+				comment={ comment }
+				delComment={ this.props.delComment }
+			/>
 		));
 	}
 }
@@ -18,5 +21,3 @@ Comments.propTypes = {
 }
 
 export default Comments;
-
-// TODO: should store a snippet ID
