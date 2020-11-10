@@ -45,7 +45,7 @@ public class CreateSnippetHandler implements RequestHandler<CreateSnippetRequest
         try {
         	Snippet snippet = createSnippet();
         	if (snippet != null) {
-        	  response = new CreateSnippetResponse(snippet);
+        		response = new CreateSnippetResponse(snippet);
         	} else {
         		response = new CreateSnippetResponse(422);
         	}

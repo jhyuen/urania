@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import com.amazonaws.services.lambda.runtime.Context;
 
+import urania.snippetSystem.http.CreateSnippetResponse;
+import urania.snippetSystem.model.Snippet;
+
 /**
  * A simple test harness for locally invoking your Lambda function handler.
  */
@@ -32,12 +35,13 @@ public class CreateSnippetHandlerTest {
 
     @Test
     public void testLambdaFunctionHandler() {
-        LambdaFunctionHandler handler = new LambdaFunctionHandler();
+        CreateSnippetHandler handler = new CreateSnippetHandler();
         Context ctx = createContext();
 
-        String output = handler.handleRequest(input, ctx);
+        CreateSnippetResponse response = handler.handleRequest(null, ctx);
 
         // TODO: validate output here if needed.
-        Assert.assertEquals("Hello from Lambda!", output);
+        // This will fail
+        Assert.assertEquals("Hello from Lambda!", response);
     }
 }
