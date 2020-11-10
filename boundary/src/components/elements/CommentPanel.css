@@ -1,3 +1,11 @@
+.comment {
+	background-color: #444444;
+	padding: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;	
+	border-radius: 10px 10px 10px 10px;
+}
+
 .deleteButton {
 	cursor: pointer;
 	float: right;

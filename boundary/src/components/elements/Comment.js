@@ -4,22 +4,10 @@ import Button from 'react-bootstrap/Button';
 import Delete from '@material-ui/icons/DeleteForeverOutlined';
 
 class Comment extends Component {
-	// dynamic styling
-	getStyle = () => {
-		return {
-			backgroundColor	: '#333333',
-			padding			: '10px',
-			marginBottom	: '10px',
-			marginTop		: '10px',	
-			borderRadius	: '10px 10px 10px 10px'
-		}
-	}
-
 	render() {
 		const { commentID, commentText } = this.props.comment;			
 		return (
-			<>
-			<div style={this.getStyle()}>
+			<div className='comment'>
 				<p>
 					{ commentText }
 					<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, commentID) }>
@@ -27,7 +15,6 @@ class Comment extends Component {
 					</Button>
 				</p>
 			</div>
-			</>
 		)
 	}
 }
