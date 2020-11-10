@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './CommentPanel.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import CommentList from './CommentList'
 import CommentEnterArea from './CommentEnterArea.js'
 import PropTypes from 'prop-types';
+import './CommentPanel.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const { v4: uuidv4 } = require('uuid');	
 
@@ -13,55 +13,53 @@ class CommentPanel extends Component {
 	    this.state = {
 	    	comments: []
 	    }
-
 	    this.deleteCommentRequest = this.deleteCommentRequest.bind(this);
 	}
 	
 	componentDidMount() {
 		this.setState({ comments: this.props.comments })
-    console.log(this.state.comments)
+    	console.log(this.state.comments)
 	}
 
 	deleteCommentRequest = async (cID) => {
-    console.log(this.props.id)
-    console.log(cID)
-    var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
-    var update_url = base_url + this.props.id + "/delete_comment";
+    	console.log(this.props.id)
+    	console.log(cID)
+    	var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+    	var update_url = base_url + this.props.id + "/delete_comment";
 		fetch(update_url, {
 			method: 'POST',
-      body: JSON.stringify({ commentID : cID }),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
+      		body: JSON.stringify({ commentID : cID }),
+      		headers: {
+        		'Accept': 'application/json',
+        		'Content-Type': 'application/json'
+      		}
 		})
-			.then(response => response.json())
-			.then(responseData => {
-				console.log(responseData.snippetId)
-				console.log(responseData)
-        return responseData
-			})
-			.catch(error => {
-		          console.log("error", error);
-		          alert("An error occured, please try again later.");
-		     });
-
+		.then(response => response.json())
+		.then(responseData => {
+			console.log(responseData.snippetId)
+			console.log(responseData)
+        	return responseData
+		})
+		.catch(error => {
+			console.log("error", error);
+			alert("An error occured, please try again later.");
+	     });
 	}
 
 	delComment = (cID) => {
-	  var snippet = this.deleteCommentRequest(cID);
-    console.log(snippet)
+		var snippet = this.deleteCommentRequest(cID);
+		console.log(snippet)
 		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== cID)] });
 	}
 		
 	addComment = (text) => {
 		const newComment = {	
-				commentID				: uuidv4(),				// generate a random unique id
-				timeStamp		: Date.now(),			// grab the current time
-				commentText			: text,
-				startLine		: 0,
+				commentID	: uuidv4(),				// generate a random unique id
+				timeStamp	: Date.now(),			// grab the current time
+				commentText	: text,
+				startLine	: 0,
 				startIndex	: 0,
-				endLine			: 0,
+				endLine		: 0,
 				endIndex	: 0
 		}
 		this.setState({ comments: [...this.state.comments, newComment] });
