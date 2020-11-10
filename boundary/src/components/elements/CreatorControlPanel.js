@@ -20,6 +20,7 @@ class CreatorControlPanel extends Component {
     this.updateSnippetInfo = this.updateSnippetInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -45,7 +46,6 @@ class CreatorControlPanel extends Component {
   }
 
   enableSnippetPassword = async (val) => {
-    console.log(val)
 	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
 	  var update_url = base_url + this.props.id + "/set_password";
 	  fetch(update_url, {
@@ -60,6 +60,27 @@ class CreatorControlPanel extends Component {
 	      console.log("error", error);
 	      alert("An error occured, please try again later.");
 	    });
+  }
+
+  deleteSnippet = async () => {
+	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	  var update_url = base_url + this.props.id + "/delete_snippet";
+	  fetch(update_url, {
+		  method: 'POST',
+		  //body: JSON.stringify({enable: val}),
+		  //headers: {
+			  //'Accept': 'application/json',
+			  //'Content-Type': 'application/json'
+		  //}
+	  })
+	    .catch(error => {
+	      console.log("error", error);
+	      alert("An error occured, please try again later.");
+	    });
+  }
+
+  handleDelete(event) {
+    this.deleteSnippet().then(this.successDeleteCallback, this.failureDeleteCallback);
   }
   
   handleChange(event) {
@@ -91,6 +112,32 @@ class CreatorControlPanel extends Component {
                       no-repeat`
       })
     }
+
+  successDeleteCallback() {
+      Swal.fire({
+	      title: 'Success',
+          html: 'Snippet Deleted!',
+          icon: 'success',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })
+    }
+
+   failureDeleteCallback() {
+      Swal.fire({
+	      title: 'Error',
+          html: 'Unable to Delete Snippet',
+          icon: 'error',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })
+    }
    
   handleSubmit(event) {
     event.preventDefault();
@@ -99,12 +146,11 @@ class CreatorControlPanel extends Component {
 
   fetchSnippet = async (id) => {
 		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
-	    var get_snippet_url = base_url + id + "/snippet"; 
+	  var get_snippet_url = base_url + id + "/snippet"; 
 		var data = await fetch(get_snippet_url)
 		
 		var snippetData = await data.json()
-		console.log(snippetData)
-        return snippetData.httpCode
+    return snippetData.httpCode
 	}
 
 	render() {
@@ -151,7 +197,7 @@ class CreatorControlPanel extends Component {
 					<Button className="actionButton" variant="success">Create New Snippet</Button>{' '}
 				</Link>
 				<Link>
-					<Button className="actionButton" variant="danger" onClick={this.deleteSnippet}>Delete Snippet</Button>{' '}
+					<Button className="actionButton" variant="danger" onClick={this.handleDelete}>Delete Snippet</Button>{' '}
 				</Link>
 			</>
 		)
@@ -161,21 +207,6 @@ class CreatorControlPanel extends Component {
 		console.log("changed password status");
     this.enableSnippetPassword(event.target.checked)
     this.setState({ password_enable: event.target.checked})
-    {/**var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
-    var update_url = base_url + this.props.id + "/passwordEnable";
-	  fetch(update_url, {
-		  method: 'POST',
-		  body: JSON.stringify({info: this.state.password_enable}),
-		  headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json'
-      }
-    })
-
-    .catch(error => {
-      console.log("error", error);
-      alert("An error occured, please try again later.");
-    });**/}
 	};
 	
 	viewSnippet() {    
