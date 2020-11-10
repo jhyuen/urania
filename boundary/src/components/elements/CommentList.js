@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Comment from './Comment';
 import PropTypes from 'prop-types';
 
-class Comments extends Component {
+class CommentList extends Component {
 	render() {
 		return this.props.comments.map((comment) => (
 			<Comment
@@ -15,9 +15,9 @@ class Comments extends Component {
 }
 
 // PropTypes
-Comments.propTypes = {
+CommentList.propTypes = {
 	comments 	: PropTypes.array.isRequired,
 	delComment 	: PropTypes.func.isRequired
 }
 
-export default Comments;
+export default CommentList;

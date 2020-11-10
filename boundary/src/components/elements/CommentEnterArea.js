@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 
 
-export class AddComment extends Component {
+export class CommentEnterArea extends Component {
 
 	state = {
 		text: ''		
 	}
 	
-	// constantly change the state when typing a comment
 	onChange = (e) => {
-		this.setState( {[e.target.name]: e.target.value} );
+		this.setState( {text: e.target.value} );
 	}
 	
 	onSubmit = (e) => {
@@ -24,9 +23,9 @@ export class AddComment extends Component {
 		return (
 			<form className="commentInput" onSubmit={ this.onSubmit }>
 				<textarea
+					className='addCommentField'
 					type="text"
 					name="text"
-					className='addCommentField'
 					placeholder="Add Comment..."
 					value={ this.state.text }
 					onChange={ this.onChange }
@@ -40,8 +39,8 @@ export class AddComment extends Component {
 }
 
 // PropTypes
-AddComment.propTypes = {
+CommentEnterArea.propTypes = {
 	addComment : PropTypes.func.isRequired
 }
 
-export default AddComment;
+export default CommentEnterArea;

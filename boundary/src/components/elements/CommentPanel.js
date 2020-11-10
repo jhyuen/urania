@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './CommentPanel.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Comments from './Comments'
-import AddComment from '../../controllers/AddComment.js'
+import CommentList from './CommentList'
+import CommentEnterArea from './CommentEnterArea.js'
 import PropTypes from 'prop-types';
 
 const { v4: uuidv4 } = require('uuid');	
@@ -48,10 +48,10 @@ class CommentPanel extends Component {
 
 	}
 
-	delComment = (id) => {
-	  var snippet = this.deleteCommentRequest(id);
+	delComment = (cID) => {
+	  var snippet = this.deleteCommentRequest(cID);
     console.log(snippet)
-		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== id)] });
+		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== cID)] });
 	}
 		
 	addComment = (text) => {
@@ -71,8 +71,8 @@ class CommentPanel extends Component {
 		return(
 			<>
 				<h2>Comments</h2>
-				<AddComment addComment={ this.addComment } />
-				<Comments comments={ this.state.comments } delComment={ this.delComment }/>
+				<CommentEnterArea addComment={ this.addComment } />
+				<CommentList comments={ this.state.comments } delComment={ this.delComment }/>
 			</>
 		)
 	}
