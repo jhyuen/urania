@@ -9,8 +9,6 @@ import urania.snippetSystem.http.UpdateSnippetInfoRequest;
 import urania.snippetSystem.http.UpdateSnippetInfoResponse;
 import urania.snippetSystem.model.Snippet;
 
-import java.util.UUID;
-
 public class UpdateSnippetInfoHandler implements RequestHandler<UpdateSnippetInfoRequest, UpdateSnippetInfoResponse> {
 	
 	LambdaLogger logger;

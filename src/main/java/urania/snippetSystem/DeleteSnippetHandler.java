@@ -8,9 +8,6 @@ import urania.snippetSystem.db.CommentDAO;
 import urania.snippetSystem.db.SnippetDAO;
 import urania.snippetSystem.http.DeleteSnippetRequest;
 import urania.snippetSystem.http.DeleteSnippetResponse;
-import urania.snippetSystem.model.Snippet;
-
-import java.util.UUID;
 
 public class DeleteSnippetHandler implements RequestHandler<DeleteSnippetRequest, DeleteSnippetResponse> {
 	

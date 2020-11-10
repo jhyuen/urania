@@ -1,14 +1,13 @@
 package urania.snippetSystem.db;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
-
 import urania.snippetSystem.model.Comment;
-import urania.snippetSystem.model.Snippet;
 
 /**
  * Comment Data Access Object

@@ -1,9 +1,7 @@
 package urania.snippetSystem.model;
 
-import java.util.UUID;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 public class Snippet {
 	public final String snippetID;

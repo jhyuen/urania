@@ -1,7 +1,6 @@
 package urania.snippetSystem.model;
 
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * In most cases the response is the name of the constant that was being created.

@@ -1,11 +1,12 @@
 package urania.snippetSystem.db;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 import urania.snippetSystem.model.Snippet;
 
@@ -145,25 +146,23 @@ public class SnippetDAO {
     }
 
     public List<Snippet> getAllSnippets() throws Exception {
-        
-//        List<Constant> allConstants = new ArrayList<>();
-//        try {
-//            Statement statement = conn.createStatement();
-//            String query = "SELECT * FROM " + tblName + ";";
-//            ResultSet resultSet = statement.executeQuery(query);
-//
-//            while (resultSet.next()) {
-//                Constant c = generateConstant(resultSet);
-//                allConstants.add(c);
-//            }
-//            resultSet.close();
-//            statement.close();
-//            return allConstants;
-//
-//        } catch (Exception e) {
-//            throw new Exception("Failed in getting books: " + e.getMessage());
-//        }
-    	return null;
+        List<Snippet> allSnippets = new ArrayList<>();
+        try {
+            Statement statement = conn.createStatement();
+            String query = "SELECT * FROM " + tblName + ";";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                Snippet s = generateSnippet(resultSet);
+                allSnippets.add(s);
+            }
+            resultSet.close();
+            statement.close();
+            return allSnippets;
+
+        } catch (Exception e) {
+            throw new Exception("Failed in getting books: " + e.getMessage());
+        }
     }
     
     private Snippet generateSnippet(ResultSet resultSet) throws Exception {

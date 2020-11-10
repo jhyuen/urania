@@ -6,15 +6,12 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import urania.snippetSystem.db.CommentDAO;
 import urania.snippetSystem.db.SnippetDAO;
-import urania.snippetSystem.http.CreateSnippetRequest;
-import urania.snippetSystem.http.CreateSnippetResponse;
 import urania.snippetSystem.http.GetSnippetRequest;
 import urania.snippetSystem.http.GetSnippetResponse;
 import urania.snippetSystem.model.Comment;
 import urania.snippetSystem.model.Snippet;
 
 import java.util.List;
-import java.util.UUID;
 
 public class GetSnippetHandler implements RequestHandler<GetSnippetRequest, GetSnippetResponse> {
 	
