@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+//import { Redirect } from 'react-router-dom';
 import './ControlPanel.css';
 import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+//import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Swal from "sweetalert2";
@@ -224,16 +224,16 @@ class CreatorControlPanel extends Component {
             showLoaderOnConfirm: true,
             preConfirm: (id) => {
 	           let res = this.fetchSnippet(id).then(function(result) {
-		             if(result == 201) {
-	                window.location.pathname = '/' + id + '/creator';  
-               } else {
-	                Swal.fire({
-		                title: 'Error',
-                        html: 'Snippet not found',
-                        icon: 'error',
-                        width: 600,
-                        padding: '3em',
-                        background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)'
+               		if (result === 201) {
+	                	window.location.pathname = '/' + id + '/creator';  
+               		} else {
+		                Swal.fire({
+			                title: 'Error',
+	                        html: 'Snippet not found',
+	                        icon: 'error',
+	                        width: 600,
+	                        padding: '3em',
+	                        background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)'
 	                })
                }	          
               })            	                 
@@ -244,7 +244,7 @@ class CreatorControlPanel extends Component {
 }
 
 CreatorControlPanel.propTypes = {
-	  id              : PropTypes.string.isRequired,
+	id              : PropTypes.string.isRequired,
     password_status : PropTypes.bool.isRequired,
     password        : PropTypes.string.isRequired,
     time            : PropTypes.number.isRequired

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './ControlPanel.css';
 import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Swal from "sweetalert2";
@@ -81,18 +80,18 @@ class ViewerControlPanel extends Component {
             showLoaderOnConfirm: true,
             preConfirm: (id) => {
 	           let res = this.fetchSnippet(id).then(function(result) {
-		             if(result == 201) {
-	                 window.location.pathname = '/' + id;  
-               } else {
-	                Swal.fire({
-		                title: 'Error',
-                        html: 'Snippet not found',
-                        icon: 'error',
-                        width: 600,
-                        padding: '3em',
-                        background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)'
-	                })
-               }	          
+	               if(result === 201) {
+		                 window.location.pathname = '/' + id;  
+	               } else {
+		                Swal.fire({
+			                title: 'Error',
+	                        html: 'Snippet not found',
+	                        icon: 'error',
+	                        width: 600,
+	                        padding: '3em',
+	                        background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)'
+		                })
+	               }	          
               })            	                 
             },
             allowOutsideClick: () => !Swal.isLoading()
@@ -103,7 +102,7 @@ class ViewerControlPanel extends Component {
 // validate prop types
 ViewerControlPanel.propTypes = {
 	updSnippetIdCallback 	: PropTypes.func.isRequired,
-	time : PropTypes.number.isRequired
+	time 					: PropTypes.number.isRequired
 };
 
 export default ViewerControlPanel;

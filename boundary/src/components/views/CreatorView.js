@@ -41,7 +41,7 @@ class CreatorView extends Component {
 	}
 	
 	render() {
-		if (this.state.dataFetched && this.state.status == 201) {
+		if (this.state.dataFetched && this.state.status === 201) {
 			return(
 					<div className="app">
 						<div className="snippetHeader">
