@@ -4,25 +4,14 @@ import './SnippetHeader.css';
 
 class SnippetHeader extends React.Component {
 
-constructor() {
-	super();
-    this.state = {
-      dropDownValue: "Java"
-    }
-}
-
-changeValue(text) {
-    this.setState({dropDownValue: text})
-}
-
 render () {
-	var idText 			= "Snippet ID: ";
+	var idText = "Snippet ID: ";
 	return (
-      <div className='snippetHeader'>
-		<div className="leftFloat">
-			<h2>{idText}{this.props.id}</h2>
+      <div className = 'snippetHeader'>
+		<div className = 'leftFloat'>
+			<h2>{ idText }{ this.props.id }</h2>
 		</div>
-		<div className="rightFloat">
+		<div className = 'rightFloat'>
 		</div>
       </div>
     );
@@ -31,7 +20,7 @@ render () {
  
 // validate prop types
 SnippetHeader.propTypes = {
-	id		: PropTypes.string.isRequired
+	id : PropTypes.string.isRequired
 };
 
 export default SnippetHeader;
