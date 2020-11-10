@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import AceEditor from 'react-ace';
 import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './SnippetText.css';
-import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/mode-c_cpp";
-import "ace-builds/src-noconflict/keybinding-vim";
-import "ace-builds/src-noconflict/keybinding-emacs";
-import "ace-builds/src-min-noconflict/keybinding-sublime"
-
-
 import PropTypes from 'prop-types';
 import { Dropdown } from 'react-bootstrap'
 import Swal from "sweetalert2";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './SnippetText.css';
+import "ace-builds/src-noconflict/theme-monokai";
+// coding languages
+import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-c_cpp";
+// ace editor modes
+import "ace-builds/src-noconflict/keybinding-vim";
+import "ace-builds/src-noconflict/keybinding-emacs";
+import "ace-builds/src-noconflict/keybinding-sublime";
+import "ace-builds/src-noconflict/keybinding-vscode";
 
 class SnippetText extends Component {
 
@@ -101,6 +102,12 @@ class SnippetText extends Component {
 		//console.log(this.state.textEditorLanguageMode)
 	}
 	
+	setVsCode() {
+	    this.setState({ dropDownEditorModeValue: 'VS Code' })
+		this.setState({ textEditorKeyboardHandler: 'vscode' })
+		//console.log(this.state.textEditorLanguageMode)
+	}
+	
 	changeSelectionValue(text) {
 		this.setState({codingTypeValue: text})
 	}
@@ -172,11 +179,11 @@ class SnippetText extends Component {
 						<Dropdown.Item as="button"><div onClick={ () => this.setVim() }>Vim</div></Dropdown.Item>
 						<Dropdown.Item as="button"><div onClick={ () => this.setEmacs() }>Emacs</div></Dropdown.Item>
 						<Dropdown.Item as="button"><div onClick={ () => this.setSublime() }>Sublime</div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={ () => this.setVsCode() }>VS Code</div></Dropdown.Item>
 					</Dropdown.Menu>
 					</Dropdown>
 				</div>
 			</div>
-			
 			<div className="editor" id="aceEditor">
 				<AceEditor 
 					width				= { '100%' }
@@ -194,7 +201,6 @@ class SnippetText extends Component {
 					}}
 				/>
 			</div>
-			
 			</>
 		)
 	}
