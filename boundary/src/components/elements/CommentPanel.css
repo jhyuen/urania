@@ -6,14 +6,8 @@
 	border-radius: 10px 10px 10px 10px;
 }
 
-.deleteButton {
-	cursor: pointer;
-	float: right;
-}
-
-.addButton {
-	width: 80px;
-	height: 40px;
+.commentInput {
+	display: flex; 
 }
 
 .addCommentField {
@@ -25,6 +19,16 @@
 	background-color: #3C3C3C;
   	color: #FCFCFC;
   	resize: none;
+}
+
+.deleteButton {
+	cursor: pointer;
+	float: right;
+}
+
+.addButton {
+	width: 80px;
+	height: 40px;
 }
 
 .commentInput {

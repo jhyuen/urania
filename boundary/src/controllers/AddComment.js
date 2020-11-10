@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 
+
 export class AddComment extends Component {
 
 	state = {
@@ -21,9 +22,18 @@ export class AddComment extends Component {
 
 	render() {
 		return (
-			<form className="commentInput" onSubmit={ this.onSubmit } style={{ display: 'flex' }}>
-				<textarea type="text" name="text" className='addCommentField' placeholder="Add Comment..." value = {this.state.text} onChange={this.onChange}/>
-				<Button className="addButton" type="submit" variant="primary">Add</Button>{' '}
+			<form className="commentInput" onSubmit={ this.onSubmit }>
+				<textarea
+					type="text"
+					name="text"
+					className='addCommentField'
+					placeholder="Add Comment..."
+					value={ this.state.text }
+					onChange={ this.onChange }
+				/>
+				<Button className="addButton" type="submit" variant="primary">
+					Add
+				</Button>
 			</form>
 		)
 	}
