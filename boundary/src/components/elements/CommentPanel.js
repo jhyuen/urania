@@ -81,6 +81,6 @@ class CommentPanel extends Component {
 export default CommentPanel;
 
 CommentPanel.propTypes = {
-  id        : PropTypes.string.isRequired,
+  	id        	: PropTypes.string.isRequired,
 	comments 	: PropTypes.array.isRequired,
 }
