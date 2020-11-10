@@ -5,8 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './SnippetText.css';
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/keybinding-vim";
 import "ace-builds/src-noconflict/keybinding-emacs";
+import "ace-builds/src-min-noconflict/keybinding-sublime"
+
+
 import PropTypes from 'prop-types';
 import { Dropdown } from 'react-bootstrap'
 import Swal from "sweetalert2";
@@ -16,10 +21,12 @@ class SnippetText extends Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	    	value: "",
-	    	dropDownValue: "Java",
-	    	codingTypeValue: "vim",
-	    	markers: []
+	    	value						: "",
+	    	dropDownLanguageValue		: 'Java',
+			textEditorLanguageMode		: 'java',
+	    	dropDownEditorModeValue		: 'Vim',
+			textEditorKeyboardHandler	: 'vim',
+	    	markers						: []
 	    }
 	    
 	    this.updateSnippetText = this.updateSnippetText.bind(this);
@@ -30,12 +37,12 @@ class SnippetText extends Component {
 	componentDidMount() {
     let newMarkers = []
     this.props.comments.map((comment) => (
-      newMarkers.push({startRow:  comment.startLine,
-                       startCol:  comment.startIndex,
-                       endRow:    comment.endLine,
-                       endCol:    comment.endIndex,
-                       className: "highlight",
-                       type:      "text" })
+      newMarkers.push({startRow		: comment.startLine,
+                       startCol		: comment.startIndex,
+                       endRow		: comment.endLine,
+                       endCol		: comment.endIndex,
+                       className	: "highlight",
+                       type			: "text" })
 		));
 		this.setState({ value: this.props.text, markers: newMarkers
                     })
@@ -57,9 +64,41 @@ class SnippetText extends Component {
 		      alert("An error occured, please try again later.");
 		    });
 	}
+
+	setJava() {
+	    this.setState({ dropDownLanguageValue: 'Java' })
+		this.setState({ textEditorLanguageMode: 'java' })
+		//console.log(this.state.textEditorLanguageMode)
+	}
 	
-	changeValue(text) {
-	    this.setState({dropDownValue: text})
+	setPython() {
+	    this.setState({ dropDownLanguageValue: 'Python' })
+		this.setState({ textEditorLanguageMode: 'python' })
+		//console.log(this.state.textEditorLanguageMode)
+	}
+	
+	setCpp() {
+	    this.setState({ dropDownLanguageValue: 'C++' })
+		this.setState({ textEditorLanguageMode: 'c_cpp' })
+		//console.log(this.state.textEditorLanguageMode)
+	}
+	
+	setSublime() {
+	    this.setState({ dropDownEditorModeValue: 'Sublime' })
+		this.setState({ textEditorKeyboardHandler: 'sublime' })
+		//console.log(this.state.textEditorLanguageMode)
+	}
+	
+	setVim() {
+	    this.setState({ dropDownEditorModeValue: 'Vim' })
+		this.setState({ textEditorKeyboardHandler: 'vim' })
+		//console.log(this.state.textEditorLanguageMode)
+	}
+	
+	setEmacs() {
+	    this.setState({ dropDownEditorModeValue: 'Emacs' })
+		this.setState({ textEditorKeyboardHandler: 'emacs' })
+		//console.log(this.state.textEditorLanguageMode)
 	}
 	
 	changeSelectionValue(text) {
@@ -101,6 +140,7 @@ class SnippetText extends Component {
 	    this.updateSnippetText().then(this.successCallback, this.failureCallback);  
 	}
 	
+
 	render() {
 		return(
 			<>
@@ -112,49 +152,50 @@ class SnippetText extends Component {
 					<Button className="snippetTextButton rightish" variant="primary" onClick={this.handleSubmit}>Save</Button>{' '}
 					<Dropdown size="sm">
 						<Dropdown.Toggle variant="success" id="dropdown-coding-language">
-							{this.state.dropDownValue}
+							{this.state.dropDownLanguageValue}
 						</Dropdown.Toggle>
 						<Dropdown.Menu>
-							<Dropdown.Header> Select Coding Language</Dropdown.Header>
+							<Dropdown.Header>Coding Language</Dropdown.Header>
 							<Dropdown.Divider />
-							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Java </div></Dropdown.Item>
-							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> Python </div></Dropdown.Item>
-							<Dropdown.Item as="button"><div onClick={(e) => this.changeValue(e.target.textContent)}> C++ </div></Dropdown.Item>
+							<Dropdown.Item as="button"><div onClick={() => this.setJava()}>Java</div></Dropdown.Item>
+							<Dropdown.Item as="button"><div onClick={() => this.setPython()}>Python</div></Dropdown.Item>
+							<Dropdown.Item as="button"><div onClick={() => this.setCpp()}>C++</div></Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown>
 					<Dropdown size="sm">
-					<Dropdown.Toggle variant="info" id="dropdown-selection-type">
-						{this.state.codingTypeValue}
+					<Dropdown.Toggle variant="info" id="dropdown-editor-mode">
+						{this.state.dropDownEditorModeValue}
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
-						<Dropdown.Header> Select Selection Type</Dropdown.Header>
+						<Dropdown.Header>Editor Mode</Dropdown.Header>
 						<Dropdown.Divider />
-						<Dropdown.Item as="button"><div onClick={(e) => this.changeSelectionValue(e.target.textContent)}> vim </div></Dropdown.Item>
-						<Dropdown.Item as="button"><div onClick={(e) => this.changeSelectionValue(e.target.textContent)}> emacs </div></Dropdown.Item>
-						<Dropdown.Item as="button"><div onClick={(e) => this.changeSelectionValue(e.target.textContent)}> normal </div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={ () => this.setVim() }>Vim</div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={ () => this.setEmacs() }>Emacs</div></Dropdown.Item>
+						<Dropdown.Item as="button"><div onClick={ () => this.setSublime() }>Sublime</div></Dropdown.Item>
 					</Dropdown.Menu>
 					</Dropdown>
 				</div>
 			</div>
+			
 			<div className="editor" id="aceEditor">
 				<AceEditor 
-					width={ '100%' }
-					height={ '84.2vh' }
-					onChange={this.handleChange}
-					value={this.state.value}
-                    markers={this.state.markers}
-					theme = 'monokai'
-					mode = 'java'
-					setOptions={{
-						highlightActiveLine: true,
-						showPrintMargin: true,
-						autoScrollEditorIntoView: true
+					width				= { '100%' }
+					height				= { '84.2vh' }
+					onChange			= { this.handleChange }
+					value				= { this.state.value }
+                    markers				= { this.state.markers }
+					mode 				= { this.state.textEditorLanguageMode }
+					keyboardHandler 	= { this.state.textEditorKeyboardHandler }
+					theme 				= 'monokai'
+					setOptions			={{
+						highlightActiveLine			: true,
+						showPrintMargin				: true,
+						autoScrollEditorIntoView	: true
 					}}
 				/>
 			</div>
-		  	
-			</>
 			
+			</>
 		)
 	}
 }
