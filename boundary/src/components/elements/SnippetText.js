@@ -52,9 +52,9 @@ class SnippetText extends Component {
 	
 	static getDerivedStateFromProps(nextProps, prevState) {
 		console.log("Deriving: " + nextProps.comments)
-		let funMarkers = []
+		let newMarkers = []
 		nextProps.comments.map((comment) => (
-				funMarkers.push({startRow		: comment.startLine,
+				newMarkers.push({startRow		: comment.startLine,
 			                       startCol		: comment.startIndex,
 			                       endRow		: comment.endLine,
 			                       endCol		: comment.endIndex,
@@ -62,7 +62,7 @@ class SnippetText extends Component {
 			                       type			: "text" })
 					));	
 		return {
-			markers: funMarkers
+			markers: newMarkers
 		 };
 	}
 	
