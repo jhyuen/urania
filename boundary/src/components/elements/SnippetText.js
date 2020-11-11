@@ -194,7 +194,7 @@ class SnippetText extends Component {
 					width				= { '100%' }
 					height				= { '84.2vh' }
 					onChange			= { this.handleChange }
-          onSelectionChange   = { this.handleTextSelection }
+					onSelectionChange   = { this.handleTextSelection }
 					value				= { this.state.value }
                     markers				= { this.state.markers }
 					mode 				= { this.state.textEditorLanguageMode }

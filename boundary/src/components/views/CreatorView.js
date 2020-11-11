@@ -19,7 +19,16 @@ class CreatorView extends Component {
 			"list": []
 		},
 		dataFetched: false,
-    range: null,
+		range: {
+			start : {
+				"row": null,
+				"column": null
+			},
+			end: {
+				"row": null,
+				"column": null
+			}
+		},
 		status: ''
 	}
 	
@@ -29,10 +38,10 @@ class CreatorView extends Component {
 		this.fetchSnippet(result[0])
 	}
 
-  getSelectionCallback = (newRange) => {
-    this.setState({range: newRange})
-    console.log(this.state.range)
-  }
+	getSelectionCallback = (newRange) => {
+		this.setState({range: newRange})
+		console.log(this.state.range)
+	}
 
   //updateSnippetCallback = (snippet) => {
     //this.setState({snippet: snippet})
@@ -48,7 +57,7 @@ class CreatorView extends Component {
 		//console.log(snippetData.viewerPasswordStatus)
 		console.log(snippetData.viewerPassword)
 		this.setState({ snippet: snippetData, dataFetched : true, status: snippetData.httpCode })
-    console.log(this.state.snippet.list)
+		console.log(this.state.snippet.list)
 	}
 	
 	render() {
@@ -66,8 +75,8 @@ class CreatorView extends Component {
 						</div>
 						<div className="commentPanel">
 							<CommentPanel range={this.state.range}
-                            id={this.state.snippet.snippetId}
-                            comments={this.state.snippet.list}
+                            			  id={this.state.snippet.snippetId}
+										  comments={this.state.snippet.list}
                             //snippetCallback={this.updateSnippetCallback}
 							/>
 						</div>

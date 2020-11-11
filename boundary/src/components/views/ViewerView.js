@@ -58,9 +58,9 @@ class ViewerView extends Component {
 							</div>
 							<div className="snippetText">
 								<SnippetText id={this.state.snippet.snippetId}
-                             text={this.state.snippet.snippetText}
-                             comments={this.state.snippet.list}
-                             selectionCallback={this.getSelectionCallback}/>
+				                             text={this.state.snippet.snippetText}
+				                             comments={this.state.snippet.list}
+				                             selectionCallback={this.getSelectionCallback}/>
 							</div>
 							<div className="commentPanel">
 								<CommentPanel id={ this.state.snippet.snippetId }

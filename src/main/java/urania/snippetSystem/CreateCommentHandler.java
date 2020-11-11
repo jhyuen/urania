@@ -1,5 +1,6 @@
 package urania.snippetSystem;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -15,7 +16,7 @@ public class CreateCommentHandler implements RequestHandler<CreateCommentRequest
 	
 	LambdaLogger logger;
 	
-	Comment createComment (String snippetID, String commentText, int sL, int sI, int eL, int eI) throws Exception {
+	List<Comment> createComment (String snippetID, String commentText, int sL, int sI, int eL, int eI) throws Exception {
 		if (logger != null) { logger.log("in createComment"); }
 		CommentDAO dao = new CommentDAO();
 		
@@ -25,7 +26,7 @@ public class CreateCommentHandler implements RequestHandler<CreateCommentRequest
 		if (exist == null) {
 		  Comment comment = new Comment(snippetID, newUUID, commentText,  sL, sI, eL, eI);
 			if (dao.createComment(comment)) {
-				return comment;
+				return dao.getAllComments(snippetID);
 			} else {
 				return null;
 			}
@@ -34,7 +35,7 @@ public class CreateCommentHandler implements RequestHandler<CreateCommentRequest
 			return null;
 		}
 	}
-
+	
     @Override
     public CreateCommentResponse handleRequest(CreateCommentRequest req, Context context) {
         logger = context.getLogger();
@@ -43,9 +44,9 @@ public class CreateCommentHandler implements RequestHandler<CreateCommentRequest
 
         CreateCommentResponse response;
         try {
-        	Comment comment = createComment(req.snippetID, req.commentText, req.startLine, req.startIndex, req.endLine, req.endIndex);
-        	if (comment != null) {
-        	  response = new CreateCommentResponse(comment);
+        	List<Comment> comments = createComment(req.snippetID, req.commentText, req.startLine, req.startIndex, req.endLine, req.endIndex);
+        	if (comments != null) {
+        	  response = new CreateCommentResponse(comments);
         	} else {
         		response = new CreateCommentResponse(422);
         	}
