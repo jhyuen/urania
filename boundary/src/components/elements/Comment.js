@@ -10,12 +10,13 @@ class Comment extends Component {
 	render() {
 		return (
 			<div className='comment'>
-					<textarea
+					<textarea 
 						className='displayCommentTextArea'
 						type="text"
 						name="text"
 						value={ this.props.comment.commentText }
 						onChange={ this.onChange }
+						readonly
 					/>
 					<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
 						<Delete/>

@@ -9,7 +9,7 @@ class ViewerSnippetInfo extends React.Component {
         <div className='infoHeader'>
         	<h2>Description</h2>
         </div>
-        <div className='viewerText'>{ this.props.info }</div>
+        <textarea className='viewerText' value={this.props.info} disabled/>
       </div>
     );
   }

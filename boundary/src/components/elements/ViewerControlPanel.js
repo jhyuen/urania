@@ -54,7 +54,8 @@ class ViewerControlPanel extends Component {
 		        <div className='infoHeader'>
 		        	<h2>Description</h2>
 		        </div>
-		        <div className='viewerText'>{ this.props.info }</div>
+		        <textarea disabled className='viewerText' value={this.props.info}/>
+		        <br></br>
 		        <br></br>
 		        <h2>Actions</h2>
 				<Button className="actionButton" variant="info" onClick={this.viewSnippet}>View Snippet</Button>{' '}
