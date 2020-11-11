@@ -19,6 +19,7 @@ class CreatorView extends Component {
 			"list": []
 		},
 		dataFetched: false,
+    range: null,
 		status: ''
 	}
 	
@@ -27,6 +28,16 @@ class CreatorView extends Component {
 		var result = window.location.pathname.match(patt)
 		this.fetchSnippet(result[0])
 	}
+
+  getSelectionCallback = (newRange) => {
+    this.setState({range: newRange})
+    console.log(this.state.range)
+  }
+
+  //updateSnippetCallback = (snippet) => {
+    //this.setState({snippet: snippet})
+    //console.log(this.state.snippet)
+  //}
 
 	fetchSnippet = async (path) => {
 		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta";
@@ -50,10 +61,15 @@ class CreatorView extends Component {
 						<div className="snippetText">
 							<SnippetText id={this.state.snippet.snippetId}
                            text={this.state.snippet.snippetText}
-                           comments={this.state.snippet.list}/>
+                           comments={this.state.snippet.list}
+                           selectionCallback={this.getSelectionCallback}/>
 						</div>
 						<div className="commentPanel">
-							<CommentPanel id={this.state.snippet.snippetId} comments={this.state.snippet.list}/>
+							<CommentPanel range={this.state.range}
+                            id={this.state.snippet.snippetId}
+                            comments={this.state.snippet.list}
+                            //snippetCallback={this.updateSnippetCallback}
+              />
 						</div>
 						<div className="controlPanel">
 							<CreatorControlPanel password_status={this.state.snippet.viewerPasswordEnabled}

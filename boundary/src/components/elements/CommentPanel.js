@@ -52,29 +52,40 @@ class CommentPanel extends Component {
 		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== cID)] });
 	}
 		
-	addComment = async (text, sL, sI, eL, eI) => {
-		const newComment = {	
-				commentText	: text,
-				sL	: sL,
-				sI	: sI,
-				eL	: eL,
-				eI	: eI
-		}
-		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
-	  	var update_url = base_url + this.props.id + "/add_comment";
+	addComment = async (text) => {
+    // check range
+    var selR = this.props.range
+    if (((selR.start.row != selR.end.row) || (selR.start.column != selR.end.column))
+        && text != '') {
+      console.log("legal comment")
+      const newComment = {	
+          commentText	: text,
+          sL	: selR.start.row,
+          sI	: selR.start.column,
+          eL	: selR.end.row,
+          eI	: selR.end.column
+      }
+      var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+      var update_url = base_url + this.props.id + "/add_comment";
 
-	  	fetch(update_url, {
-			  method: 'POST',
-			  body: JSON.stringify(newComment),
-			  headers: {
-				  'Accept': 'application/json',
-				  'Content-Type': 'application/json'
-			}
-		})
-		.catch(error => {
-		      console.log("error", error);
-		      alert("An error occured, please try again later.");
-	    });
+      fetch(update_url, {
+        method: 'POST',
+        body: JSON.stringify(newComment),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      // Maybe need to change lambda to return a snippet with comment array
+			//.then(responseData => {
+				//this.props.snippetCallback(responseData)
+			//})
+      .catch(error => {
+            console.log("error", error);
+            alert("An error occured, please try again later.");
+      });
+    }
 		
 		//this.setState({ comments: [...this.state.comments, newComment] });
 	} 
