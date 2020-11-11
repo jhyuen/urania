@@ -80,7 +80,7 @@ class CommentPanel extends Component {
 	      })
 	      .then(response => response.json())
 	      .then(responseData => {
-	    	  console.log("reponseData:" + responseData)
+	    	  //console.log("reponseData:" + responseData)
 	    	  console.log("responseData.list" + responseData.list)
 	    	  this.setState({ comments: responseData.list })
 	    	  this.props.commentCallback(responseData.list)
