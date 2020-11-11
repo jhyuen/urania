@@ -52,17 +52,31 @@ class CommentPanel extends Component {
 		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== cID)] });
 	}
 		
-	addComment = (text) => {
+	addComment = async (text, sL, sI, eL, eI) => {
 		const newComment = {	
-				commentID	: uuidv4(),				// generate a random unique id
-				timeStamp	: Date.now(),			// grab the current time
 				commentText	: text,
-				startLine	: 0,
-				startIndex	: 0,
-				endLine		: 0,
-				endIndex	: 0
+				sL	: sL,
+				sI	: sI,
+				eL	: eL,
+				eI	: eI
 		}
-		this.setState({ comments: [...this.state.comments, newComment] });
+		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	  	var update_url = base_url + this.props.id + "/add_comment";
+
+	  	fetch(update_url, {
+			  method: 'POST',
+			  body: JSON.stringify(newComment),
+			  headers: {
+				  'Accept': 'application/json',
+				  'Content-Type': 'application/json'
+			}
+		})
+		.catch(error => {
+		      console.log("error", error);
+		      alert("An error occured, please try again later.");
+	    });
+		
+		//this.setState({ comments: [...this.state.comments, newComment] });
 	} 
 	
 	render() {

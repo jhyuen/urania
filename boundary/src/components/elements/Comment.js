@@ -13,6 +13,7 @@ class Comment extends Component {
 					<textarea
 						className='displayCommentTextArea'
 						type="text"
+						disabled
 						name="text"
 						value={ this.props.comment.commentText }
 						onChange={ this.onChange }

@@ -27,7 +27,7 @@ class CreatorControlPanel extends Component {
 	  this.setState({ password_enable: this.props.password_status })
 	  this.setState({ value: this.props.info })
   }
-  
+ 
   updateSnippetInfo = async () => {
 	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
 	  var update_url = base_url + this.props.id + "/info";
