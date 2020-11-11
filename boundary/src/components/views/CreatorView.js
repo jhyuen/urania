@@ -16,7 +16,7 @@ class CreatorView extends Component {
 		 	"languageSelected": "loading language selected...",
 		 	"viewerPassword": "loading viewer password...",
 		 	"viewerPasswordStatus": "0",
-			"list": []
+			"list": null
 		},
 		dataFetched: false,
 		range: {
@@ -29,7 +29,8 @@ class CreatorView extends Component {
 				"column": null
 			}
 		},
-		status: ''
+		status: '',
+		fun: []
 	}
 	
 	componentDidMount() {
@@ -43,10 +44,14 @@ class CreatorView extends Component {
 		console.log(this.state.range)
 	}
 
-  //updateSnippetCallback = (snippet) => {
-    //this.setState({snippet: snippet})
-    //console.log(this.state.snippet)
-  //}
+	updateCommentsCallback = (comments) => {
+		//var mySnippet =  { ...this.state.snippet } 
+		//mySnippet.list = comments
+		//this.setState({ mySnippet })
+		
+		//this.setState({ snippet.list : comments })
+		this.setState({ fun : comments})
+	}
 
 	fetchSnippet = async (path) => {
 		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta";
@@ -69,15 +74,16 @@ class CreatorView extends Component {
 						</div>
 						<div className="snippetText">
 							<SnippetText id={this.state.snippet.snippetId}
-                           text={this.state.snippet.snippetText}
-                           comments={this.state.snippet.list}
-                           selectionCallback={this.getSelectionCallback}/>
+										text={this.state.snippet.snippetText}
+										comments={this.state.snippet.list}
+										fun = {this.state.fun}
+										selectionCallback={this.getSelectionCallback}/>
 						</div>
 						<div className="commentPanel">
 							<CommentPanel range={this.state.range}
                             			  id={this.state.snippet.snippetId}
 										  comments={this.state.snippet.list}
-                            //snippetCallback={this.updateSnippetCallback}
+                            			  commentCallback={this.updateCommentsCallback}
 							/>
 						</div>
 						<div className="controlPanel">

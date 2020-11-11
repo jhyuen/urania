@@ -17,7 +17,7 @@ class Comment extends Component {
 						name="text"
 						value={ this.props.comment.commentText }
 						onChange={ this.onChange }
-						readonly
+						readOnly
 					/>
 					<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
 						<Delete/>

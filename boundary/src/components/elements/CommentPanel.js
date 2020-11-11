@@ -80,14 +80,11 @@ class CommentPanel extends Component {
 	      })
 	      .then(response => response.json())
 	      .then(responseData => {
-	    	  console.log(responseData)
-	    	  console.log(responseData.list)
+	    	  console.log("reponseData:" + responseData)
+	    	  console.log("responseData.list" + responseData.list)
 	    	  this.setState({ comments: responseData.list })
+	    	  this.props.commentCallback(responseData.list)
 	      })
-	      // Maybe need to change lambda to return a snippet with comment array
-				//.then(responseData => {
-					//this.props.snippetCallback(responseData)
-				//})
 	      .catch(error => {
 	            console.log("error", error);
 	            alert("An error occured, please try again later.");

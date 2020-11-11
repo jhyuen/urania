@@ -37,17 +37,33 @@ class SnippetText extends Component {
 	}
 	
 	componentDidMount() {
-    let newMarkers = []
-    this.props.comments.map((comment) => (
-      newMarkers.push({startRow		: comment.startLine,
-                       startCol		: comment.startIndex,
-                       endRow		: comment.endLine,
-                       endCol		: comment.endIndex,
-                       className	: "highlight",
-                       type			: "text" })
-		));
-		this.setState({ value: this.props.text, markers: newMarkers
-                    })
+	    let newMarkers = []
+	    this.props.comments.map((comment) => (
+	      newMarkers.push({startRow		: comment.startLine,
+	                       startCol		: comment.startIndex,
+	                       endRow		: comment.endLine,
+	                       endCol		: comment.endIndex,
+	                       className	: "highlight",
+	                       type			: "text" })
+			));
+			this.setState({ value: this.props.text, markers: newMarkers
+	                    })
+	}
+	
+	static getDerivedStateFromProps(nextProps, prevState) {
+		console.log("Deriving: " + nextProps.fun)
+		let funMarkers = []
+		nextProps.fun.map((comment) => (
+				funMarkers.push({startRow		: comment.startLine,
+			                       startCol		: comment.startIndex,
+			                       endRow		: comment.endLine,
+			                       endCol		: comment.endIndex,
+			                       className	: "highlight",
+			                       type			: "text" })
+					));	
+		return {
+			markers: funMarkers
+		 };
 	}
 	
 	updateSnippetText = async () => {
