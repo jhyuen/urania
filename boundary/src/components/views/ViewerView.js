@@ -63,12 +63,15 @@ class ViewerView extends Component {
                              selectionCallback={this.getSelectionCallback}/>
 							</div>
 							<div className="commentPanel">
-								<CommentPanel comments={this.state.snippet.list}/>
+								<CommentPanel id={ this.state.snippet.snippetId }
+												comments={this.state.snippet.list}/>
+								}
 							</div>
 							<div className="controlPanel">
-								<ViewerControlPanel time={ this.state.snippet.timeStamp.epochSecond } 
-                                    updSnippetIdCallback={ this.updSnippetIdCallback } 
-                                    info={ this.state.snippet.snippetInfo }/>
+								<ViewerControlPanel 
+									updSnippetIdCallback={ this.updSnippetIdCallback }
+									time={ this.state.snippet.timeStamp.epochSecond }
+									info={ this.state.snippet.snippetInfo }/>
 							</div>
 				       </div>
 		if (this.state.dataFetched && this.state.status == 201 && !this.state.passwordStatus) {

@@ -7,25 +7,12 @@ import Swal from "sweetalert2";
 
 class ViewerControlPanel extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.updId 			= this.updId.bind(this);
 		this.viewSnippet 	= this.viewSnippet.bind(this);
-		this.state = {
-			snippet: {
-				 		"snippetId": "loading snippet id...",
-				 		"snippetText": "loading snippet text..",
-				 		"snippetInfo": "loading snippet info...",
-				 		"timeStamp": "loading timestamp...",
-				 		"languageSelected": "loading language selected...",
-				 		"viewerPassword": "loading viewer password...",
-				 		"viewerPasswordStatus": "0",
-				 	 }
-		}
+		this.state = {}
 	}
-	
-	componentDidMount() {
-	}
-	
+
 	updId = (id) => {
 		this.props.updSnippetIdCallback(id);
 	}
@@ -103,7 +90,8 @@ class ViewerControlPanel extends Component {
 // validate prop types
 ViewerControlPanel.propTypes = {
 	updSnippetIdCallback 	: PropTypes.func.isRequired,
-	time 					: PropTypes.number.isRequired
+	info					: PropTypes.string.isRequired,
+	time					: PropTypes.number.isRequired
 };
 
 export default ViewerControlPanel;

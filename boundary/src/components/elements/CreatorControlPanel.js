@@ -155,7 +155,6 @@ class CreatorControlPanel extends Component {
 
 	render() {
 		var timestampText 	= "Created on: ";
-		
 		var tempSecond = this.props.time
 		var d = new Date(0)
 		d.setUTCSeconds(tempSecond)
@@ -190,13 +189,11 @@ class CreatorControlPanel extends Component {
 				<Link to={'/'+this.props.id}>
 					<Button className="actionButton" variant="primary" onClick={this.viewAsViewer}>View as Viewer</Button>{' '}
 				</Link>
-				<Link>
 					<Button className="actionButton" variant="info" onClick={this.viewSnippet}>View Snippet</Button>{' '}
-				</Link>
 				<Link to='/'>
 					<Button className="actionButton" variant="success">Create New Snippet</Button>{' '}
 				</Link>
-				<Link>
+				<Link to={'/' + this.props.id}>
 					<Button className="actionButton" variant="danger" onClick={this.handleDelete}>Delete Snippet</Button>{' '}
 				</Link>
 			</>
@@ -247,6 +244,7 @@ CreatorControlPanel.propTypes = {
 	id              : PropTypes.string.isRequired,
     password_status : PropTypes.bool.isRequired,
     password        : PropTypes.string.isRequired,
+    info        : PropTypes.string.isRequired,
     time            : PropTypes.number.isRequired
 };
 
