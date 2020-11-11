@@ -33,6 +33,7 @@ class SnippetText extends Component {
 	    this.updateSnippetText = this.updateSnippetText.bind(this);
 	    this.handleChange = this.handleChange.bind(this);
 	    this.handleSubmit = this.handleSubmit.bind(this);
+	    this.handleTextSelection = this.handleTextSelection.bind(this);
 	}
 	
 	componentDidMount() {
@@ -115,6 +116,10 @@ class SnippetText extends Component {
 	handleChange(newValue) {
 	    this.setState({value: newValue})
 	}
+
+  handleTextSelection(selection) {
+    this.props.selectionCallback(selection.getRange())
+  }
 	   
 	successCallback() {
       Swal.fire({
@@ -189,6 +194,7 @@ class SnippetText extends Component {
 					width				= { '100%' }
 					height				= { '84.2vh' }
 					onChange			= { this.handleChange }
+          onSelectionChange   = { this.handleTextSelection }
 					value				= { this.state.value }
                     markers				= { this.state.markers }
 					mode 				= { this.state.textEditorLanguageMode }

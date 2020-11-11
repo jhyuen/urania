@@ -29,6 +29,11 @@ class ViewerView extends Component {
 		this.setState({snippetId : id});
 	}
 	
+  getSelectionCallback = (newRange) => {
+    this.setState({range: newRange})
+    console.log(this.state.range)
+  }
+
 	componentDidMount() {
 		var patt = /\/[^/]*/i
 		var result = window.location.pathname.match(patt)
@@ -53,16 +58,17 @@ class ViewerView extends Component {
 							</div>
 							<div className="snippetText">
 								<SnippetText id={this.state.snippet.snippetId}
-		                           text={this.state.snippet.snippetText}
-		                           comments={this.state.snippet.list}/>
+                             text={this.state.snippet.snippetText}
+                             comments={this.state.snippet.list}
+                             selectionCallback={this.getSelectionCallback}/>
 							</div>
 							<div className="commentPanel">
 								<CommentPanel comments={this.state.snippet.list}/>
 							</div>
 							<div className="controlPanel">
 								<ViewerControlPanel time={ this.state.snippet.timeStamp.epochSecond } 
-													updSnippetIdCallback={ this.updSnippetIdCallback } 
-													info={ this.state.snippet.snippetInfo }/>
+                                    updSnippetIdCallback={ this.updSnippetIdCallback } 
+                                    info={ this.state.snippet.snippetInfo }/>
 							</div>
 				       </div>
 		if (this.state.dataFetched && this.state.status == 201 && !this.state.passwordStatus) {
