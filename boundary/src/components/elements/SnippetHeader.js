@@ -8,11 +8,7 @@ render () {
 	var idText = "Snippet ID: ";
 	return (
       <div className = 'snippetHeader'>
-		<div className = 'leftFloat'>
-			<h2>{ idText }{ this.props.id }</h2>
-		</div>
-		<div className = 'rightFloat'>
-		</div>
+		<h2>{ idText }{ this.props.id }</h2>
       </div>
     );
   }
