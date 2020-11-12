@@ -69,7 +69,6 @@ class ViewerControlPanel extends Component {
 		Swal.fire({
             title: 'Submit Snippet ID',
             input: 'text',
-            width: 600,
             padding: '3em',
             background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
             inputAttributes: {
@@ -87,8 +86,6 @@ class ViewerControlPanel extends Component {
 			                title: 'Error',
 	                        html: 'Snippet not found',
 	                        icon: 'error',
-	                        width: 600,
-	                        padding: '3em',
 	                        background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)'
 		                })
 	               }	          

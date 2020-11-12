@@ -17,12 +17,13 @@ class ViewerView extends Component {
 		 	"languageSelected": "loading language selected...",
 		 	"viewerPassword": "loading viewer password...",
 		 	"viewerPasswordStatus": "0",
-			"list": []
+			"list": [],
 		},
 		dataFetched: false,
 		status: '',
 		passwordStatus: '',
-		password: ''
+		password: '',
+		checked: false
 	}
 	
 	updSnippetIdCallback = (id) => {
@@ -52,7 +53,7 @@ class ViewerView extends Component {
 	}
 
 	render() {
-		let contents = <div className="app">
+		const contents = <div className="app">
 							<div className="snippetHeader">
 								<SnippetHeader time={ this.state.snippet.timeStamp.epochSecond } id={ this.state.snippet.snippetId } />
 							</div>
@@ -70,13 +71,12 @@ class ViewerView extends Component {
                                     updSnippetIdCallback={ this.updSnippetIdCallback } 
                                     info={ this.state.snippet.snippetInfo }/>
 							</div>
-				       </div>
-		if (this.state.dataFetched && this.state.status == 201 && !this.state.passwordStatus) {
-			return <div> {contents} </div> 
+				         </div>
+		if (this.state.dataFetched && this.state.status == 201 && (!this.state.passwordStatus || this.state.checked)) {
+			return <div>{contents}</div>
 		} else if(!this.state.dataFetched){
-			return <h1>Loading Snippet...</h1>
-		} else if(this.state.dataFetched && this.state.status == 201 && this.state.passwordStatus){
-			const popup = { display: 'none' }, H1 = { marginTop: '200px' }
+			return <h1>Loading...</h1>
+		} else if(this.state.dataFetched && this.state.status == 201 && this.state.passwordStatus && !this.state.checked){
 			Swal.fire({
                  title: 'Submit Password',
                  icon: 'info',
@@ -98,23 +98,28 @@ class ViewerView extends Component {
                              `Incorrect Password. Try Again.`
                          )
 	                 } else {
-                         setTimeout(function(){
-	                          document.getElementById('H1').style.display = 'none'
-                         }, 1000) 
-                         setTimeout(function(){
-	                          document.getElementById('popup').style.display = 'block'
-                         }, 1000)                        	                 
+		                 this.setState({ checked: true })                                                 	                 
 	                 }          
                  },
                  allowOutsideClick: false,
                  allowEscapeKey: false
             })
-            return <div> 
-                      <div id='H1' style={H1}> <h1>One moment...</h1> </div>
-                      <div id='popup' style={popup}> {contents} </div>
-                   </div>
+            return <h1></h1>
 		} else {
-		    return <h1>Snippet not found</h1>
+			Swal.fire({
+                 title: 'Snippet not found',
+                 icon: 'error',
+                 padding: '3em',
+                 background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
+                 showConfirmButton: false,
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
+            })
+		    return <h1></h1>
 		}
 	}
 }
