@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Swal from "sweetalert2";
+import './SnippetInfo.css';
 
 class ViewerControlPanel extends Component {
 	constructor(props) {

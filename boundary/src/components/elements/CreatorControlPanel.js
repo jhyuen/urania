@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-//import { Redirect } from 'react-router-dom';
 import './ControlPanel.css';
 import Button from 'react-bootstrap/Button';
-//import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Swal from "sweetalert2";
+import './SnippetInfo.css';
 
 class CreatorControlPanel extends Component {
   constructor(props) {

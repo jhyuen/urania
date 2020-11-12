@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import CommentPanel from '../elements/CommentPanel'
 import SnippetText from '../elements/SnippetText.js';
 import SnippetHeader from '../elements/SnippetHeader';
-import CreatorSnippetInfo from '../elements/CreatorSnippetInfo';
 import CreatorControlPanel from '../elements/CreatorControlPanel';
 import Swal from "sweetalert2";
 
