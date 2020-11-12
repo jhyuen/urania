@@ -4,6 +4,7 @@ import SnippetText from '../elements/SnippetText.js';
 import SnippetHeader from '../elements/SnippetHeader';
 import CreatorSnippetInfo from '../elements/CreatorSnippetInfo';
 import CreatorControlPanel from '../elements/CreatorControlPanel';
+import Swal from "sweetalert2";
 
 class CreatorView extends Component {
 
@@ -29,8 +30,7 @@ class CreatorView extends Component {
 				"column": null
 			}
 		},
-		status: '',
-		fun: []
+		status: ''
 	}
 	
 	componentDidMount() {
@@ -90,9 +90,22 @@ class CreatorView extends Component {
 					</div>
 			)
 		} else if(!this.state.dataFetched) {
-			return <h1>Loading Snippet...</h1>
+			return <h1>Loading...</h1>
 		} else {
-			return <h1>Snippet not found</h1>
+			Swal.fire({
+                 title: 'Snippet not found',
+                 padding: '3em',
+                 icon: 'error',
+                 background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
+                 showConfirmButton: false,
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
+            })
+			return <h1></h1>
 		}
 		
 	}
