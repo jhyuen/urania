@@ -1,10 +1,9 @@
 .comment {
-	height: 70px;
+	height: 125px;
 	background-color: #444444;
 	border-radius: 5px;
 	padding: 10px;
 	margin-bottom: 10px;
-	margin-top: 10px;	
 }
 
 .commentInput {
@@ -25,7 +24,7 @@
 .displayCommentTextArea {
 	padding: 7px;
 	height: 50px;
-	width: 80%;
+	width: 83%;
 	border-radius: 5px;
 	background-color: #444444;
 	color: #FCFCFC;
@@ -46,4 +45,18 @@
 
 .commentInput {
 	margin-top: 12px;
+}
+
+.commentHeader {
+	background-color: #333333;
+	padding: 7px;
+	height: 40px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+.commentList {
+	margin-top: 10px;
+	height: 78.8vh;
+	overflow: auto;
 }

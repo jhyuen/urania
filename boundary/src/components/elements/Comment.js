@@ -8,20 +8,26 @@ class Comment extends Component {
 	onChange = () => {}
 	
 	render() {
+		var tempSecond = this.props.comment.timeStamp.epochSecond
+		var d = new Date(0)
+		d.setUTCSeconds(tempSecond)
 		return (
 			<div className='comment'>
-					<textarea 
-						className='displayCommentTextArea'
-						type="text"
-						disabled
-						name="text"
-						value={ this.props.comment.commentText }
-						onChange={ this.onChange }
-						readOnly
-					/>
-					<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
-						<Delete/>
-					</Button>
+				<div className="commentHeader"> 
+					<p>{d.toLocaleString()}</p>
+				</div>
+				<textarea 
+					className='displayCommentTextArea'
+					type="text"
+					disabled
+					name="text"
+					value={ this.props.comment.commentText }
+					onChange={ this.onChange }
+					readOnly
+				/>
+				<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
+					<Delete/>
+				</Button>	
 			</div>
 		)
 	}

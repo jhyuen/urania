@@ -1,6 +1,11 @@
+html {
+	height: 100%;
+}
+
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	line-height: 1.4;
+	height: 100%;
 }
 
 a {
@@ -55,11 +60,11 @@ label {
 	grid-column-end: 4;
 	grid-row-start: 2;
 	grid-row-end: 3;
-	padding: 20px;
+	padding: 20px 20px 0px 20px;
 }
 
 .controlPanel {
-	background-color: #252526;
+	background-color: #333333;
 	grid-column-start: 1;
 	grid-column-end: 2;
 	grid-row-start: 2;

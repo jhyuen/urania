@@ -22,7 +22,7 @@
 	margin-right: 10px;
 }
 
-#dropdown-editor-mode {
+#dropdown-selection-type {
 	height: 40px;
 	width: 100px;
 	float: right;
@@ -42,3 +42,5 @@
   position: absolute;
   background-color: #595959;
 }
+ 
+

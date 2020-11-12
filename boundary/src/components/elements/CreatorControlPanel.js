@@ -144,12 +144,11 @@ class CreatorControlPanel extends Component {
   }
 
   fetchSnippet = async (id) => {
-		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
 	  var get_snippet_url = base_url + id + "/snippet"; 
-		var data = await fetch(get_snippet_url)
-		
-		var snippetData = await data.json()
-    return snippetData.httpCode
+	  var data = await fetch(get_snippet_url)
+	  var snippetData = await data.json()
+	  return snippetData.httpCode
 	}
 
 	render() {

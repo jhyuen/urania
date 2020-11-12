@@ -101,7 +101,9 @@ class CommentPanel extends Component {
 			<>
 				<h2>Comments</h2>
 				<CommentEnterArea addComment={ this.addComment } />
-				<CommentList comments={ this.state.comments } delComment={ this.delComment }/>
+				<div className="commentList">
+					<CommentList comments={ this.state.comments } delComment={ this.delComment }/>
+				</div>
 			</>
 		)
 	}
