@@ -36,8 +36,9 @@ class CommentPanel extends Component {
 		})
 		.then(response => response.json())
 		.then(responseData => {
-			console.log(responseData.snippetId)
-			console.log(responseData)
+			//console.log(responseData.snippetId)
+			//console.log(responseData)
+			this.props.commentCallback(responseData.list)
         	return responseData
 		})
 		.catch(error => {
@@ -47,8 +48,8 @@ class CommentPanel extends Component {
 	}
 
 	delComment = (cID) => {
-		var snippet = this.deleteCommentRequest(cID);
-		console.log(snippet)
+		var response = this.deleteCommentRequest(cID);
+		console.log(response)
 		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== cID)] });
 	}
 		
