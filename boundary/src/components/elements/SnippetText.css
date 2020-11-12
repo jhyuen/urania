@@ -22,7 +22,7 @@
 	margin-right: 10px;
 }
 
-#dropdown-selection-type {
+#dropdown-editor-mode {
 	height: 40px;
 	width: 100px;
 	float: right;
@@ -39,8 +39,6 @@
 }
 
 .highlight {
-  position: absolute;
-  background-color: #595959;
+  	position: absolute;
+  	background-color: #595959;
 }
- 
-
