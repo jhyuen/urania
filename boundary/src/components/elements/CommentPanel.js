@@ -19,7 +19,6 @@ class CommentPanel extends Component {
 	
 	componentDidMount() {
 		this.setState({ comments: this.props.comments })
-    	console.log(this.props.text)
 	}
 
     fetchSnippet = async () => {
@@ -74,8 +73,6 @@ class CommentPanel extends Component {
 	    if (((selR.start.row != selR.end.row) 
 	    		|| (selR.start.column != selR.end.column))
 	    		&& text != '') {
-		console.log(this.props.text)
-		console.log(result)
 		if(result === this.props.text) {
 	      console.log("legal comment")
 	      const newComment = {	

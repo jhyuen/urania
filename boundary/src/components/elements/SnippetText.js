@@ -129,7 +129,6 @@ class SnippetText extends Component {
 	}
 	
 	handleChange(newValue) {
-	    this.setState({value: newValue})
         this.props.updTextCallback(newValue)
 	}
 
