@@ -29,7 +29,8 @@ class CreatorView extends Component {
 				"column": null
 			}
 		},
-		status: ''
+		status: '',
+		text: null
 	}
 	
 	componentDidMount() {
@@ -40,7 +41,11 @@ class CreatorView extends Component {
 
 	getSelectionCallback = (newRange) => {
 		this.setState({range: newRange})
-		console.log(this.state.range)
+	}
+	
+	getTextCallback = (newValue) => {
+		this.setState({text: newValue})
+		console.log(this.state.text)
 	}
 
 	updateCommentsCallback = (comments) => {
@@ -70,13 +75,15 @@ class CreatorView extends Component {
 							<SnippetText id={this.state.snippet.snippetId}
 										text={this.state.snippet.snippetText}
 										comments={this.state.snippet.list}
-										selectionCallback={this.getSelectionCallback}/>
+										selectionCallback={this.getSelectionCallback}
+										updTextCallback={this.getTextCallback}/>
 						</div>
 						<div className="commentPanel">
 							<CommentPanel range={this.state.range}
                             			  id={this.state.snippet.snippetId}
 										  comments={this.state.snippet.list}
                             			  commentCallback={this.updateCommentsCallback}
+                                          text={this.state.text}
 							/>
 						</div>
 						<div className="controlPanel">
@@ -104,7 +111,7 @@ class CreatorView extends Component {
                  allowOutsideClick: false,
                  allowEscapeKey: false
             })
-			return <h1></h1>
+			return <></>
 		}
 		
 	}

@@ -22,7 +22,18 @@ class ViewerView extends Component {
 		status: '',
 		passwordStatus: '',
 		password: '',
-		checked: false
+		range: {
+			start : {
+				"row": null,
+				"column": null
+			},
+			end: {
+				"row": null,
+				"column": null
+			}
+		},
+		checked: false,
+		text: null
 	}
 	
 	updSnippetIdCallback = (id) => {
@@ -34,6 +45,10 @@ class ViewerView extends Component {
     console.log(this.state.range)
   }
 
+   getTextCallback = (newValue) => {
+		this.setState({text: newValue})
+		console.log(this.state.text)
+	}
 	componentDidMount() {
 		var patt = /\/[^/]*/i
 		var result = window.location.pathname.match(patt)
@@ -60,11 +75,15 @@ class ViewerView extends Component {
 								<SnippetText id={this.state.snippet.snippetId}
 				                             text={this.state.snippet.snippetText}
 				                             comments={this.state.snippet.list}
-				                             selectionCallback={this.getSelectionCallback}/>
+				                             selectionCallback={this.getSelectionCallback}
+                                             updTextCallback={this.getTextCallback}/>
 							</div>
 							<div className="commentPanel">
-								<CommentPanel id={ this.state.snippet.snippetId }
-												comments={this.state.snippet.list}/>
+								<CommentPanel range={this.state.range}
+								              id={ this.state.snippet.snippetId }
+										      comments={this.state.snippet.list}
+											  text={this.state.text}
+											/>
 								}
 							</div>
 							<div className="controlPanel">
@@ -106,7 +125,7 @@ class ViewerView extends Component {
                  allowOutsideClick: false,
                  allowEscapeKey: false
             })
-            return <h1></h1>
+            return <></>
 		} else {
 			Swal.fire({
                  title: 'Snippet not found',
@@ -121,7 +140,7 @@ class ViewerView extends Component {
                  allowOutsideClick: false,
                  allowEscapeKey: false
             })
-		    return <h1></h1>
+		    return <></>
 		}
 	}
 }

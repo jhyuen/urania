@@ -51,7 +51,6 @@ class SnippetText extends Component {
 	}
 	
 	static getDerivedStateFromProps(nextProps, prevState) {
-		console.log("Deriving: " + nextProps.comments)
 		let newMarkers = []
 		nextProps.comments.map((comment) => (
 				newMarkers.push({startRow		: comment.startLine,
@@ -131,6 +130,7 @@ class SnippetText extends Component {
 	
 	handleChange(newValue) {
 	    this.setState({value: newValue})
+        this.props.updTextCallback(newValue)
 	}
 
   handleTextSelection(selection) {
