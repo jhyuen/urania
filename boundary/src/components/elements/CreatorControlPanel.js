@@ -235,16 +235,13 @@ class CreatorControlPanel extends Component {
             confirmButtonText: 'Look up',
             showLoaderOnConfirm: true,
             preConfirm: (id) => {
-	           let res = this.fetchSnippet(id).then(function(result) {
+	           return this.fetchSnippet(id).then(result => {
                		if (result === 201) {
 	                	window.location.pathname = '/' + id + '/creator';  
                		} else {
-		                Swal.fire({
-			                title: 'Error',
-	                        html: 'Snippet not found',
-	                        icon: 'error',
-	                        background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)'
-	                })
+		                 Swal.showValidationMessage(
+                             `Invalid Snippet ID. Try Again.`
+                         )
                }	          
               })            	                 
             },

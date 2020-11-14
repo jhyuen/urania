@@ -21,10 +21,8 @@ class ViewerControlPanel extends Component {
 	fetchSnippet = async (id) => {
 		var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
 	    var get_snippet_url = base_url + id + "/snippet"; 
-		var data = await fetch(get_snippet_url)
-		
+		var data = await fetch(get_snippet_url)	
 		var snippetData = await data.json()
-		console.log(snippetData)
         return snippetData.httpCode
 	}
 
@@ -67,18 +65,15 @@ class ViewerControlPanel extends Component {
             confirmButtonText: 'Look up',
             showLoaderOnConfirm: true,
             preConfirm: (id) => {
-	           let res = this.fetchSnippet(id).then(function(result) {
-	               if(result === 201) {
-		                 window.location.pathname = '/' + id;  
-	               } else {
-		                Swal.fire({
-			                title: 'Error',
-	                        html: 'Snippet not found',
-	                        icon: 'error',
-	                        background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)'
-		                })
-	               }	          
-              })            	                 
+	           return this.fetchSnippet(id).then(result => {
+               		if (result === 201) {
+	                	window.location.pathname = '/' + id;  
+               		} else {
+		                 Swal.showValidationMessage(
+                             `Invalid Snippet ID. Try Again.`
+                         )
+               }	          
+              })          	                 
             },
             allowOutsideClick: () => !Swal.isLoading()
         })
