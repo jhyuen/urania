@@ -60,7 +60,7 @@ class CreatorView extends Component {
 		var snippetData = await data.json()
 		//console.log(snippetData.viewerPasswordStatus)
 		console.log(snippetData.viewerPassword)
-		this.setState({ snippet: snippetData, dataFetched : true, status: snippetData.httpCode })
+		this.setState({ snippet: snippetData, dataFetched : true, status: snippetData.httpCode, text: snippetData.snippetText })
 		console.log(this.state.snippet.list)
 	}
 	

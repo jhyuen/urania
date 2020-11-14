@@ -70,6 +70,8 @@ class CommentPanel extends Component {
 	    // check range
 		this.fetchSnippet().then((result) => { 
 			var selR = this.props.range
+			console.log(this.props.text)
+			console.log(result)
 	    if (((selR.start.row != selR.end.row) 
 	    		|| (selR.start.column != selR.end.column))
 	    		&& text != '') {
@@ -126,16 +128,16 @@ class CommentPanel extends Component {
 	} 
 	
 	render() {
-		let addBtn;
+		const addBtn = document.getElementsByClassName('addButton')[0]
 		let selR = this.props.range;
 		if((((selR.start.row != selR.end.row) 
 	    		|| (selR.start.column != selR.end.column))
-	    		)) { addBtn = <CommentEnterArea addComment={ this.addComment } /> }
-		else { addBtn = <div hidden><CommentEnterArea addComment={ this.addComment } /></div> }
+	    		)) { addBtn.disabled = false }
+        else { addBtn.disabled = true }
 		return(
 			<>
 				<h2>Comments</h2>
-				{addBtn}
+				<CommentEnterArea addComment={ this.addComment } />
 				<div className="commentList">
 					<CommentList comments={ this.state.comments } delComment={ this.delComment }/>
 				</div>

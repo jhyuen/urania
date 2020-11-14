@@ -42,13 +42,17 @@ class ViewerView extends Component {
 	
   getSelectionCallback = (newRange) => {
     this.setState({range: newRange})
-    console.log(this.state.range)
   }
 
    getTextCallback = (newValue) => {
 		this.setState({text: newValue})
 		console.log(this.state.text)
 	}
+	
+	updateCommentsCallback = (comments) => {
+		this.setState({ snippet: { ...this.state.snippet, list: comments} });
+	}
+	
 	componentDidMount() {
 		var patt = /\/[^/]*/i
 		var result = window.location.pathname.match(patt)
@@ -61,9 +65,7 @@ class ViewerView extends Component {
 		var data = await fetch(get_snippet_url)
 		
 		var snippetData = await data.json()
-		console.log(snippetData.viewerPasswordEnabled)
-		console.log(snippetData)
-		this.setState({ snippet: snippetData, dataFetched : true, status: snippetData.httpCode, passwordStatus: snippetData.viewerPasswordEnabled, password: snippetData.viewerPassword  })
+		this.setState({ snippet: snippetData, dataFetched : true, status: snippetData.httpCode, passwordStatus: snippetData.viewerPasswordEnabled, password: snippetData.viewerPassword, text: snippetData.snippetText  })
 	}
 
 	render() {
@@ -82,6 +84,7 @@ class ViewerView extends Component {
 								<CommentPanel range={this.state.range}
 								              id={ this.state.snippet.snippetId }
 										      comments={this.state.snippet.list}
+				                              commentCallback={this.updateCommentsCallback}
 											  text={this.state.text}
 											/>
 								}

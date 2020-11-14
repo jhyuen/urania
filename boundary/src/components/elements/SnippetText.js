@@ -119,7 +119,7 @@ class SnippetText extends Component {
 	}
 	
 	setVsCode() {
-	    this.setState({ dropDownEditorModeValue: 'VS Code' })
+	    this.setState({ dropDownEditorModeValue: 'Standard' })
 		this.setState({ textEditorKeyboardHandler: 'vscode' })
 		//console.log(this.state.textEditorLanguageMode)
 	}
@@ -129,6 +129,8 @@ class SnippetText extends Component {
 	}
 	
 	handleChange(newValue) {
+		this.setState({value: newValue})
+		console.log(this.state.value)
         this.props.updTextCallback(newValue)
 	}
 

@@ -71,15 +71,30 @@ class CreatorControlPanel extends Component {
 			  //'Accept': 'application/json',
 			  //'Content-Type': 'application/json'
 		  //}
-	  })
-	    .catch(error => {
+	  }).catch(error => {
 	      console.log("error", error);
 	      alert("An error occured, please try again later.");
 	    });
   }
 
   handleDelete(event) {
-    this.deleteSnippet().then(this.successDeleteCallback, this.failureDeleteCallback);
+	Swal.fire({
+  title: 'Delete Confirmation',
+  showDenyButton: true,
+  showCancelButton: false,
+  icon: 'warning',
+  confirmButtonColor: '#d33',
+  denyButtonColor: '#3085d6',
+  html: 'Are you sure you want to delete the snippet?',
+  confirmButtonText: `Yes, Delete`,
+  background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+  denyButtonText: `No, Go Back`,
+}).then((result) => {
+  if (result.isConfirmed) {
+     this.deleteSnippet().then(this.successDeleteCallback, this.failureDeleteCallback);
+  } 
+})
+   
   }
   
   handleChange(event) {
@@ -113,16 +128,20 @@ class CreatorControlPanel extends Component {
     }
 
   successDeleteCallback() {
+      document.getElementById('root').innerHTML = <></>
       Swal.fire({
-	      title: 'Success',
-          html: 'Snippet Deleted!',
-          icon: 'success',
-          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
-          backdrop: ` rgba(0,0,123,0.4)
-                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
-                      left top
-                      no-repeat`
-      })
+                 title: 'Snippet deleted',
+                 padding: '3em',
+                 icon: 'success',
+                 background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
+                 showConfirmButton: false,
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
+            })
     }
 
    failureDeleteCallback() {
@@ -185,15 +204,14 @@ class CreatorControlPanel extends Component {
 		        <br></br>
 		        <h2>Actions</h2>
 				<Link to={'/'+this.props.id}>
-					<Button className="actionButton" variant="primary" onClick={this.viewAsViewer}>View as Viewer</Button>{' '}
+					<Button className="actionButton" variant="primary">View as Viewer</Button>{' '}
 				</Link>
 					<Button className="actionButton" variant="info" onClick={this.viewSnippet}>View Snippet</Button>{' '}
 				<Link to='/'>
 					<Button className="actionButton" variant="success">Create New Snippet</Button>{' '}
 				</Link>
-				<Link to={'/' + this.props.id}>
-					<Button className="actionButton" variant="danger" onClick={this.handleDelete}>Delete Snippet</Button>{' '}
-				</Link>
+				<Button className="actionButton" variant="danger" onClick={this.handleDelete}>Delete Snippet</Button>{' '}
+				
 			</>
 		)
 	};
