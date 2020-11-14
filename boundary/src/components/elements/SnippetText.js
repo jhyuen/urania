@@ -15,7 +15,6 @@ import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/keybinding-vim";
 import "ace-builds/src-noconflict/keybinding-emacs";
 import "ace-builds/src-noconflict/keybinding-sublime";
-import "ace-builds/src-noconflict/keybinding-vscode";
 
 class SnippetText extends Component {
 
@@ -25,8 +24,8 @@ class SnippetText extends Component {
 	    	value						: "",
 	    	dropDownLanguageValue		: 'Java',
 			textEditorLanguageMode		: 'java',
-	    	dropDownEditorModeValue		: 'Vim',
-			textEditorKeyboardHandler	: 'vim',
+	    	dropDownEditorModeValue		: 'Sublime',
+			textEditorKeyboardHandler	: 'sublime',
 	    	markers						: []
 	    }
 	    
@@ -85,43 +84,31 @@ class SnippetText extends Component {
 	setJava() {
 	    this.setState({ dropDownLanguageValue: 'Java' })
 		this.setState({ textEditorLanguageMode: 'java' })
-		//console.log(this.state.textEditorLanguageMode)
 	}
 	
 	setPython() {
 	    this.setState({ dropDownLanguageValue: 'Python' })
 		this.setState({ textEditorLanguageMode: 'python' })
-		//console.log(this.state.textEditorLanguageMode)
 	}
 	
 	setCpp() {
 	    this.setState({ dropDownLanguageValue: 'C++' })
 		this.setState({ textEditorLanguageMode: 'c_cpp' })
-		//console.log(this.state.textEditorLanguageMode)
 	}
 	
 	setSublime() {
 	    this.setState({ dropDownEditorModeValue: 'Sublime' })
 		this.setState({ textEditorKeyboardHandler: 'sublime' })
-		//console.log(this.state.textEditorLanguageMode)
 	}
 	
 	setVim() {
 	    this.setState({ dropDownEditorModeValue: 'Vim' })
 		this.setState({ textEditorKeyboardHandler: 'vim' })
-		//console.log(this.state.textEditorLanguageMode)
 	}
 	
 	setEmacs() {
 	    this.setState({ dropDownEditorModeValue: 'Emacs' })
 		this.setState({ textEditorKeyboardHandler: 'emacs' })
-		//console.log(this.state.textEditorLanguageMode)
-	}
-	
-	setVsCode() {
-	    this.setState({ dropDownEditorModeValue: 'Standard' })
-		this.setState({ textEditorKeyboardHandler: 'vscode' })
-		//console.log(this.state.textEditorLanguageMode)
 	}
 	
 	changeSelectionValue(text) {
@@ -197,10 +184,9 @@ class SnippetText extends Component {
 					<Dropdown.Menu>
 						<Dropdown.Header>Editor Mode</Dropdown.Header>
 						<Dropdown.Divider />
+						<Dropdown.Item as="button"><div onClick={ () => this.setSublime() }>Sublime</div></Dropdown.Item>
 						<Dropdown.Item as="button"><div onClick={ () => this.setVim() }>Vim</div></Dropdown.Item>
 						<Dropdown.Item as="button"><div onClick={ () => this.setEmacs() }>Emacs</div></Dropdown.Item>
-						<Dropdown.Item as="button"><div onClick={ () => this.setSublime() }>Sublime</div></Dropdown.Item>
-						<Dropdown.Item as="button"><div onClick={ () => this.setVsCode() }>VS Code</div></Dropdown.Item>
 					</Dropdown.Menu>
 					</Dropdown>
 				</div>
