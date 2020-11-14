@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loader from '../elements/Loader';
 import { Redirect } from 'react-router-dom';
 
 class NewSnippet extends Component {
@@ -9,6 +10,7 @@ class NewSnippet extends Component {
 	
 	componentDidMount() {
 		this.fetchNewSnippetId()
+		document.getElementById('lText').innerHTML = 'Creating New Snippet'
 	}
 	
 	fetchNewSnippetId = async () => {
@@ -34,7 +36,7 @@ class NewSnippet extends Component {
 		if (this.state.redirect === true) {
 			return <Redirect to={{ pathname: '/'+ this.state.snippetId + '/creator' }} />
 		} else {
-			return <h1>Creating New Snippet</h1>
+			return <Loader/>
 		}
 	}
 }

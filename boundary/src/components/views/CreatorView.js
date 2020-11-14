@@ -3,6 +3,7 @@ import CommentPanel from '../elements/CommentPanel'
 import SnippetText from '../elements/SnippetText.js';
 import SnippetHeader from '../elements/SnippetHeader';
 import CreatorControlPanel from '../elements/CreatorControlPanel';
+import Loader from '../elements/Loader';
 import Swal from "sweetalert2";
 
 class CreatorView extends Component {
@@ -95,7 +96,7 @@ class CreatorView extends Component {
 					</div>
 			)
 		} else if(!this.state.dataFetched) {
-			return <h1>Loading...</h1>
+			return <Loader/>
 		} else {
 			Swal.fire({
                  title: 'Snippet not found',

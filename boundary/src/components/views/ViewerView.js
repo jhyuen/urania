@@ -3,6 +3,7 @@ import CommentPanel from '../elements/CommentPanel'
 import SnippetText from '../elements/SnippetText.js';
 import SnippetHeader from '../elements/SnippetHeader';
 import ViewerControlPanel from '../elements/ViewerControlPanel';
+import Loader from '../elements/Loader';
 import Swal from "sweetalert2";
 
 class ViewerView extends Component {
@@ -98,7 +99,7 @@ class ViewerView extends Component {
 		if (this.state.dataFetched && this.state.status == 201 && (!this.state.passwordStatus || this.state.checked)) {
 			return <div>{contents}</div>
 		} else if(!this.state.dataFetched){
-			return <h1>Loading...</h1>
+			return <Loader/>
 		} else if(this.state.dataFetched && this.state.status == 201 && this.state.passwordStatus && !this.state.checked){
 			Swal.fire({
                  title: 'Submit Password',
