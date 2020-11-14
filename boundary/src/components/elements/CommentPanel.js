@@ -128,12 +128,14 @@ class CommentPanel extends Component {
 	} 
 	
 	render() {
-		const addBtn = document.getElementsByClassName('addButton')[0]
+		setTimeout(()=>{
+			const addBtn = document.getElementsByClassName('addButton')[0]
 		let selR = this.props.range;
 		if((((selR.start.row != selR.end.row) 
 	    		|| (selR.start.column != selR.end.column))
 	    		)) { addBtn.disabled = false }
         else { addBtn.disabled = true }
+		}, 100)
 		return(
 			<>
 				<h2>Comments</h2>
