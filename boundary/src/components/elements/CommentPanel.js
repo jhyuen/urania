@@ -15,10 +15,62 @@ class CommentPanel extends Component {
 	    	comments: []
 	    }
 	    this.deleteCommentRequest = this.deleteCommentRequest.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAddComment = this.handleAddComment.bind(this);
+        this.addComment = this.addComment.bind(this);
 	}
 	
 	componentDidMount() {
 		this.setState({ comments: this.props.comments })
+	}
+	
+	successCallback(text, selR) {
+      Swal.fire({
+	      title: 'Success',
+          html: 'Snippet Updated!',
+          icon: 'success',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      }).then(()=> {
+	       this.addComment(text, selR)
+      })
+    }
+
+    failureCallback() {
+      Swal.fire({
+	      title: 'Error',
+          html: 'Unable to Update Snippet',
+          icon: 'error',
+          background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })
+    }
+	
+	handleSubmit(text, selR) {
+	    this.updateSnippetText().then(this.successCallback(text, selR), this.failureCallback);  
+	}
+	
+	updateSnippetText = async () => {
+		  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+		  var update_url = base_url + this.props.id + "/text";
+		  fetch(update_url, {
+			  method: 'POST',
+			  body: JSON.stringify({text: this.props.text}),
+			  headers: {
+				  'Accept': 'application/json',
+				  'Content-Type': 'application/json'
+			  }
+		  })
+		    .catch(error => {
+		      console.log("error", error);
+		      alert("An error occured, please try again later.");
+		    });
 	}
 
     fetchSnippet = async () => {
@@ -31,8 +83,6 @@ class CommentPanel extends Component {
 	}
 	
 	deleteCommentRequest = async (cID) => {
-    	console.log(this.props.id)
-    	console.log(cID)
     	var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
     	var update_url = base_url + this.props.id + "/delete_comment";
 		fetch(update_url, {
@@ -62,22 +112,13 @@ class CommentPanel extends Component {
 
 	delComment = (cID) => {
 		var response = this.deleteCommentRequest(cID);
-		console.log(response)
 		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== cID)] });
 	}
-		
-	addComment = async (text) => {
-	    // check range
-		this.fetchSnippet().then((result) => { 
-			var selR = this.props.range
-			console.log(this.props.text)
-			console.log(result)
-	    if (((selR.start.row != selR.end.row) 
-	    		|| (selR.start.column != selR.end.column))
-	    		&& text != '') {
-		if(result === this.props.text) {
-	      console.log("legal comment")
-	      const newComment = {	
+	
+	addComment = async (text, selR) => {
+		console.log(selR);
+		console.log(selR.start);
+		const newComment = {	
 	          commentText	: text,
 	          sL	: selR.start.row,
 	          sI	: selR.start.column,
@@ -104,16 +145,35 @@ class CommentPanel extends Component {
 	      .catch(error => {
 	            console.log("error", error);
 	            alert("An error occured, please try again later.");
-	      }); }
+	      });
+	}
+		
+	handleAddComment = (text) => {
+	    // check range
+		this.fetchSnippet().then((result) => { 
+			let selR = this.props.range
+	    if (((selR.start.row != selR.end.row) 
+	    		|| (selR.start.column != selR.end.column))
+	    		&& text != '') {
+		if(result === this.props.text) {
+	      console.log("legal comment")
+          this.addComment(text, selR)
+	       }
 	       else { 
 		       Swal.fire({
             title: 'Unsaved Snippet Text',
             padding: '3em',
             icon: 'warning',
+            showCancelButton: true,
             background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
-            html: 'You have unsaved changes',
-            allowOutsideClick: () => !Swal.isLoading()
-        })
+            html: 'Do you want save your changes?',
+            confirmButtonText: `Save & Add Comment`,
+            allowOutsideClick: () => !Swal.isLoading()            
+        }).then((result) => {
+  if (result.isConfirmed) {
+     this.handleSubmit(text, selR)
+  } 
+})
 	        }
 	      //this.setState({ comments: [...this.state.comments, newComment] });
 	    } else { 
@@ -139,7 +199,7 @@ class CommentPanel extends Component {
 		return(
 			<>
 				<h2>Comments</h2>
-				<CommentEnterArea addComment={ this.addComment } />
+				<CommentEnterArea addComment={ this.handleAddComment } />
 				<div className="commentList">
 					<CommentList comments={ this.state.comments } delComment={ this.delComment }/>
 				</div>

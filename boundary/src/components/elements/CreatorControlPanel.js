@@ -88,7 +88,7 @@ class CreatorControlPanel extends Component {
   html: 'Are you sure you want to delete the snippet?',
   confirmButtonText: `Yes, Delete`,
   background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
-  denyButtonText: `No, Go Back`,
+  denyButtonText: `No, Go Back`
 }).then((result) => {
   if (result.isConfirmed) {
      this.deleteSnippet().then(this.successDeleteCallback, this.failureDeleteCallback);

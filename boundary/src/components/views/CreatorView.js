@@ -45,7 +45,6 @@ class CreatorView extends Component {
 	
 	getTextCallback = (newValue) => {
 		this.setState({text: newValue})
-		console.log(this.state.text)
 	}
 
 	updateCommentsCallback = (comments) => {
