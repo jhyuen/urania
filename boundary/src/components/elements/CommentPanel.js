@@ -3,6 +3,7 @@ import CommentList from './CommentList'
 import CommentEnterArea from './CommentEnterArea.js'
 import PropTypes from 'prop-types';
 import './CommentPanel.css';
+import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from "sweetalert2";
 
@@ -22,12 +23,7 @@ class CommentPanel extends Component {
 	
 	componentDidMount() {
 		this.setState({ comments: this.props.comments })
-		const addBtn = document.getElementsByClassName('addButton')[0]
-		let selR = this.props.range;
-		if((((selR.start.row != selR.end.row) 
-	    		|| (selR.start.column != selR.end.column))
-	    		)) { addBtn.disabled = false }
-        else { addBtn.disabled = true }
+		
 	}
 	
 	successCallback(text, selR) {
@@ -123,7 +119,6 @@ class CommentPanel extends Component {
 	
 	addComment = async (text, selR) => {
 		console.log(selR);
-		console.log(selR.start);
 		const newComment = {	
 	          commentText	: text,
 	          sL	: selR.start.row,
@@ -194,10 +189,23 @@ class CommentPanel extends Component {
 	} 
 	
 	render() {
+		let addBtn;
+		let selR = this.props.range;
+		
+		if((((selR.start.row != selR.end.row) 
+	    		|| (selR.start.column != selR.end.column))
+	    		)) { 
+		addBtn = <Button className="addButton" type="submit" variant="primary">
+			        Add
+				 </Button> }
+        else { 
+	    addBtn = <Button disabled className="addButton" type="submit" variant="primary">
+					Add
+				 </Button> }
 		return(
 			<>
 				<h2>Comments</h2>
-				<CommentEnterArea addComment={ this.handleAddComment } />
+				<CommentEnterArea addComment={ this.handleAddComment } btn={addBtn}/>
 				<div className="commentList">
 					<CommentList comments={ this.state.comments } delComment={ this.delComment }/>
 				</div>

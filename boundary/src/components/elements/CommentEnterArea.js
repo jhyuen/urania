@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
-
 
 export class CommentEnterArea extends Component {
 
@@ -30,9 +28,7 @@ export class CommentEnterArea extends Component {
 					value={ this.state.text }
 					onChange={ this.onChange }
 				/>
-				<Button className="addButton" type="submit" variant="primary">
-					Add
-				</Button>
+				{this.props.btn}
 			</form>
 		)
 	}
