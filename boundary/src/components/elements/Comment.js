@@ -17,10 +17,10 @@ class Comment extends Component {
 				<div className="commentHeader"> 
 					<p className="commentTimestamp">{d.toLocaleString()}</p>
 					<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
-						<Delete fontSize="medium" className="commentButton" />
+						<Delete className="commentButton" />
 					</Button>	
 					<Button className="identifyButton" variant="info" onClick={ this.props.identifyComment.bind(this, this.props.comment.commentID) }>
-						<SearchIcon fontSize="medium" className="commentButton"/>
+						<SearchIcon className="commentButton"/>
 					</Button>					
 				</div>
 				<textarea 

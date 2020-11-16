@@ -42,3 +42,8 @@
   	position: absolute;
   	background-color: #595959;
 }
+
+.selectedHighlight {
+  	position: absolute;
+  	background-color: #a8322b;
+}

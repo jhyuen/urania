@@ -44,24 +44,33 @@ class SnippetText extends Component {
 	                       endCol		: comment.endIndex,
 	                       className	: "highlight",
 	                       type			: "text" })
-			));
-			this.setState({ value: this.props.text, markers: newMarkers
-	                    })
+		));
+		this.setState({ value: this.props.text, markers: newMarkers })
 	}
 	
 	static getDerivedStateFromProps(nextProps, prevState) {
 		let newMarkers = []
-		nextProps.comments.map((comment) => (
-				newMarkers.push({startRow		: comment.startLine,
-			                       startCol		: comment.startIndex,
-			                       endRow		: comment.endLine,
-			                       endCol		: comment.endIndex,
-			                       className	: "highlight",
-			                       type			: "text" })
-					));	
-		return {
-			markers: newMarkers
-		 };
+		nextProps.comments.map((comment) => {
+			if (nextProps.selectedCommentId == comment.commentID) {
+				console.log(nextProps.selectedCommentId)
+				newMarkers.push({ 
+					startRow		: comment.startLine,
+				    startCol		: comment.startIndex,
+				    endRow			: comment.endLine,
+				    endCol			: comment.endIndex,
+				    className		: "selectedHighlight",
+				    type			: "text" })
+			} else {
+				newMarkers.push({
+					startRow		: comment.startLine,
+                    startCol		: comment.startIndex,
+                    endRow			: comment.endLine,
+                    endCol			: comment.endIndex,
+                    className		: "highlight",
+                    type			: "text" })
+			}     
+		})	
+		return { markers: newMarkers };
 	}
 	
 	updateSnippetText = async () => {
@@ -217,7 +226,8 @@ class SnippetText extends Component {
 SnippetText.propTypes = {
 		id :       PropTypes.string.isRequired,
 		text :     PropTypes.string.isRequired,
-        comments : PropTypes.array.isRequired
+        comments : PropTypes.array.isRequired,
+        selectedCommentId : PropTypes.string.isRequired
 };
 
 export default SnippetText;

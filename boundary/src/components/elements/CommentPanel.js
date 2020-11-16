@@ -108,6 +108,10 @@ class CommentPanel extends Component {
 	     });
 	}
 	
+	identifyCommentRequest(cID) {
+		this.props.selectedCommentIdCallback(cID)
+	}
+	
 	handleTextSelection(selection) {
       this.props.selectionCallback(selection.getRange())
     }
@@ -118,8 +122,7 @@ class CommentPanel extends Component {
 	}
 	
 	identifyComment = (cID) =>  {
-		//var response = this.identifyCommentRequest(cID);
-		console.log("Hello")
+		this.identifyCommentRequest(cID);
 	}
 	
 	addComment = async (text, selR) => {

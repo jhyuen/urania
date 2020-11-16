@@ -31,7 +31,8 @@ class CreatorView extends Component {
 			}
 		},
 		status: '',
-		text: null
+		text: null,
+		selectedCId: ''
 	}
 	
 	componentDidMount() {
@@ -48,6 +49,10 @@ class CreatorView extends Component {
 		this.setState({text: newValue})
 	}
 
+	getSelectedCommentId = (newId) => {
+		this.setState({selectedCId: newId})
+	}
+	
 	updateCommentsCallback = (comments) => {
 		this.setState({ snippet: { ...this.state.snippet, list: comments} });
 	}
@@ -76,13 +81,16 @@ class CreatorView extends Component {
 										text={this.state.snippet.snippetText}
 										comments={this.state.snippet.list}
 										selectionCallback={this.getSelectionCallback}
-										updTextCallback={this.getTextCallback}/>
+										updTextCallback={this.getTextCallback}
+										selectedCommentId={this.state.selectedCId}
+										 />
 						</div>
 						<div className="commentPanel">
 							<CommentPanel range={this.state.range}
                             			  id={this.state.snippet.snippetId}
 										  comments={this.state.snippet.list}
                             			  commentCallback={this.updateCommentsCallback}
+										  selectedCommentIdCallback={this.getSelectedCommentId}
                                           text={this.state.text}
 							/>
 						</div>

@@ -41,9 +41,9 @@ class ViewerView extends Component {
 		this.setState({snippetId : id});
 	}
 	
-  getSelectionCallback = (newRange) => {
-    this.setState({range: newRange})
-  }
+	getSelectionCallback = (newRange) => {
+		this.setState({range: newRange})
+	}
 
    getTextCallback = (newValue) => {
 		this.setState({text: newValue})
