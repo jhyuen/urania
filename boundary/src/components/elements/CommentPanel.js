@@ -12,7 +12,8 @@ class CommentPanel extends Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	    	comments: []
+	    	comments: [],
+	    	selectedCommentId: ''
 	    }
 	    this.deleteCommentRequest = this.deleteCommentRequest.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -121,6 +122,8 @@ class CommentPanel extends Component {
 	}
 	
 	identifyComment = (cID) =>  {
+		console.log(cID)
+		this.setState({ selectedCommentId : cID })
 		this.identifyCommentRequest(cID);
 	}
 	
@@ -214,7 +217,7 @@ class CommentPanel extends Component {
 				<h2>Comments</h2>
 				<CommentEnterArea addComment={ this.handleAddComment } btn={addBtn}/>
 				<div className="commentList">
-					<CommentList comments={ this.state.comments } delComment={ this.delComment } identifyComment={ this.identifyComment }/>
+					<CommentList comments={ this.state.comments } delComment={ this.delComment } identifyComment={ this.identifyComment } selectedCommentId={ this.state.selectedCommentId }/>
 				</div>
 			</>
 		)

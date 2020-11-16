@@ -10,6 +10,7 @@ class CommentList extends Component {
 				  comment={ comment }
 				  delComment={ this.props.delComment }
 				  identifyComment= { this.props.identifyComment}
+				  selectedCommentId= { this.props.selectedCommentId }
 			/>
 		))
 	}
