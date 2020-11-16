@@ -4,12 +4,12 @@ class Loader extends Component {
 	
 	render() {
 		return (
-<div class="primary">
-<div class="content">
-   <div class="planet">
-      <div class="ring"></div>
-         <div class="cover-ring"></div>
-      <div class="spots">
+<div className="primary">
+<div className="content">
+   <div className="planet">
+      <div className="ring"></div>
+         <div className="cover-ring"></div>
+      <div className="spots">
          <span></span>
          <span></span>
          <span></span>
