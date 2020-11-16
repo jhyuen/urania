@@ -52,7 +52,7 @@ class SnippetText extends Component {
 		let newMarkers = []
 		nextProps.comments.map((comment) => {
 			if (nextProps.selectedCommentId == comment.commentID) {
-				console.log(nextProps.selectedCommentId)
+				//console.log(nextProps.selectedCommentId)
 				newMarkers.push({ 
 					startRow		: comment.startLine,
 				    startCol		: comment.startIndex,
