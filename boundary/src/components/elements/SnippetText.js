@@ -51,7 +51,7 @@ class SnippetText extends Component {
 	static getDerivedStateFromProps(nextProps, prevState) {
 		let newMarkers = []
 		nextProps.comments.map((comment) => {
-			if (nextProps.selectedCommentId == comment.commentID) {
+			if (nextProps.selectedCommentId === comment.commentID) {
 				//console.log(nextProps.selectedCommentId)
 				newMarkers.push({ 
 					startRow		: comment.startLine,
@@ -59,7 +59,7 @@ class SnippetText extends Component {
 				    endRow			: comment.endLine,
 				    endCol			: comment.endIndex,
 				    className		: "selectedHighlight",
-				    type			: "text" })
+				    type			: "text" });
 			} else {
 				newMarkers.push({
 					startRow		: comment.startLine,
@@ -67,9 +67,9 @@ class SnippetText extends Component {
                     endRow			: comment.endLine,
                     endCol			: comment.endIndex,
                     className		: "highlight",
-                    type			: "text" })
+                    type			: "text" });
 			}     
-		})	
+		});	
 		return { markers: newMarkers };
 	}
 	
@@ -129,9 +129,9 @@ class SnippetText extends Component {
         this.props.updTextCallback(newValue)
 	}
 
-  handleTextSelection(selection) {
-    this.props.selectionCallback(selection.getRange())
-  }
+	handleTextSelection(selection) {
+		this.props.selectionCallback(selection.getRange())
+	}
 	   
 	successCallback() {
       Swal.fire({

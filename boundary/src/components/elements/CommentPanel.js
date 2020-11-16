@@ -7,7 +7,6 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from "sweetalert2";
 
-const { v4: uuidv4 } = require('uuid');	
 
 class CommentPanel extends Component {
 	constructor(props) {
@@ -117,7 +116,7 @@ class CommentPanel extends Component {
     }
 
 	delComment = (cID) => {
-		var response = this.deleteCommentRequest(cID);
+		this.deleteCommentRequest(cID);
 		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== cID)] });
 	}
 	
@@ -161,9 +160,9 @@ class CommentPanel extends Component {
 	    // check range
 		this.fetchSnippet().then((result) => { 
 			let selR = this.props.range
-	    if (((selR.start.row != selR.end.row) 
-	    		|| (selR.start.column != selR.end.column))
-	    		&& text != '') {
+	    if (((selR.start.row !== selR.end.row) 
+	    		|| (selR.start.column !== selR.end.column))
+	    		&& text !== '') {
 		if(result === this.props.text) {
 	      console.log("legal comment")
           this.addComment(text, selR)
@@ -200,8 +199,8 @@ class CommentPanel extends Component {
 		let addBtn;
 		let selR = this.props.range;
 		
-		if((((selR.start.row != selR.end.row) 
-	    		|| (selR.start.column != selR.end.column))
+		if((((selR.start.row !== selR.end.row) 
+	    		|| (selR.start.column !== selR.end.column))
 	    		)) { 
 		addBtn = <Button className="addButton" type="submit" variant="primary">
 			        Add

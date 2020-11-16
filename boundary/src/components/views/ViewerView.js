@@ -34,7 +34,8 @@ class ViewerView extends Component {
 			}
 		},
 		checked: false,
-		text: null
+		text: null,
+		selectedCId: ''
 	}
 	
 	updSnippetIdCallback = (id) => {
@@ -45,8 +46,12 @@ class ViewerView extends Component {
 		this.setState({range: newRange})
 	}
 
-   getTextCallback = (newValue) => {
+	getTextCallback = (newValue) => {
 		this.setState({text: newValue})
+	}
+   
+   	getSelectedCommentId = (newId) => {
+		this.setState({selectedCId: newId})
 	}
 	
 	updateCommentsCallback = (comments) => {
@@ -78,13 +83,16 @@ class ViewerView extends Component {
 				                             text={this.state.snippet.snippetText}
 				                             comments={this.state.snippet.list}
 				                             selectionCallback={this.getSelectionCallback}
-                                             updTextCallback={this.getTextCallback}/>
+                                             updTextCallback={this.getTextCallback}
+											 selectedCommentId={this.state.selectedCId}
+											 />
 							</div>
 							<div className="commentPanel">
 								<CommentPanel range={this.state.range}
 								              id={ this.state.snippet.snippetId }
 										      comments={this.state.snippet.list}
 				                              commentCallback={this.updateCommentsCallback}
+											  selectedCommentIdCallback={this.getSelectedCommentId}
 											  text={this.state.text}
 											/>
 								}
@@ -96,11 +104,11 @@ class ViewerView extends Component {
 									info={ this.state.snippet.snippetInfo }/>
 							</div>
 				         </div>
-		if (this.state.dataFetched && this.state.status == 201 && (!this.state.passwordStatus || this.state.checked)) {
+		if (this.state.dataFetched && this.state.status === 201 && (!this.state.passwordStatus || this.state.checked)) {
 			return <div>{contents}</div>
 		} else if(!this.state.dataFetched){
 			return <Loader/>
-		} else if(this.state.dataFetched && this.state.status == 201 && this.state.passwordStatus && !this.state.checked){
+		} else if(this.state.dataFetched && this.state.status === 201 && this.state.passwordStatus && !this.state.checked){
 			Swal.fire({
                  title: 'Submit Password',
                  icon: 'info',
