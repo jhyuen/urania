@@ -9,6 +9,7 @@ class CommentList extends Component {
 				key={ comment.commentID }		// the key allows react to rerender only the comments which were changed
 				comment={ comment }
 				delComment={ this.props.delComment }
+				identifyComment= { this.props.identifyComment}
 			/>
 		));
 	}
@@ -17,7 +18,8 @@ class CommentList extends Component {
 // PropTypes
 CommentList.propTypes = {
 	comments 	: PropTypes.array.isRequired,
-	delComment 	: PropTypes.func.isRequired
+	delComment 	: PropTypes.func.isRequired,
+	identifyComment 	: PropTypes.func.isRequired,
 }
 
 export default CommentList;

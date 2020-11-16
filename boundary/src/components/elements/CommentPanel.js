@@ -117,6 +117,11 @@ class CommentPanel extends Component {
 		this.setState({ comments: [...this.state.comments.filter(comment => comment.commentID !== cID)] });
 	}
 	
+	identifyComment = (cID) =>  {
+		//var response = this.identifyCommentRequest(cID);
+		console.log("Hello")
+	}
+	
 	addComment = async (text, selR) => {
 		console.log(selR);
 		const newComment = {	
@@ -207,7 +212,7 @@ class CommentPanel extends Component {
 				<h2>Comments</h2>
 				<CommentEnterArea addComment={ this.handleAddComment } btn={addBtn}/>
 				<div className="commentList">
-					<CommentList comments={ this.state.comments } delComment={ this.delComment }/>
+					<CommentList comments={ this.state.comments } delComment={ this.delComment } identifyComment={ this.identifyComment }/>
 				</div>
 			</>
 		)

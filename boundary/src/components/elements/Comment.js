@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Delete from '@material-ui/icons/DeleteForeverOutlined';
+import SearchIcon from '@material-ui/icons/Search';
 
 class Comment extends Component {
 	
@@ -14,7 +15,13 @@ class Comment extends Component {
 		return (
 			<div className='comment'>
 				<div className="commentHeader"> 
-					<p>{d.toLocaleString()}</p>
+					<p className="commentTimestamp">{d.toLocaleString()}</p>
+					<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
+						<Delete fontSize="medium" className="commentButton" />
+					</Button>	
+					<Button className="identifyButton" variant="info" onClick={ this.props.identifyComment.bind(this, this.props.comment.commentID) }>
+						<SearchIcon fontSize="medium" className="commentButton"/>
+					</Button>					
 				</div>
 				<textarea 
 					className='displayCommentTextArea'
@@ -25,9 +32,7 @@ class Comment extends Component {
 					onChange={ this.onChange }
 					readOnly
 				/>
-				<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
-					<Delete/>
-				</Button>	
+				
 			</div>
 		)
 	}
@@ -36,7 +41,8 @@ class Comment extends Component {
 // PropTypes
 Comment.propTypes = {
 	comment 	: PropTypes.object.isRequired,
-	delComment 	: PropTypes.func.isRequired
+	delComment 	: PropTypes.func.isRequired,
+	identifyComment : PropTypes.func.isRequired
 }
 
 export default Comment;
