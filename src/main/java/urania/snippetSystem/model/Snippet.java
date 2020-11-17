@@ -21,16 +21,6 @@ public class Snippet {
 		this.languageSelected = "Python";
 		this.timeStamp = Instant.now();
 	}
-	
-	public Snippet (String snippetText, String snippetInfo) {
-		this.snippetID = UUID.randomUUID().toString();
-		this.viewerPassword = UUID.randomUUID().toString();
-		this.viewerPasswordEnabled = false;
-		this.snippetText = snippetText;
-		this.snippetInfo = snippetInfo;
-		this.languageSelected = "Python";
-		this.timeStamp = Instant.now();
-	}
 
 	public Snippet (String snippetID, String snippetText, String snippetInfo, Instant datetime, String lang, String pass, int passStatus) {
 		this.snippetID = snippetID;
@@ -41,17 +31,6 @@ public class Snippet {
 		this.viewerPassword = pass;
 		this.viewerPasswordEnabled = (passStatus == 1) ? true : false;
 	}
-	
-//	private String generateTimestamp () {
-//		String timestamp;
-//		Instant time = Instant.now();
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm-dd-uuuu HH:mm:ss");
-//		timestamp = time.format(formatter);
-//		return timestamp;
-//	}
-	
-//	public boolean getSystem() { return system; }
-//	public void setSystem(boolean s) { system = s; }
 	
 	/**
 	 * Equality of Constants determined by name alone.
