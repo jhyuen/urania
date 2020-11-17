@@ -237,7 +237,7 @@ class CreatorControlPanel extends Component {
             preConfirm: (id) => {
 	           return this.fetchSnippet(id).then(result => {
                		if (result === 201) {
-	                	window.location.pathname = '/' + id + '/creator';  
+	                	window.location.pathname = '/' + id;  
                		} else {
 		                 Swal.showValidationMessage(
                              `Invalid Snippet ID. Try Again.`
