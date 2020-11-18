@@ -4,6 +4,7 @@ import './App.css';
 import CreatorView from './components/views/CreatorView';
 import ViewerView from './components/views/ViewerView';
 import AdminView from './components/views/AdminView';
+import AdminView1 from './components/views/AdminView1';
 import NewSnippet from './components/views/NewSnippet';
 
 export * from './api.js';
@@ -18,6 +19,7 @@ class App extends Component {
 					<Route path="/creator" exact component={ NewSnippet } />
 					<Route path="/:snippetId/creator" exact component={ CreatorView } />
 					<Route path="/admin" 	component={ AdminView } />
+					<Route path="/admin1" 	component={ AdminView1 } />
 					<Route path="/:snippetId" 	component={ ViewerView } />
 				</Switch>
 			</Router>
