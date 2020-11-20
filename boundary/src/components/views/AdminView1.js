@@ -12,18 +12,10 @@ import LastPage from '@material-ui/icons/LastPage';
 
 import makeData from './makeData'
 
-// Let's add a fetchData method to our Table component that will be used to fetch
-// new data when pagination state changes
-// We can also add a loading state to let our table know it's loading new data
-function Table(
-	{
-		columns,
-		data,
-		fetchData,
-		loading,
-		pageCount: controlledPageCount,
-	}
-) {
+// fetchData - a method to fetch new data when pagination state changes
+// we can also add a loading state to let our table know it's loading new data
+function Table({ columns, data, fetchData, loading, pageCount: controlledPageCount }) 
+{
   const {
     getTableProps,
     getTableBodyProps,
@@ -39,8 +31,7 @@ function Table(
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize }			// get the state from the instance
-  } = useTable(
-    {
+  } = useTable ({
       columns,
       data,
       initialState: { pageIndex: 0 },
@@ -57,9 +48,7 @@ function Table(
   // render the UI for your table
   return (
     <>
-		<h1>Admin View</h1>
-		
-      	<table {...getTableProps()} className="adminTable">
+		<table {...getTableProps()} className="adminTable">
 			<thead className="tableHead">
 				{headerGroups.map(headerGroup => (
 					<tr {...headerGroup.getHeaderGroupProps()} >
@@ -133,7 +122,7 @@ function Table(
   )
 }
 
-// Let's simulate a large dataset on the server (outside of our component)
+// get data
 const serverData = makeData(10000)
 
 function AdminView1() {
@@ -158,48 +147,48 @@ function AdminView1() {
         ]
   )
 
-  // We'll start our table without any data
-  const [data, setData] = React.useState([])
-  const [loading, setLoading] = React.useState(false)
-  const [pageCount, setPageCount] = React.useState(0)
-  const fetchIdRef = React.useRef(0)
+	// We'll start our table without any data
+	const [data, setData] 			= React.useState([])
+	const [loading, setLoading] 	= React.useState(false)
+	const [pageCount, setPageCount] = React.useState(0)
+	const fetchIdRef 				= React.useRef(0)
+  
+	// this will get called when the table needs new data
+	const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
 
-  const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
-    // This will get called when the table needs new data
-    // You could fetch your data from literally anywhere,
-    // even a server. But for this example, we'll just fake it.
-
-    // Give this fetch an ID
-    const fetchId = ++fetchIdRef.current
-
-    // Set the loading state
-    setLoading(true)
-
-    // We'll even set a delay to simulate a server here
-    setTimeout(() => {
-      // Only update the data if this is the latest fetch
-      if (fetchId === fetchIdRef.current) {
-        const startRow = pageSize * pageIndex
-        const endRow = startRow + pageSize
-        setData(serverData.slice(startRow, endRow))
-
-        // Your server could send back total page count.
-        // For now we'll just fake it, too
-        setPageCount(Math.ceil(serverData.length / pageSize))
-
-        setLoading(false)
-      }
-    }, 1000)
+	    // give this fetch an ID
+	    const fetchId = ++fetchIdRef.current
+	
+	    // set the loading state
+	    setLoading(true)
+	
+    	// simulate the server delay
+	    setTimeout(() => {
+	      // Only update the data if this is the latest fetch
+	      if (fetchId === fetchIdRef.current) {
+	        const startRow = pageSize * pageIndex
+	        const endRow = startRow + pageSize
+	        setData(serverData.slice(startRow, endRow))
+	
+	        // Your server could send back total page count.
+	        // For now we'll just fake it, too
+	        setPageCount(Math.ceil(serverData.length / pageSize))
+	
+	        setLoading(false)
+	      }}, 1000)
   }, [])
 
   return (
-      <Table
-        columns		= { columns }
-        data		= { data }
-        fetchData	= { fetchData }
-        loading		= { loading }
-        pageCount	= { pageCount }
-      />
+	<div>
+		<h1>Admin View</h1> 
+		<Table
+	        columns		= { columns }
+	        data		= { data }
+	        fetchData	= { fetchData }
+	        loading		= { loading }
+	        pageCount	= { pageCount }
+	      />
+	</div>
   )
 }
 
