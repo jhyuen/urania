@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AdminTable from '../elements/AdminTable.js';
-import './AdminView.css';
 import Button from 'react-bootstrap/Button';
 import Delete from '@material-ui/icons/DeleteForeverOutlined';
 

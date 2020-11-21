@@ -9,6 +9,8 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPage from '@material-ui/icons/LastPage';
 
+import './AdminTable.css';
+
 function AdminTable({ columns, data, loading}) 
 {
   const {
