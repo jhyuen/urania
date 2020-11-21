@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import AdminTable from '../elements/AdminTable.js';
 import './AdminView.css';
+import Button from 'react-bootstrap/Button';
+import Delete from '@material-ui/icons/DeleteForeverOutlined';
+
 //import { SelectColumnFilter } from './filters';
 
 class AdminView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
-      loading: true,
-      pageCount: 0,
-      fetchIdRef: 0,
+      data			: [],
+      loading		: true,
+      pageCount		: 0,
+      fetchIdRef	: 0,
     }
-
     this.handleDelete = this.handleDelete.bind(this);
   }
 
@@ -55,11 +57,11 @@ class AdminView extends Component {
 					{
 						Header	: 'Date Created',
 						accessor: (values) => {
-              var tempSecond = values.timeStamp.epochSecond
-              var d = new Date(0)
-              d.setUTCSeconds(tempSecond)
-              return d.toLocaleString()
-            },		// TODO: change to 'timeStamp'
+			            	var tempSecond = values.timeStamp.epochSecond
+			              	var d = new Date(0)
+			              	d.setUTCSeconds(tempSecond)
+			              	return d.toLocaleString()
+			            },		
 					},
 					{
 						Header	: 'Days Old',
@@ -67,11 +69,14 @@ class AdminView extends Component {
 					},
 					{
 						Header	: 'Delete',
-            accessor: 'delete',
-            disableSortBy: true,
-            Cell: ({cell}) => (
-              <button value={cell.row.values.name} onClick={() => {this.handleDelete(cell.row.values.snippetID)}}>Delete</button>
-            )
+			            accessor: 'delete',
+			            disableSortBy: true,
+			            Cell: ({cell}) => (
+							<Button className="deleteButton" variant="danger" value={cell.row.values.name}
+									onClick={() => {this.handleDelete(cell.row.values.snippetID)}}>
+								<Delete/>
+							</Button>
+			            )
 					}
 		    ]
 		
@@ -81,7 +86,6 @@ class AdminView extends Component {
 				<AdminTable
 			        columns		= { columns }
 			        data		= { this.state.data }
-			        //fetchData	= { fetchData }
 			        loading		= { this.state.loading }
 			        pageCount	= { this.state.pageCount }
 			      />
