@@ -81,7 +81,9 @@ class AdminView extends Component {
 		
 		return (
 			<div>
-				<h1>Admin View</h1> 
+				<h1>
+					Administrator View
+				</h1> 
 				<AdminTable
 			        columns		= { columns }
 			        data		= { this.state.data }

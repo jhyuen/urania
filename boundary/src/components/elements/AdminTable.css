@@ -12,32 +12,39 @@
 	margin-left		: 40%;
 }
 
+.btnFirstPage {
+	background-color: rgb(65, 65, 65);
+}
+
 .btnPrevPage {
-	margin-left		: 2px;
+	margin-left		: 5px;
+	background-color: rgb(65, 65, 65);
 }
 
 .btnNextPage {
-	margin-left		: 2px;
+	margin-left		: 5px;
+	background-color: rgb(65, 65, 65);
 }
 
 .btnLastPage {
-	margin-left		: 2px;
+	margin-left		: 5px;
+	background-color: rgb(65, 65, 65);
 }
 
 .goToBadge {
 	font			: 14px sans-serif;
-	margin-left		: 2px;
+	margin-left		: 5px;
 	text-align		: center;
 	padding			: 12px 5px;
-	background-color: rgb(145, 145, 145);
+	background-color: rgb(65, 65, 65);
 }
 
 .pagesBadge {
 	font			: 14px sans-serif;
-	margin-left		: 2px;
+	margin-left		: 5px;
 	text-align		: center;
 	padding			: 15px 5px;
-	background-color: rgb(145, 145, 145);
+	background-color: rgb(65, 65, 65);
 }
 
 .goToInput {
@@ -46,8 +53,8 @@
 
 .recordsPerPage {
 	font			: 14px sans-serif;
-	margin-left		: 2px;
-	background-color: rgb(145, 145, 145);
+	margin-left		: 5px;
+	background-color: rgb(65, 65, 65);
 	color			: #FCFCFC;
 	border-radius	: 5px;
 }
@@ -107,5 +114,6 @@
 
 .pagination {
 	margin-left		: 20px;
+	margin-bottom	: 10px;
     padding-top		: 10px;
 }
