@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTable, usePagination } from 'react-table'
+import { useTable, useSortBy, usePagination } from 'react-table'
 
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
@@ -31,16 +31,32 @@ function AdminTable({ columns, data, fetchData, loading, pageCount: controlledPa
   } = useTable ({
       columns,
       data,
-      initialState: { pageIndex: 0 },
-      manualPagination: true, 				// tell usePagination that we will handle our own data fetching.
+      initialState: { pageIndex: 0, 
+                      pageSize: 20,
+                      sortBy: [
+                        {
+                          id:'Date Created',
+                          desc: true
+                        }
+                      ]},
+      //manualPagination: true, 				// tell usePagination that we will handle our own data fetching.
       										// this means we'll also have to provide our own pageCount.
-      pageCount: controlledPageCount,
+      //pageCount: controlledPageCount,
     },
+    useSortBy,
     usePagination
   )
 
   // listen for changes in pagination and use the state to fetch our new data
-  React.useEffect(() => { fetchData({ pageIndex, pageSize }) }, [fetchData, pageIndex, pageSize])
+  //React.useEffect(() => { fetchData({ pageIndex, pageSize }) }, [fetchData, pageIndex, pageSize])
+  const generateSortingIndicator = (column) => {
+    return column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : '';
+  };
+
+  const onChangeInInput = (event) => {
+    const page = event.target.value ? Number(event.target.value) - 1 : 0;
+    gotoPage(page);
+  }
 
   // render the UI for your table
   return (
@@ -51,8 +67,12 @@ function AdminTable({ columns, data, fetchData, loading, pageCount: controlledPa
 					<tr {...headerGroup.getHeaderGroupProps()} >
 					    {headerGroup.headers.map(column => (
 							<th {...column.getHeaderProps()} >
-					            {column.render('Header')}
-					            <span>{column.isSorted ? column.isSortedDesc ? 'v' : '^' : ''}</span>
+                <div {...column.getSortByToggleProps()}>
+                  {column.render('Header')}
+                  {/*<span>{column.isSorted ? column.isSortedDesc ? 'v' : '^' : ''}</span>*/}
+                  {generateSortingIndicator(column)}
+                </div>
+                {/*<Filter column={column} />*/}
 							</th>
 					    ))}
 					</tr>
@@ -72,7 +92,7 @@ function AdminTable({ columns, data, fetchData, loading, pageCount: controlledPa
 				})}
 				<tr>
 					{loading ? (<td colSpan="10000">Loading...</td>) : 	// use custom loading state to show a loading indicator
-					(<td colSpan="10000">Showing {page.length} of {controlledPageCount * pageSize} results</td>)}
+					(<td colSpan="10000">Showing {page.length} of {data.length} results</td>)}
 				</tr>
 	        </tbody>
       </table>

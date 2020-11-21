@@ -1,113 +1,20 @@
 import React, { Component } from 'react';
 import AdminTable from '../elements/AdminTable.js';
 import './AdminView1.css';
+//import { SelectColumnFilter } from './filters';
 
-import makeData from './makeData'
+class AdminView1 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      loading: true,
+      pageCount: 0,
+      fetchIdRef: 0,
+    }
 
-// get data
-const serverData = makeData(10000)
-
-/*const serverData = async () => {
-	var get_snippets_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/snippetList"; 
-	var data = await fetch(get_snippets_url)
-	var snippetData = await data.json()
-	//console.log(snippetData.viewerPasswordStatus)
-	console.log(snippetData.list)
-	return snippetData.list
-}*/
-
-/*function makeData(...lens) {
-  const makeDataLevel = (depth = 0) => {
-    const len = lens[depth]
-    return range(len).map(d => {
-      return {
-        ...newPerson(),
-        subRows: lens[depth + 1] ? makeDataLevel(depth + 1) : undefined,
-      }
-    })
+    this.handleDelete = this.handleDelete.bind(this);
   }
-
-  return makeDataLevel()
-}*/
-
-
-function AdminView1() {
-  	
-
-	const columns = React.useMemo(
-    () => [
-			{
-				Header	: 'SnippetID',
-				accessor: 'snippetID',
-			},
-			{
-				Header	: 'Date Created',
-				accessor: 'viewerPassword',		// TODO: change to 'timeStamp'
-			},
-			{
-				Header	: 'Days Old',
-				accessor: 'daysold',
-			},
-			{
-				Header	: 'Delete',
-				accessor: 'delete',
-			}
-        ]
-  )
-
-	// We'll start our table without any data
-	const [data, setData] 			= React.useState([])
-	const [loading, setLoading] 	= React.useState(false)
-	const [pageCount, setPageCount] = React.useState(0)
-	const fetchIdRef 				= React.useRef(0)
-  
-	// this will get called when the table needs new data
-	const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
-
-	    // give this fetch an ID
-	    const fetchId = ++fetchIdRef.current
-	
-	    // set the loading state
-	    setLoading(true)
-	    
-		// Only update the data if this is the latest fetch
-		if (fetchId === fetchIdRef.current) {
-		  const startRow = pageSize * pageIndex
-		  const endRow = startRow + pageSize
-
-		  setData(serverData.slice(startRow, endRow))
-		
-		  // Your server could send back total page count.
-		  // For now we'll just fake it, too
-		  setPageCount(Math.ceil(serverData.length / pageSize))
-		
-		  setLoading(false)
-		}
-		
-  }, [])
-
-  return (
-	<div>
-		<h1>Admin View</h1> 
-		<AdminTable
-	        columns		= { columns }
-	        data		= { data }
-	        fetchData	= { fetchData }
-	        loading		= { loading }
-	        pageCount	= { pageCount }
-	      />
-	</div>
-  )
-}
-
-export default AdminView1;
-
-class AdminView2 extends Component {
-	state = {
-		data: []
-		
-	
-	}
 
 	componentDidMount() { this.fetchAllSnippets() }
 
@@ -117,19 +24,42 @@ class AdminView2 extends Component {
 		var snippetData = await data.json()
 		//console.log(snippetData.viewerPasswordStatus)
 		console.log(snippetData.list)
-		this.setState({ data: snippetData.list })
+		this.setState({ data: snippetData.list,
+                    loading: false  })
 	}
+  
+  handleDelete = async (snippetID) => {
+	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	  var update_url = base_url + snippetID + "/delete_snippet";
+    console.log(snippetID)
+    fetch(update_url, {
+		  method: 'POST',
+		  //body: JSON.stringify({enable: val}),
+		  //headers: {
+			  //'Accept': 'application/json',
+			  //'Content-Type': 'application/json'
+		  //}
+	  }).catch(error => {
+	      console.log("error", error);
+	      alert("An error occured, please try again later.");
+	  });
+  }
 	
 	render() {
-		const columns = React.useMemo(
-		    () => [
+		const columns = [
 					{
 						Header	: 'SnippetID',
 						accessor: 'snippetID',
+            disableSortBy: true,
 					},
 					{
 						Header	: 'Date Created',
-						accessor: 'viewerPassword',		// TODO: change to 'timeStamp'
+						accessor: (values) => {
+              var tempSecond = values.timeStamp.epochSecond
+              var d = new Date(0)
+              d.setUTCSeconds(tempSecond)
+              return d.toLocaleString()
+            },		// TODO: change to 'timeStamp'
 					},
 					{
 						Header	: 'Days Old',
@@ -137,15 +67,18 @@ class AdminView2 extends Component {
 					},
 					{
 						Header	: 'Delete',
-						accessor: 'delete',
+            accessor: 'delete',
+            disableSortBy: true,
+            Cell: ({cell}) => (
+              <button value={cell.row.values.name} onClick={() => {this.handleDelete(cell.row.values.snippetID)}}>Delete</button>
+            )
 					}
-		        ]
-		  )
+		    ]
 		
-		const [data, setData] 			= React.useState([])
+		/*const [data, setData] 			= React.useState([])
 		const [loading, setLoading] 	= React.useState(false)
 		const [pageCount, setPageCount] = React.useState(0)
-		const fetchIdRef 				= React.useRef(0)
+		const fetchIdRef 				= React.useRef(0)*/
 		
 		
 		return (
@@ -153,16 +86,16 @@ class AdminView2 extends Component {
 				<h1>Admin View</h1> 
 				<AdminTable
 			        columns		= { columns }
-			        data		= { data }
-			        fetchData	= { fetchData }
-			        loading		= { loading }
-			        pageCount	= { pageCount }
+			        data		= { this.state.data }
+			        //fetchData	= { fetchData }
+			        loading		= { this.state.loading }
+			        pageCount	= { this.state.pageCount }
 			      />
 			</div>
 		)
 	}
 }
 
-export default AdminView2;
+export default AdminView1;
 
 
