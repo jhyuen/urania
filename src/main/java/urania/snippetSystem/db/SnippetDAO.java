@@ -125,7 +125,7 @@ public class SnippetDAO {
             Timestamp timestamp = Timestamp.from(newTime);
             
             snippetsToBeDeletedPs.setString(1, timestamp.toString());
-            
+            	
             ResultSet resultSet = snippetsToBeDeletedPs.executeQuery();
             
             while (resultSet.next()) {
