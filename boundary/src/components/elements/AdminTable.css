@@ -1,0 +1,119 @@
+.showOf {
+	background-color: rgb(151, 203, 255);
+	font			: 22px sans-serif;
+	font-weight		: bold;
+	text-align		: left;
+}
+
+.deleteButton {
+	cursor			: pointer;
+	float			: left;
+	height			: 100%;
+	margin-left		: 40%;
+}
+
+.btnFirstPage {
+	background-color: rgb(65, 65, 65);
+}
+
+.btnPrevPage {
+	margin-left		: 5px;
+	background-color: rgb(65, 65, 65);
+}
+
+.btnNextPage {
+	margin-left		: 5px;
+	background-color: rgb(65, 65, 65);
+}
+
+.btnLastPage {
+	margin-left		: 5px;
+	background-color: rgb(65, 65, 65);
+}
+
+.goToBadge {
+	font			: 14px sans-serif;
+	margin-left		: 5px;
+	text-align		: center;
+	padding			: 12px 5px;
+	background-color: rgb(65, 65, 65);
+}
+
+.pagesBadge {
+	font			: 14px sans-serif;
+	margin-left		: 5px;
+	text-align		: center;
+	padding			: 15px 5px;
+	background-color: rgb(65, 65, 65);
+}
+
+.goToInput {
+	width			: 70px;
+}
+
+.recordsPerPage {
+	font			: 14px sans-serif;
+	margin-left		: 5px;
+	background-color: rgb(65, 65, 65);
+	color			: #FCFCFC;
+	border-radius	: 5px;
+}
+
+.adminTable {
+	margin-left		: 20px;
+	border-spacing	: 0;
+	border-width	: 1px;
+	border-color	: black;
+	border-style	: solid;
+	width			: 98.5%	
+}
+
+.tableHead {
+	border			: 1px solid black;
+	background		: rgb(151, 203, 255);
+   	color			: black;
+	width			: 100%; 
+	height			: 100%;
+	text-align		: left;
+	font			: 22px sans-serif;
+}
+
+.tableHead th {
+	margin			: 0;
+    padding			: 0.5rem;
+    border-bottom	: 1px solid black;
+    border-right	: 1px solid black;
+}
+
+.tableHead th:last-child {
+	border-right	: 1;
+	text-align		: center;
+}
+
+.tableBody {
+	border			: 1px solid black;
+	background		: white;
+   	color			: black;
+	width			: 100%;
+	height			: 100%;
+	text-align		: left;
+	font			: 22px sans-serif;
+	empty-cells		: show;
+}
+
+.tableBody td {
+	margin			: 0;
+    padding			: 0.5rem;
+    border-bottom	: 1px solid black;
+    border-right	: 1px solid black;
+}
+
+.tableBody td:last-child {
+	border-right	: 1;
+}
+
+.pagination {
+	margin-left		: 20px;
+	margin-bottom	: 10px;
+    padding-top		: 10px;
+}

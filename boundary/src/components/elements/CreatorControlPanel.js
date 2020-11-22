@@ -74,7 +74,7 @@ class CreatorControlPanel extends Component {
 	  }).catch(error => {
 	      console.log("error", error);
 	      alert("An error occured, please try again later.");
-	    });
+	  });
   }
 
   handleDelete(event) {
