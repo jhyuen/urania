@@ -119,7 +119,7 @@ public class SnippetDAO {
     	try {		
     		List<String> deleteSnippetIds = new ArrayList<>();
     		
-    		PreparedStatement snippetsToBeDeletedPs = conn.prepareStatement("SELECT snippetId FROM " + tblName + " WHERE timeStamp < ?;");
+    		PreparedStatement snippetsToBeDeletedPs = conn.prepareStatement("SELECT snippetId FROM " + tblName + " WHERE timeStamp > ?;");
             
             Instant newTime = Instant.now().minus(daysOld, ChronoUnit.DAYS);
             Timestamp timestamp = Timestamp.from(newTime);
