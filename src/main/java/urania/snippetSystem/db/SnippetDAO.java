@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import urania.snippetSystem.model.Snippet;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Snippet Data Access Object
@@ -114,6 +115,39 @@ public class SnippetDAO {
         }
     }
 
+    public List<String> deleteStaleSnippet (int daysOld) throws Exception {
+    	try {		
+    		List<String> deleteSnippetIds = new ArrayList<>();
+    		
+    		PreparedStatement snippetsToBeDeletedPs = conn.prepareStatement("SELECT snippetId FROM " + tblName + " WHERE timeStamp < ?;");
+            
+            Instant newTime = Instant.now().minus(daysOld, ChronoUnit.DAYS);
+            Timestamp timestamp = Timestamp.from(newTime);
+            
+            snippetsToBeDeletedPs.setString(1, timestamp.toString());
+            
+            ResultSet resultSet = snippetsToBeDeletedPs.executeQuery();
+            
+            while (resultSet.next()) {
+            	String uuid  = resultSet.getString("snippetId");
+            	deleteSnippetIds.add(uuid);
+            }
+            
+            resultSet.close();
+            snippetsToBeDeletedPs.close();
+            
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE timeStamp > ?;");
+            ps.setString(1, timestamp.toString());
+            
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return deleteSnippetIds;
+
+        } catch (Exception e) {
+            throw new Exception("Failed to delete stale snippet: " + e.getMessage());
+        }
+    }
 
     public boolean createSnippet (Snippet snippet) throws Exception {
         try {
