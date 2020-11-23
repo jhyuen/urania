@@ -4,8 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Delete from '@material-ui/icons/DeleteForeverOutlined';
 import Form from 'react-bootstrap/Form';
 
-//import { SelectColumnFilter } from './filters';
-
 class AdminView extends Component {
   constructor(props) {
     super(props);
@@ -91,28 +89,26 @@ class AdminView extends Component {
 		
 		return (
 			<div>
-				<h1>
-					Administrator View
-				</h1> 
-        <Form>
-          <Form.Group>
-            <Form.Control
-              type='text'
-              onChange={(e) => {
-                this.setState( { filter: e.target.value,
-                                 dataSource: this.state.data.filter(snippet =>
-                                   snippet.snippetID.includes(e.target.value)) } )
-              }}
-              placeholder={'search for Snippet ID...'}
-            />
-          </Form.Group>
-        </Form>
+				<h1>Administrator View</h1> 
+		        <Form className='searchSnippetIdBar'>
+		          <Form.Group>
+		            <Form.Control
+		              type='text'
+		              onChange={(e) => {
+		                this.setState( { filter: e.target.value,
+		                                 dataSource: this.state.data.filter(snippet =>
+		                                   snippet.snippetID.includes(e.target.value)) } )
+		              }}
+		              placeholder={'Search for Snippet ID...'}
+		            />
+		          </Form.Group>
+		        </Form>
 				<AdminTable
-			        columns		= { columns }
-			        data		= { this.state.dataSource }
-			        loading		= { this.state.loading }
-			        pageCount	= { this.state.pageCount }
-			      />
+				    columns		= { columns }
+				    data		= { this.state.dataSource }
+				    loading		= { this.state.loading }
+				    pageCount	= { this.state.pageCount }
+				/>
 			</div>
 		)
 	}

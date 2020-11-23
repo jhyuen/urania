@@ -124,7 +124,7 @@ function AdminTable({ columns, data, loading})
           </option>
           ))}
         </select>
-        <Button className='deleteStale' variant="dark" onClick={() => deleteStaleSnippets()} disabled={data.length === 0}>
+        <Button className='btnDeleteStale' variant="danger" onClick={() => deleteStaleSnippets()} disabled={data.length === 0}>
           Delete Stale Snippets
         </Button>
       </div>

@@ -1,3 +1,13 @@
+.searchSnippetIdBar {
+	margin-left		: 20px;
+	width			: 40%;	
+	border-width	: 2px;
+}
+
+.btnDeleteStale {
+	margin-left		: 5px;
+}
+
 .showOf {
 	background-color: rgb(151, 203, 255);
 	font			: 22px sans-serif;
@@ -114,6 +124,6 @@
 
 .pagination {
 	margin-left		: 20px;
-	margin-bottom	: 10px;
+	margin-bottom	: 20px;
     padding-top		: 10px;
 }
