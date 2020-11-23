@@ -148,6 +148,34 @@ public class CommentDAO {
         }
     }
     
+    public boolean deleteStaleSnippetComments (List<String> snippetIds) throws Exception {
+    	try {		
+    		
+    		String snippetIdString = " ( ";
+            for(int i=0;i<snippetIds.size();i++) {
+            	if (i==snippetIds.size()-1) {
+            		snippetIdString = snippetIdString + " \'" + snippetIds.get(i) + "\' ";
+            	} else {
+            		snippetIdString = snippetIdString + " \'" + snippetIds.get(i) + "\' , ";
+            	}
+            }
+            
+            snippetIdString = snippetIdString + " ) ";
+            
+            
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE snippetId IN " + snippetIdString + ";");
+            
+            //ps.setString(1, snippetIdString);
+            ps.executeUpdate();	
+            ps.close();
+            
+            return true;
+
+        } catch (Exception e) {
+            throw new Exception("Failed to delete stale snippet comments: " + e.getMessage());
+        }
+    }
+    
     private Comment generateComment(ResultSet resultSet) throws Exception {
       
       String snippetID    = resultSet.getString("snippetId");
