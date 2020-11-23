@@ -150,27 +150,29 @@ public class CommentDAO {
     
     public boolean deleteStaleSnippetComments (List<String> snippetIds) throws Exception {
     	try {		
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE snippetId IN ?;");
-            
-            String snippetIdString = "(";
+    		
+    		String snippetIdString = " ( ";
             for(int i=0;i<snippetIds.size();i++) {
             	if (i==snippetIds.size()-1) {
-            		snippetIdString = snippetIdString + " '" + snippetIds.get(i) + "' ";
+            		snippetIdString = snippetIdString + " \'" + snippetIds.get(i) + "\' ";
             	} else {
-            		snippetIdString = snippetIdString + " '" + snippetIds.get(i) + "' ,";
+            		snippetIdString = snippetIdString + " \'" + snippetIds.get(i) + "\' , ";
             	}
             }
             
-            snippetIdString = snippetIdString + ")";
+            snippetIdString = snippetIdString + " ) ";
             
-            ps.setString(1, snippetIdString);
-            ps.executeUpdate();
+            
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE snippetId IN " + snippetIdString + ";");
+            
+            //ps.setString(1, snippetIdString);
+            ps.executeUpdate();	
             ps.close();
             
             return true;
 
         } catch (Exception e) {
-            throw new Exception("Failed to delete snippet: " + e.getMessage());
+            throw new Exception("Failed to delete stale snippet comments: " + e.getMessage());
         }
     }
     
