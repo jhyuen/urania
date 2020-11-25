@@ -16,7 +16,7 @@ public class DeleteStaleSnippetHandler implements RequestHandler<DeleteStaleSnip
 	
 	LambdaLogger logger;
 	
-	List<String> deleteStaleSnippet (int daysOld) throws Exception {
+	List<String> deleteStaleSnippet (double daysOld) throws Exception {
 		if (logger != null) { logger.log("in deleteStaleSnippet"); }
 		SnippetDAO dao = new SnippetDAO();
 		return dao.deleteStaleSnippet(daysOld);

@@ -24,6 +24,8 @@ public class SnippetDAO {
 
 	java.sql.Connection conn;
 	
+	final double secondsInDay = (24*60*60);
+	
 	final String tblName = "UraniaSchema.Snippet";   // Exact capitalization
 
     public SnippetDAO () {
@@ -115,13 +117,15 @@ public class SnippetDAO {
         }
     }
 
-    public List<String> deleteStaleSnippet (int daysOld) throws Exception {
+    public List<String> deleteStaleSnippet (double daysOld) throws Exception {
     	try {		
     		List<String> deleteSnippetIds = new ArrayList<>();
     		
     		PreparedStatement snippetsToBeDeletedPs = conn.prepareStatement("SELECT snippetId FROM " + tblName + " WHERE timeStamp < ?;");
             
-            Instant newTime = Instant.now().minus(daysOld, ChronoUnit.DAYS);
+    		// 86400 = seconds in a day
+    		int secondsOld = (int)(daysOld * 86400);
+    		Instant newTime = Instant.now().minus(secondsOld, ChronoUnit.SECONDS);
             Timestamp timestamp = Timestamp.from(newTime);
             
             snippetsToBeDeletedPs.setString(1, timestamp.toString());
