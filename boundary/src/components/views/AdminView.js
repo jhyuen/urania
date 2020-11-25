@@ -57,10 +57,16 @@ class AdminView extends Component {
 	render() {
 		const columns = [
 					{
-						Header	: 'SnippetID',
+						Header	: 'Snippet ID',
 						accessor: 'snippetID',
-            disableSortBy: true,
+            			disableSortBy: true
 					},
+					{
+						Header	: 'Snippet Info',
+						accessor: 'snippetInfo',
+						disableSortBy: true
+					},
+					
 					{
 						Header	: 'Date Created',
 						accessor: (values) => {
@@ -71,19 +77,15 @@ class AdminView extends Component {
 			            },		
 					},
 					{
-						Header	: 'Days Old',
-						accessor: 'daysold',
-					},
-					{
 						Header	: 'Delete',
-            accessor: 'delete',
-            disableSortBy: true,
-            Cell: ({cell}) => (
+			            accessor: 'delete',
+			            disableSortBy: true,
+			            Cell: ({cell}) => (
 							<Button className="deleteButton" variant="danger" value={cell.row.values.name}
 									onClick={() => {this.handleDelete(cell.row.values.snippetID)}}>
 								<Delete/>
 							</Button>
-            )
+            			)
 					}
 		    ]
 		
