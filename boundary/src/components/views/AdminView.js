@@ -3,6 +3,7 @@ import AdminTable from '../elements/AdminTable.js';
 import Button from 'react-bootstrap/Button';
 import Delete from '@material-ui/icons/DeleteForeverOutlined';
 import Form from 'react-bootstrap/Form';
+import Swal from "sweetalert2";
 
 class AdminView extends Component {
   constructor(props) {
@@ -33,12 +34,52 @@ class AdminView extends Component {
                     //dataSource: snippetData.list,
                     loading: false  })
 	}
-  
+	
+	deleteStaleSnippets = async() => {
+		Swal.fire({
+		        title: 'Days Old',
+		        input: 'text',
+				inputPlaceholder: 'Enter a number >= 0',
+		        padding: '3em',
+		        background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
+		        inputAttributes: {
+		           autocapitalize: 'off'
+		        },
+		        showCancelButton: true,
+		        confirmButtonText: 'Delete',
+		        showLoaderOnConfirm: true,	
+		        preConfirm: async (daysOld) => {
+		          		daysOld = parseFloat(daysOld)
+						console.log("days old", daysOld)
+						if(daysOld >= 0 ) {
+							var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+							var update_url = base_url + "/delete_stale_snippets";
+			    			await fetch(update_url, {
+							  method: 'POST',
+							  body: JSON.stringify({daysOld: daysOld}),
+							  headers: {
+								  'Accept': 'application/json',
+								  'Content-Type': 'application/json'
+							  }
+							
+						}).catch(error => {
+						    console.log("error", error);
+						    alert("An error occured, please try again later.");
+						});
+						this.fetchAllSnippets();
+						} else {
+							Swal.showValidationMessage(`Incorrect input`)
+						}
+		        },
+		        allowOutsideClick: () => !Swal.isLoading()
+		    })
+	}
+
   handleDelete = async (snippetID) => {
-	  var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
-	  var update_url = base_url + snippetID + "/delete_snippet";
-    console.log(snippetID)
-    await fetch(update_url, {
+	var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
+	var update_url = base_url + snippetID + "/delete_snippet";
+	console.log(snippetID)
+	await fetch(update_url, {
 		  method: 'POST',
 		  //body: JSON.stringify({enable: val}),
 		  //headers: {
@@ -73,7 +114,8 @@ class AdminView extends Component {
 			            	var tempSecond = values.timeStamp.epochSecond
 			              	var d = new Date(0)
 			              	d.setUTCSeconds(tempSecond)
-			              	return d.toLocaleString()
+							var options = { hour12: false };
+			              	return d.toLocaleString('en-US', options)
 			            },		
 					},
 					{
@@ -106,10 +148,11 @@ class AdminView extends Component {
 		          </Form.Group>
 		        </Form>
 				<AdminTable
-				    columns		= { columns }
-				    data		= { this.state.dataSource }
-				    loading		= { this.state.loading }
-				    pageCount	= { this.state.pageCount }
+				    deleteStaleSnippets = {this.deleteStaleSnippets}
+					columns				= { columns }
+				    data				= { this.state.dataSource }
+				    loading				= { this.state.loading }
+				    pageCount			= { this.state.pageCount }
 				/>
 			</div>
 		)
