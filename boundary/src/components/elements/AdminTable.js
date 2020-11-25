@@ -9,11 +9,9 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPage from '@material-ui/icons/LastPage';
 
-import Swal from "sweetalert2";
-
 import './AdminTable.css';
 
-function AdminTable({ columns, data, loading}) 
+function AdminTable({ deleteStaleSnippets, columns, data, loading}) 
 {
   const {
     getTableProps,
@@ -130,34 +128,6 @@ function AdminTable({ columns, data, loading})
       </div>
     </>
   )
-}
-
-function deleteStaleSnippets() {
-  Swal.fire({
-          title: 'Days Old',
-          input: 'number',
-          padding: '3em',
-          background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
-          inputAttributes: {
-             autocapitalize: 'off'
-          },
-          showCancelButton: true,
-          confirmButtonText: 'Delete',
-          showLoaderOnConfirm: true,
-          preConfirm: (daysOld) => {
-            console.log(daysOld)
-            {/*return this.fetchSnippet(daysOld).then(result => {
-                if (result === 201) {
-                  window.location.pathname = '/' + id;  
-                } else {
-                   Swal.showValidationMessage(
-                           `Invalid number. Try Again.`
-                       )
-             }	          
-            })  */}        	                 
-          },
-          allowOutsideClick: () => !Swal.isLoading()
-      })
 }
 
 export default AdminTable;

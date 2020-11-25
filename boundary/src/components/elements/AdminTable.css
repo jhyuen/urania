@@ -19,7 +19,7 @@
 	cursor			: pointer;
 	float			: left;
 	height			: 100%;
-	margin-left		: 40%;
+	margin-left		: 35%;
 }
 
 .btnFirstPage {
@@ -95,7 +95,20 @@
     border-right	: 1px solid black;
 }
 
-.tableHead th:last-child {
+.tableHead th:nth-child(1) {
+	width			: 30%;
+	
+}
+
+.tableHead th:nth-child(2) {
+	width			: 40%;
+}
+
+.tableHead th:nth-child(3) {
+	width			: 20%;
+}
+
+.tableHead th:nth-child(4) {
 	border-right	: 1;
 	text-align		: center;
 }
