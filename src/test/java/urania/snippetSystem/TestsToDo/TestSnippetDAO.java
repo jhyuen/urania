@@ -1,4 +1,4 @@
-package urania.snippetSystem;
+package urania.snippetSystem.TestsToDo;
 
 
 import static org.junit.Assert.*;
@@ -11,7 +11,7 @@ import org.junit.Test;
 import urania.snippetSystem.db.SnippetDAO;
 import urania.snippetSystem.model.Snippet;
 
-public class TestSnippetThings {
+public class TestSnippetDAO {
 
 	@Test
 	public void testFindSnippet() {
