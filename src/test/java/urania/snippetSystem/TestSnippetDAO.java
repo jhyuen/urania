@@ -1,4 +1,4 @@
-package urania.snippetSystem.TestsToDo;
+package urania.snippetSystem;
 
 
 import static org.junit.Assert.*;
