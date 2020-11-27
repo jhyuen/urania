@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTable, useSortBy, useFilters, usePagination } from 'react-table';
+import { useTable, useSortBy, usePagination } from 'react-table';
 
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
