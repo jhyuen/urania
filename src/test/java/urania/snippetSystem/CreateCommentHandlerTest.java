@@ -47,9 +47,12 @@ public class CreateCommentHandlerTest extends LambdaTest {
         CreateCommentRequest csr = new CreateCommentRequest("testSnippet", "this is a test", 0, 0, 1, 1);
         String SAMPLE_INPUT_STRING = new Gson().toJson(csr);
         
-        CreateCommentResponse response = null; try { response =
-        testSuccessInput(SAMPLE_INPUT_STRING); } catch (IOException ioe) {
-        Assert.fail("Invalid:" + ioe.getMessage()); }
+        CreateCommentResponse response = null;
+        try {
+            response = testSuccessInput(SAMPLE_INPUT_STRING);
+        } catch (IOException ioe) {
+            Assert.fail("Invalid:" + ioe.getMessage());
+        }
         
         DeleteCommentRequest dcr = new
         DeleteCommentRequest(response.list.get(0).snippetID,
