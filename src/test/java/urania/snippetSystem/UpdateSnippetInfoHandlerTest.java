@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 
 import urania.snippetSystem.GetSnippetHandler;
 import urania.snippetSystem.ListSnippetHandler;
+import urania.snippetSystem.UpdateSnippetInfoHandler;
 import urania.snippetSystem.db.SnippetDAO;
 import urania.snippetSystem.http.CreateCommentRequest;
 import urania.snippetSystem.http.CreateSnippetRequest;
@@ -21,27 +22,29 @@ import urania.snippetSystem.http.GetSnippetRequest;
 import urania.snippetSystem.http.GetSnippetResponse;
 import urania.snippetSystem.http.ListSnippetRequest;
 import urania.snippetSystem.http.ListSnippetResponse;
+import urania.snippetSystem.http.UpdateSnippetInfoRequest;
+import urania.snippetSystem.http.UpdateSnippetInfoResponse;
 import urania.snippetSystem.model.Snippet;
 
 /**
  * A simple test harness for locally invoking your Lambda function handler.
  */
-public class ListSnippetHandlerTest extends LambdaTest {
+public class UpdateSnippetInfoHandlerTest extends LambdaTest {
 
-    ListSnippetResponse testSuccessInput(String incoming) throws IOException {
-    	ListSnippetHandler handler = new ListSnippetHandler();
-    	ListSnippetRequest req = new Gson().fromJson(incoming, ListSnippetRequest.class);
+    UpdateSnippetInfoResponse testSuccessInput(String incoming) throws IOException {
+    	UpdateSnippetInfoHandler handler = new UpdateSnippetInfoHandler();
+    	UpdateSnippetInfoRequest req = new Gson().fromJson(incoming, UpdateSnippetInfoRequest.class);
        
-        ListSnippetResponse resp = handler.handleRequest(req, createContext("get"));
+        UpdateSnippetInfoResponse resp = handler.handleRequest(req, createContext("update"));
         Assert.assertEquals(201, resp.httpCode);
         return resp;
     }
 	
     void testFailInput(String incoming, int failureCode) throws IOException {
-    	ListSnippetHandler handler = new ListSnippetHandler();
-    	ListSnippetRequest req = new Gson().fromJson(incoming, ListSnippetRequest.class);
+    	UpdateSnippetInfoHandler handler = new UpdateSnippetInfoHandler();
+    	UpdateSnippetInfoRequest req = new Gson().fromJson(incoming, UpdateSnippetInfoRequest.class);
 
-    	ListSnippetResponse resp = handler.handleRequest(req, createContext("get"));
+    	UpdateSnippetInfoResponse resp = handler.handleRequest(req, createContext("update"));
         Assert.assertEquals(failureCode, resp.httpCode);
     }
     private static Object input;
@@ -60,7 +63,29 @@ public class ListSnippetHandlerTest extends LambdaTest {
     
     @Test
     public void testExtraInput() {
-    	String SAMPLE_INPUT_STRING = "{\"sdsd\": \"e3\", \"hgfgdfgdfg\": \"this is not a number\"}";
+		String SAMPLE_INPUT_STRING = "{\"snippetID\": \"test_snippedId\", \"hgfgdfgdfg\": \"this is not a number\"}";
+		
+        try {
+        	testSuccessInput(SAMPLE_INPUT_STRING);
+        } catch (IOException ioe) {
+        	Assert.fail("Invalid:" + ioe.getMessage());
+        }
+    }
+    
+    @Test
+    public void testNothing() {
+		String SAMPLE_INPUT_STRING = "{\"snippetID\": \"test_snippedId\", \"hgfgdfgdfg\": \"this is not a number\"}";
+		
+        try {
+        	testSuccessInput(SAMPLE_INPUT_STRING);
+        } catch (IOException ioe) {
+        	Assert.fail("Invalid:" + ioe.getMessage());
+        }
+    }
+    
+    @Test
+    public void testBadJson() {
+		String SAMPLE_INPUT_STRING = "{\"snippetID\": \"test_snippedId\", \"hgfgdfgdfg\": \"this is not a number\"}";
 		
         try {
         	testSuccessInput(SAMPLE_INPUT_STRING);
