@@ -70,13 +70,26 @@ public class GetSnippetHandlerTest extends LambdaTest {
     
     @Test
     public void testExtraInput() {
-		String SAMPLE_INPUT_STRING = "{\"snippetID\": \"test_snippedId\", \"hgfgdfgdfg\": \"this is not a number\"}";
-		
+        SnippetDAO sd = new SnippetDAO() ;
+        Snippet snippet = new Snippet("test_snippetId");
+        try {
+            sd.createSnippet(snippet);
+        } catch (Exception ioe) {
+            Assert.fail("Create snippet failed:" + ioe.getMessage());
+        }
+        
+        String SAMPLE_INPUT_STRING = "{\"SnippetID\": \"test_snippedId\", \"hgfgdfgdfg\": \"this is not a number\"}";
+        //String SAMPLE_INPUT_STRING = "{\"SnippetID\": \"test_snippetId\"}";
+        
         try {
             testFailInput(SAMPLE_INPUT_STRING, 422);
         } catch (IOException ioe) {
         	Assert.fail("Invalid:" + ioe.getMessage());
         }
+        
+        DeleteSnippetRequest dsr = new DeleteSnippetRequest("test_snippetId");
+        DeleteSnippetResponse d_resp = new DeleteSnippetHandler().handleRequest(dsr, createContext("delete"));
+        Assert.assertEquals(d_resp.httpCode, 200);   
     }
     
     @Test
