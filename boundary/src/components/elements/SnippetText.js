@@ -26,7 +26,8 @@ class SnippetText extends Component {
 			textEditorLanguageMode		: 'java',
 	    	dropDownEditorModeValue		: 'Sublime',
 			textEditorKeyboardHandler	: 'sublime',
-	    	markers						: []
+	    	markers						: [],
+            status                      : null            
 	    }
 	    
 	    this.updateSnippetText = this.updateSnippetText.bind(this);
@@ -83,7 +84,37 @@ class SnippetText extends Component {
 				  'Accept': 'application/json',
 				  'Content-Type': 'application/json'
 			  }
-		  })
+		  }).then(response => response.json())
+		.then(responseData => {
+			console.log(responseData.httpCode)
+			if(responseData.httpCode === 200) {
+      Swal.fire({
+	      title: 'Success',
+          html: 'Snippet Updated!',
+          icon: 'success',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })} else {
+	document.getElementById('root').innerHTML = <></>
+      Swal.fire({
+                 title: 'Snippet not found',
+                 padding: '3em',
+                 icon: 'error',
+                 background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
+                 showConfirmButton: false,
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
+            })
+}
+        	return responseData.httpCode
+		})
 		    .catch(error => {
 		      console.log("error", error);
 		      alert("An error occured, please try again later.");
@@ -132,40 +163,15 @@ class SnippetText extends Component {
 	handleTextSelection(selection) {
 		this.props.selectionCallback(selection.getRange())
 	}
-	   
-	successCallback() {
-      Swal.fire({
-	      title: 'Success',
-          html: 'Snippet Updated!',
-          icon: 'success',
-          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
-          backdrop: ` rgba(0,0,123,0.4)
-                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
-                      left top
-                      no-repeat`
-      })
-    }
-
-    failureCallback() {
-      Swal.fire({
-	      title: 'Error',
-          html: 'Unable to Update Snippet',
-          icon: 'error',
-          background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
-          backdrop: ` rgba(0,0,123,0.4)
-                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
-                      left top
-                      no-repeat`
-      })
-    }
 
 	handleSubmit(event) {
 	    event.preventDefault();
-	    this.updateSnippetText().then(this.successCallback, this.failureCallback);  
+	    this.updateSnippetText()  
 	}
 	
 
 	render() {
+	    if(this.state.status !== 400) {
 		return(
 			<>
 			<div className="snippetTextHeader">
@@ -219,9 +225,24 @@ class SnippetText extends Component {
 				/>
 			</div>
 			</>
-		)
+		)}
+		else {
+			Swal.fire({
+                 title: 'Snippet not found',
+                 padding: '3em',
+                 icon: 'error',
+                 background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
+                 showConfirmButton: false,
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
+            })
+           return <></>
 	}
-}
+}}
 
 SnippetText.propTypes = {
 		id :       PropTypes.string.isRequired,

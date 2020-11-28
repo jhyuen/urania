@@ -11,7 +11,8 @@ class CreatorControlPanel extends Component {
     super(props);
     this.state = {
     	password_enable: this.props.password_status,
-    	value: ""
+    	value: "",
+        status: null
     }
     this.viewSnippet = this.viewSnippet.bind(this);
     this.setPasswordStatus = this.setPasswordStatus.bind(this);
@@ -37,7 +38,37 @@ class CreatorControlPanel extends Component {
 			  'Accept': 'application/json',
 			  'Content-Type': 'application/json'
 		  }
-	  })
+	  }).then(response => response.json())
+		.then(responseData => {
+			console.log(responseData.httpCode)
+			if(responseData.httpCode === 200) {
+      Swal.fire({
+	      title: 'Success',
+          html: 'Snippet Updated!',
+          icon: 'success',
+          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+          backdrop: ` rgba(0,0,123,0.4)
+                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                      left top
+                      no-repeat`
+      })} else {
+	document.getElementById('root').innerHTML = <></>
+      Swal.fire({
+                 title: 'Snippet not found',
+                 padding: '3em',
+                 icon: 'error',
+                 background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
+                 showConfirmButton: false,
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
+            })
+}
+            return responseData.httpCode
+		})
 	    .catch(error => {
 	      console.log("error", error);
 	      alert("An error occured, please try again later.");
@@ -54,7 +85,27 @@ class CreatorControlPanel extends Component {
 			  'Accept': 'application/json',
 			  'Content-Type': 'application/json'
 		  }
-	  })
+	  }).then(response => response.json())
+		.then(responseData => {
+			console.log(responseData.httpCode)
+			if(responseData.httpCode !== 200) {
+        	   document.getElementById('root').innerHTML = <></>
+      Swal.fire({
+                 title: 'Snippet not found',
+                 padding: '3em',
+                 icon: 'error',
+                 background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
+                 showConfirmButton: false,
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
+            })
+           }
+        	return responseData.httpCode
+		})
 	    .catch(error => {
 	      console.log("error", error);
 	      alert("An error occured, please try again later.");
@@ -91,7 +142,7 @@ class CreatorControlPanel extends Component {
   denyButtonText: `No, Go Back`
 }).then((result) => {
   if (result.isConfirmed) {
-     this.deleteSnippet().then(this.successDeleteCallback, this.failureDeleteCallback);
+     this.deleteSnippet().then(this.successCallback, this.failureCallback);
   } 
 })
    
@@ -102,32 +153,6 @@ class CreatorControlPanel extends Component {
   }
 
   successCallback() {
-      Swal.fire({
-	      title: 'Success',
-          html: 'Snippet Info Updated!',
-          icon: 'success',
-          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
-          backdrop: ` rgba(0,0,123,0.4)
-                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
-                      left top
-                      no-repeat`
-      })
-    }
-
-   failureCallback() {
-      Swal.fire({
-	      title: 'Error',
-          html: 'Unable to Update Snippet Info',
-          icon: 'error',
-          background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
-          backdrop: ` rgba(0,0,123,0.4)
-                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
-                      left top
-                      no-repeat`
-      })
-    }
-
-  successDeleteCallback() {
       document.getElementById('root').innerHTML = <></>
       Swal.fire({
                  title: 'Snippet deleted',
@@ -144,7 +169,7 @@ class CreatorControlPanel extends Component {
             })
     }
 
-   failureDeleteCallback() {
+   failureCallback() {
       Swal.fire({
 	      title: 'Error',
           html: 'Unable to Delete Snippet',
@@ -159,7 +184,7 @@ class CreatorControlPanel extends Component {
    
   handleSubmit(event) {
     event.preventDefault();
-    this.updateSnippetInfo().then(this.successCallback, this.failureCallback);
+    this.updateSnippetInfo()
   }
 
   fetchSnippet = async (id) => {
@@ -175,6 +200,7 @@ class CreatorControlPanel extends Component {
 		var tempSecond = this.props.time
 		var d = new Date(0)
 		d.setUTCSeconds(tempSecond)
+		if(this.state.status !== 400) {
 		return(
 			<>
 				<h2>Information</h2>
@@ -213,7 +239,23 @@ class CreatorControlPanel extends Component {
 				<Button className="actionButton" variant="danger" onClick={this.handleDelete}>Delete Snippet</Button>{' '}
 				
 			</>
-		)
+		)}
+		else {
+			Swal.fire({
+                 title: 'Snippet not found',
+                 padding: '3em',
+                 icon: 'error',
+                 background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
+                 showConfirmButton: false,
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
+            })
+           return <></>
+		}
 	};
 	
 	setPasswordStatus(event) {
