@@ -15,13 +15,13 @@ public class EnableSnippetPasswordResponse {
 	}
 	
 	public EnableSnippetPasswordResponse (int code) {
-		this.response = "Failed to update snippet info.";
+		this.response = "Failed to update snippet password selection.";
 		this.httpCode = code;
 	}
 	
 	// 200 means success
 	public EnableSnippetPasswordResponse(String id) {
-		this.response = "Updated snippet info for ID: " + id;
+		this.response = "Updated snippet password selection for ID: " + id;
 		this.httpCode = 200;
 	}
 	
