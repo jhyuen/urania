@@ -1,3 +1,4 @@
+
 package urania.snippetSystem.TestsToDo;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ import urania.snippetSystem.http.DeleteStaleSnippetResponse;
 /**
  * A simple test harness for locally invoking your Lambda function handler.
  */
-public class DeleteStaleSnippetHandlerTest extends LambdaTest {
+/*public class DeleteStaleSnippetHandlerTest extends LambdaTest {
 	
 	DeleteStaleSnippetResponse testSuccessInput(String incoming) throws IOException {
     	DeleteStaleSnippetHandler handler = new DeleteStaleSnippetHandler();
@@ -101,4 +102,4 @@ public class DeleteStaleSnippetHandlerTest extends LambdaTest {
         
         Assert.assertEquals(response.httpCode, 400);
     }
-}
+}*/

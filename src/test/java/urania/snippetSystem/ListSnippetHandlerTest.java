@@ -33,7 +33,7 @@ public class ListSnippetHandlerTest extends LambdaTest {
     	ListSnippetRequest req = new Gson().fromJson(incoming, ListSnippetRequest.class);
        
         ListSnippetResponse resp = handler.handleRequest(req, createContext("get"));
-        Assert.assertEquals(201, resp.httpCode);
+        Assert.assertEquals(200, resp.httpCode);
         return resp;
     }
 	
@@ -44,7 +44,6 @@ public class ListSnippetHandlerTest extends LambdaTest {
     	ListSnippetResponse resp = handler.handleRequest(req, createContext("get"));
         Assert.assertEquals(failureCode, resp.httpCode);
     }
-    private static Object input;
 
     @Test
     public void testShouldBeOk () {

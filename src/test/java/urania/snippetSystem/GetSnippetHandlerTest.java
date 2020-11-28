@@ -41,7 +41,6 @@ public class GetSnippetHandlerTest extends LambdaTest {
     	GetSnippetResponse resp = handler.handleRequest(req, createContext("get"));
         Assert.assertEquals(failureCode, resp.httpCode);
     }
-    private static Object input;
 
     @Test
     public void testShouldBeOk () {
@@ -56,27 +55,25 @@ public class GetSnippetHandlerTest extends LambdaTest {
         	Assert.fail("Create snippet failed:" + ioe.getMessage());
 		}
 		
+		GetSnippetResponse response = null;
+		
         try {
-        	testSuccessInput(SAMPLE_INPUT_STRING);
+            response = testSuccessInput(SAMPLE_INPUT_STRING);
         } catch (IOException ioe) {
         	Assert.fail("Invalid:" + ioe.getMessage());
         }
+        
+        DeleteSnippetRequest dsr = new DeleteSnippetRequest(response.snippetId);
+        DeleteSnippetResponse d_resp = new DeleteSnippetHandler().handleRequest(dsr, createContext("delete"));
+        Assert.assertEquals(d_resp.httpCode, 200);
     }
     
     @Test
     public void testExtraInput() {
 		String SAMPLE_INPUT_STRING = "{\"snippetID\": \"test_snippedId\", \"hgfgdfgdfg\": \"this is not a number\"}";
-        
-		SnippetDAO sd = new SnippetDAO() ;
-        Snippet snippet = new Snippet("test_snippetId");
-		try {
-			sd.createSnippet(snippet);
-		} catch (Exception ioe) {
-        	Assert.fail("Create snippet failed:" + ioe.getMessage());
-		}
 		
         try {
-        	testSuccessInput(SAMPLE_INPUT_STRING);
+            testFailInput(SAMPLE_INPUT_STRING, 422);
         } catch (IOException ioe) {
         	Assert.fail("Invalid:" + ioe.getMessage());
         }
@@ -87,7 +84,7 @@ public class GetSnippetHandlerTest extends LambdaTest {
         String SAMPLE_INPUT_STRING = new Gson().toJson(new GetSnippetRequest());
 
         try {
-            testFailInput(SAMPLE_INPUT_STRING, 400);
+            testFailInput(SAMPLE_INPUT_STRING, 422);
         } catch (IOException ioe) {
             Assert.fail("Invalid:" + ioe.getMessage());
         }
@@ -97,7 +94,7 @@ public class GetSnippetHandlerTest extends LambdaTest {
         String SAMPLE_INPUT_STRING = "{\"sdsd\": \"e3\", \"hgfgdfgdfg\": \"this is not a number\"}";
 
         try {
-            testFailInput(SAMPLE_INPUT_STRING, 400); }
+            testFailInput(SAMPLE_INPUT_STRING, 422); }
         catch (IOException ioe) {
             Assert.fail("Invalid:" + ioe.getMessage());
         }
