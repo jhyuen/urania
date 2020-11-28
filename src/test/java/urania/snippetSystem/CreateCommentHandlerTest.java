@@ -53,8 +53,7 @@ public class CreateCommentHandlerTest extends LambdaTest {
         
         DeleteCommentRequest dcr = new
         DeleteCommentRequest(response.list.get(0).snippetID,
-        response.list.get(0).commentID); DeleteCommentResponse d_resp = new
-        DeleteCommentHandler().handleRequest(dcr, createContext("delete"));
+        response.list.get(0).commentID); DeleteCommentResponse d_resp = new DeleteCommentHandler().handleRequest(dcr, createContext("delete"));
         Assert.assertEquals(d_resp.httpCode, 201);
     }
     
@@ -68,8 +67,7 @@ public class CreateCommentHandlerTest extends LambdaTest {
         
         DeleteCommentRequest dcr = new
         DeleteCommentRequest(response.list.get(0).snippetID,
-        response.list.get(0).commentID); DeleteCommentResponse d_resp = new
-        DeleteCommentHandler().handleRequest(dcr, createContext("delete"));
+        response.list.get(0).commentID); DeleteCommentResponse d_resp = new DeleteCommentHandler().handleRequest(dcr, createContext("delete"));
         Assert.assertEquals(d_resp.httpCode, 201);
     }
 
