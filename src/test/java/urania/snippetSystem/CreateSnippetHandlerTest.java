@@ -36,7 +36,6 @@ public class CreateSnippetHandlerTest extends LambdaTest {
     	CreateSnippetResponse resp = handler.handleRequest(req, createContext("create"));
         Assert.assertEquals(failureCode, resp.httpCode);
     }
-    private static Object input;
 
     @Test
     public void testShouldBeOk () {
