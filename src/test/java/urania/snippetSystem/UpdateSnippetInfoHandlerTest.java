@@ -47,37 +47,71 @@ public class UpdateSnippetInfoHandlerTest extends LambdaTest {
     	UpdateSnippetInfoResponse resp = handler.handleRequest(req, createContext("update"));
         Assert.assertEquals(failureCode, resp.httpCode);
     }
-    private static Object input;
 
     @Test
     public void testShouldBeOk () {
-    	ListSnippetRequest gsr = new ListSnippetRequest();
+    	UpdateSnippetInfoRequest gsr = new UpdateSnippetInfoRequest("test_snippetId", "this is updated test info");
         String SAMPLE_INPUT_STRING = new Gson().toJson(gsr);
         
+        SnippetDAO sd = new SnippetDAO() ;
+        Snippet snippet = new Snippet("test_snippetId");
+        
+		try {
+			sd.createSnippet(snippet);
+		} catch (Exception ioe) {
+        	Assert.fail("Create snippet failed:" + ioe.getMessage());
+		}
+        
+		UpdateSnippetInfoResponse response = null;
+		
         try {
-        	testSuccessInput(SAMPLE_INPUT_STRING);
+        	response = testSuccessInput(SAMPLE_INPUT_STRING);
         } catch (IOException ioe) {
         	Assert.fail("Invalid:" + ioe.getMessage());
         }
+        
+        Assert.assertEquals(response.response, "Updated snippet info for ID: test_snippetId");
+        
+        DeleteSnippetRequest dsr = new DeleteSnippetRequest("test_snippetId");
+        DeleteSnippetResponse d_resp = new DeleteSnippetHandler().handleRequest(dsr, createContext("delete"));
+        Assert.assertEquals(d_resp.httpCode, 200);
     }
     
     @Test
     public void testExtraInput() {
-		String SAMPLE_INPUT_STRING = "{\"snippetID\": \"test_snippedId\", \"hgfgdfgdfg\": \"this is not a number\"}";
+		String SAMPLE_INPUT_STRING = "{\"id\": \"test_snippetId\", \"info\": \"this is updated test info\", \"hgfgdfgdfg\": \"this is not a number\"}";
+		
+		SnippetDAO sd = new SnippetDAO() ;
+        Snippet snippet = new Snippet("test_snippetId");
+        
+		try {
+			sd.createSnippet(snippet);
+		} catch (Exception ioe) {
+        	Assert.fail("Create snippet failed:" + ioe.getMessage());
+		}
+        
+		UpdateSnippetInfoResponse response = null;
 		
         try {
-        	testSuccessInput(SAMPLE_INPUT_STRING);
+        	response = testSuccessInput(SAMPLE_INPUT_STRING);
         } catch (IOException ioe) {
         	Assert.fail("Invalid:" + ioe.getMessage());
         }
+        
+        Assert.assertEquals(response.response, "Updated snippet info for ID: test_snippetId");
+        
+        DeleteSnippetRequest dsr = new DeleteSnippetRequest("test_snippetId");
+        DeleteSnippetResponse d_resp = new DeleteSnippetHandler().handleRequest(dsr, createContext("delete"));
+        Assert.assertEquals(d_resp.httpCode, 200);
     }
     
     @Test
     public void testNothing() {
-		String SAMPLE_INPUT_STRING = "{\"snippetID\": \"test_snippedId\", \"hgfgdfgdfg\": \"this is not a number\"}";
+    	UpdateSnippetInfoRequest gsr = new UpdateSnippetInfoRequest();
+        String SAMPLE_INPUT_STRING = new Gson().toJson(gsr);
 		
         try {
-        	testSuccessInput(SAMPLE_INPUT_STRING);
+        	testFailInput(SAMPLE_INPUT_STRING, 400);
         } catch (IOException ioe) {
         	Assert.fail("Invalid:" + ioe.getMessage());
         }
@@ -85,10 +119,10 @@ public class UpdateSnippetInfoHandlerTest extends LambdaTest {
     
     @Test
     public void testBadJson() {
-		String SAMPLE_INPUT_STRING = "{\"snippetID\": \"test_snippedId\", \"hgfgdfgdfg\": \"this is not a number\"}";
+		String SAMPLE_INPUT_STRING = "{\"fasdfasdf\": \"fsdfdf\", \"hgfgdfgdfg\": \"this is not a number\"}";
 		
         try {
-        	testSuccessInput(SAMPLE_INPUT_STRING);
+        	testFailInput(SAMPLE_INPUT_STRING, 400);
         } catch (IOException ioe) {
         	Assert.fail("Invalid:" + ioe.getMessage());
         }
