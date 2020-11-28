@@ -36,7 +36,7 @@ public class UpdateSnippetInfoHandlerTest extends LambdaTest {
     	UpdateSnippetInfoRequest req = new Gson().fromJson(incoming, UpdateSnippetInfoRequest.class);
        
         UpdateSnippetInfoResponse resp = handler.handleRequest(req, createContext("update"));
-        Assert.assertEquals(201, resp.httpCode);
+        Assert.assertEquals(200, resp.httpCode);
         return resp;
     }
 	
