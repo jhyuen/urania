@@ -11,14 +11,17 @@ import org.junit.Test;
 import urania.snippetSystem.db.SnippetDAO;
 import urania.snippetSystem.model.Snippet;
 
-public class TestSnippetThings {
+public class TestSnippetDAO {
 
 	@Test
 	public void testFindSnippet() {
 	    SnippetDAO sd = new SnippetDAO();
 	    try {
+			Snippet s = new Snippet("asfedv");
+			boolean b = sd.createSnippet(s);
 	    	Snippet snippet = sd.getSnippet("asfedv");
 	    	System.out.println("snippet " + snippet.snippetID + " => " + snippet.snippetText + " => " + snippet.timeStamp);
+	    	b = sd.deleteSnippet("asfedv");
 	    } catch (Exception e) {
 	    	fail ("didn't work:" + e.getMessage());
 	    }
@@ -50,12 +53,15 @@ public class TestSnippetThings {
 	public void testUpdateSnippetText() {
 		SnippetDAO sd = new SnippetDAO();
 		try {
+			Snippet snippet = new Snippet("abcd123");
+			boolean b = sd.createSnippet(snippet);
+
 			// change snippet "abcd123" to have snippet text "updated text"
-			boolean b = sd.updateSnippetText("abcd123", "updated text");
+			b = sd.updateSnippetText("abcd123", "updated text");
 	    	assertTrue (b);
 	    	
 	    	// Check that text is changed
-	    	Snippet snippet = sd.getSnippet("abcd123");
+	    	snippet = sd.getSnippet("abcd123");
 	    	System.out.println("Updated Snippet: " + snippet.snippetID + " - text => " + snippet.snippetText);
 	    	assertEquals ("updated text", snippet.snippetText);
 	    	
@@ -72,12 +78,15 @@ public class TestSnippetThings {
 	public void testUpdateSnippetInfo() {
 		SnippetDAO sd = new SnippetDAO();
 		try {
+			Snippet snippet = new Snippet("abcd123");
+			boolean b = sd.createSnippet(snippet);
+
 			// change snippet "abcd123" to have snippet text "updated text"
-			boolean b = sd.updateSnippetInfo("abcd123", "updated info");
+			b = sd.updateSnippetInfo("abcd123", "updated info");
 	    	assertTrue (b);
 	    	
 	    	// Check that text is changed
-	    	Snippet snippet = sd.getSnippet("abcd123");
+	    	snippet = sd.getSnippet("abcd123");
 	    	System.out.println("Updated Snippet: " + snippet.snippetID + " - text => " + snippet.snippetInfo);
 	    	assertEquals ("updated info", snippet.snippetInfo);
 	    	
@@ -94,13 +103,20 @@ public class TestSnippetThings {
 	public void testEnableSnippetPassword() {
 		SnippetDAO sd = new SnippetDAO();
 		try {
+			Snippet s = new Snippet("abcd123");
+			boolean b = sd.createSnippet(s);
+	    	// Check that password is disabled
+	    	Snippet snippet = sd.getSnippet("abcd123");
+	    	System.out.println("Updated Snippet: " + snippet.snippetID + " - enablePassword => " + snippet.viewerPasswordEnabled);
+	    	assertFalse (snippet.viewerPasswordEnabled);
+
 			// update snippet to enable password 
-			boolean b = sd.enableSnippetPassword("abcd123", true);
+			b = sd.enableSnippetPassword("abcd123", true);
 	    	assertTrue (b);
 	    	
 	    	// Check that password is enabled
-	    	Snippet snippet = sd.getSnippet("abcd123");
-	    	System.out.println("Updated Snippet: " + snippet.snippetID + " - enablePassowrd => " + snippet.viewerPasswordEnabled);
+	    	snippet = sd.getSnippet("abcd123");
+	    	System.out.println("Updated Snippet: " + snippet.snippetID + " - enablePassword => " + snippet.viewerPasswordEnabled);
 	    	assertTrue (snippet.viewerPasswordEnabled);
 	    	
 	    	// change snippet "abcd123" back to viewer password disabled
@@ -109,7 +125,7 @@ public class TestSnippetThings {
 	    	
 	    	// Check that password is disabled
 	    	snippet = sd.getSnippet("abcd123");
-	    	System.out.println("Updated Snippet: " + snippet.snippetID + " - enablePassowrd => " + snippet.viewerPasswordEnabled);
+	    	System.out.println("Updated Snippet: " + snippet.snippetID + " - enablePassword => " + snippet.viewerPasswordEnabled);
 	    	assertFalse (snippet.viewerPasswordEnabled);
 			
 		} catch (Exception e) {
@@ -151,22 +167,25 @@ public class TestSnippetThings {
 	public void testGetAllSnippets() {
 		SnippetDAO sd = new SnippetDAO();
 		try {
+			Snippet snippet = new Snippet("abcd123");
+			boolean b = sd.createSnippet(snippet);
+			snippet = new Snippet("efgh");
+			b = sd.createSnippet(snippet);
 			// Get all snippets
 	    	List<Snippet> allSnippets = sd.getAllSnippets();
 
 			boolean hasABCD123 = false;
-			boolean hasShinesSnippet = false;
 			boolean hasEFGH = false;
 			for (Snippet s : allSnippets) {
 				System.out.println("found snippet " + s.snippetID);
 				if (s.snippetID.equals("abcd123")) { hasABCD123 = true; }
-				if (s.snippetID.equals("shinessnippet")) { hasShinesSnippet = true; }
 				if (s.snippetID.equals("efgh")) { hasEFGH = true; }
 			}
 
 			assertTrue("abcd123 Needs to exist in the snippet table for this test case to work.", hasABCD123);
-			assertTrue("shinessnippet Needs to exist in the snippet table (from tutorial) for this test case to work.", hasShinesSnippet);
 			assertTrue("efgh Needs to exist in the snippet table (from tutorial) for this test case to work.", hasEFGH);
+	    	b = sd.deleteSnippet("abcd123");
+	    	b = sd.deleteSnippet("efgh");
 			
 		} catch (Exception e) {
 			fail ("couldn't list all snippets: " + e.getMessage());

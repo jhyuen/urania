@@ -24,7 +24,7 @@ class Comment extends Component {
 		console.log("selectedCommentId: " + this.props.selectedCommentId)
 		return (
 			<div>
-			{ this.props.comment.commentID == this.props.selectedCommentId ?
+			{ this.props.comment.commentID === this.props.selectedCommentId ?
 				<div className='chosenComment'>
 					<div className="commentHeader"> 
 						<p className="commentTimestamp">{d.toLocaleString()}</p>

@@ -54,22 +54,6 @@ public class CommentDAO {
         }
     }
     
-    public boolean updateComment(Comment comment) throws Exception {
-//        try {
-//        	String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";
-//        	PreparedStatement ps = conn.prepareStatement(query);
-//            ps.setDouble(1, comment.value);
-//            ps.setString(2, comment.name);
-//            int numAffected = ps.executeUpdate();
-//            ps.close();
-//            
-//            return (numAffected == 1);
-//        } catch (Exception e) {
-//            throw new Exception("Failed to update report: " + e.getMessage());
-//        }
-    	return false;
-    }
-    
     public boolean deleteCommentCommentID(String commentID) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE commentId = ?;");

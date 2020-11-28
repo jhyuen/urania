@@ -9,7 +9,7 @@ import urania.snippetSystem.http.EnableSnippetPasswordRequest;
 import urania.snippetSystem.http.EnableSnippetPasswordResponse;
 import urania.snippetSystem.model.Snippet;
 
-public class EnableSnippetPassword implements RequestHandler<EnableSnippetPasswordRequest, EnableSnippetPasswordResponse> {
+public class EnableSnippetPasswordHandler implements RequestHandler<EnableSnippetPasswordRequest, EnableSnippetPasswordResponse> {
 	
 	LambdaLogger logger;
 	
