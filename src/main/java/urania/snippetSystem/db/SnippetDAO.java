@@ -205,8 +205,6 @@ public class SnippetDAO {
     
     private Snippet generateSnippet(ResultSet resultSet) throws Exception {
         String uuid  = resultSet.getString("snippetId");
-//        String text = resultSet.getObject("snippetText", String.class);
-//        String info = resultSet.getObject("snippetInfo", String.class);
         String text = resultSet.getString("snippetText");
         String info = resultSet.getString("snippetInfo");
         Instant datetime = resultSet.getTimestamp("timeStamp").toInstant();
