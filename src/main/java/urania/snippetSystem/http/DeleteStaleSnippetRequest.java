@@ -1,12 +1,12 @@
 package urania.snippetSystem.http;
 
 public class DeleteStaleSnippetRequest {
-	public int daysOld;
+	public double daysOld;
 	
-	public int getDaysOld () { return daysOld; }
-	public void setDaysOld (int setDaysOld) { this.daysOld = setDaysOld; }
+	public double getDaysOld () { return daysOld; }
+	public void setDaysOld (double setDaysOld) { this.daysOld = setDaysOld; }
 	
-	public DeleteStaleSnippetRequest (int daysOld) {
+	public DeleteStaleSnippetRequest (double daysOld) {
 		this.daysOld = daysOld;
 	}
 	
