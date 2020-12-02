@@ -13,7 +13,8 @@ class CommentPanel extends Component {
 	    super(props);
 	    this.state = {
 	    	comments: [],
-	    	selectedCommentId: ''
+	    	selectedCommentId: '',
+            status: null
 	    }
 	    this.deleteCommentRequest = this.deleteCommentRequest.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -68,7 +69,12 @@ class CommentPanel extends Component {
 				  'Accept': 'application/json',
 				  'Content-Type': 'application/json'
 			  }
-		  })
+		  }).then(response => response.json())
+		.then(responseData => {
+			console.log(responseData.httpCode)
+			this.setState({status: responseData.httpCode})
+        	return responseData.httpCode
+		})
 		    .catch(error => {
 		      console.log("error", error);
 		      alert("An error occured, please try again later.");
@@ -80,7 +86,7 @@ class CommentPanel extends Component {
 	    var get_snippet_url = base_url + this.props.id + "/snippet"; 
 		var data = await fetch(get_snippet_url)
 		var snippetData = await data.json()
-		return snippetData.snippetText
+		return snippetData
 		//console.log(snippetData.viewerPasswordStatus)
 	}
 	
@@ -149,7 +155,7 @@ class CommentPanel extends Component {
 	      })
 	      .then(response => response.json())
 	      .then(responseData => {
-	    	  //console.log("reponseData:" + responseData)
+	    	  console.log(responseData)
 	    	  this.setState({ comments: responseData.list })
 	    	  this.props.commentCallback(responseData.list)
 	      })
@@ -163,10 +169,13 @@ class CommentPanel extends Component {
 	    // check range
 		this.fetchSnippet().then((result) => { 
 			let selR = this.props.range
+		if(result.httpCode === 422) {
+			this.setState({status: result.httpCode})
+		} else {
 	    if (((selR.start.row !== selR.end.row) 
 	    		|| (selR.start.column !== selR.end.column))
 	    		&& text !== '') {
-		if(result === this.props.text) {
+		if(result.snippetText === this.props.text) {
 	      console.log("legal comment")
           this.addComment(text, selR)
 	       }
@@ -195,7 +204,7 @@ class CommentPanel extends Component {
              background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)'
             })
 	    }
-        })    	
+        }})    	
 	} 
 	
 	render() {
@@ -212,7 +221,10 @@ class CommentPanel extends Component {
 	    addBtn = <Button disabled className="addButton" type="submit" variant="primary">
 					Add
 				 </Button> }
+			
+		if(this.state.status !== 400 & this.state.status !== 422 ) {
 		return(
+			
 			<>
 				<h2>Comments</h2>
 				<CommentEnterArea addComment={ this.handleAddComment } btn={addBtn}/>
@@ -220,7 +232,22 @@ class CommentPanel extends Component {
 					<CommentList comments={ this.state.comments } delComment={ this.delComment } identifyComment={ this.identifyComment } selectedCommentId={ this.state.selectedCommentId }/>
 				</div>
 			</>
-		)
+		)} else {
+			Swal.fire({
+                 title: 'Snippet not found',
+                 padding: '3em',
+                 icon: 'error',
+                 background: '#fff url(https://t3.ftcdn.net/jpg/01/87/78/52/360_F_187785254_C2GnRn7UJDtngaw5LCY5rZRGf6YUZDsc.jpg)',
+                 backdrop: ` rgba(0,0,123,0.4)
+                             url("https://media1.thehungryjpeg.com/thumbs2/ori_3674132_r92n1p85dw7wvbdno6ihpnhy2kprdtgnlm613jmk_seamless-night-sky-stars-pattern-sketch-moon-space-planets-and-hand.jpg")
+                             left top
+                             repeat`,
+                 showConfirmButton: false,
+                 allowOutsideClick: false,
+                 allowEscapeKey: false
+            })
+			return <></>
+		}
 	}
 }
 
