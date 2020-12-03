@@ -28,12 +28,6 @@ class Comment extends Component {
 				<div className='chosenComment'>
 					<div className="commentHeader"> 
 						<p className="commentTimestamp">{d.toLocaleString()}</p>
-						<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
-							<Delete className="commentButton" />
-						</Button>	
-						<Button className="identifyButton" variant="info" onClick={ this.props.identifyComment.bind(this, this.props.comment.commentID )  }>
-							<SearchIcon className="commentButton"/>
-						</Button>					
 					</div>
 					<textarea 
 						className='displayCommentTextArea'
@@ -44,17 +38,19 @@ class Comment extends Component {
 						onChange={ this.onChange }
 						readOnly
 					/>
+					<div className="commentButtons">
+						<Button className="identifyButton" variant="info" onClick={ this.props.identifyComment.bind(this, this.props.comment.commentID )  }>
+							<SearchIcon className="commentButton"/>
+						</Button>	
+						<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
+							<Delete className="commentButton" />
+						</Button>	
+					</div>	
 				</div>
 				:
 				<div className='comment'>
 					<div className="commentHeader"> 
 						<p className="commentTimestamp">{d.toLocaleString()}</p>
-						<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
-							<Delete className="commentButton" />
-						</Button>	
-						<Button className="identifyButton" variant="info" onClick={ this.props.identifyComment.bind(this, this.props.comment.commentID )  }>
-							<SearchIcon className="commentButton"/>
-						</Button>					
 					</div>
 					<textarea 
 						className='displayCommentTextArea'
@@ -65,6 +61,14 @@ class Comment extends Component {
 						onChange={ this.onChange }
 						readOnly
 					/>
+					<div className="commentButtons">
+						<Button className="identifyButton" variant="info" onClick={ this.props.identifyComment.bind(this, this.props.comment.commentID )  }>
+							<SearchIcon className="commentButton"/>
+						</Button>	
+						<Button className="deleteButton" variant="danger" onClick={ this.props.delComment.bind(this, this.props.comment.commentID) }>
+							<Delete className="commentButton" />
+						</Button>	
+					</div>	
 				</div>
 					
 			}
