@@ -123,7 +123,7 @@ class AdminView extends Component {
 			            accessor: 'delete',
 			            disableSortBy: true,
 			            Cell: ({cell}) => (
-							<Button className="deleteButton" variant="danger" value={cell.row.values.name}
+							<Button className="deleteAdminButton" variant="danger" value={cell.row.values.name}
 									onClick={() => {this.handleDelete(cell.row.values.snippetID)}}>
 								<Delete/>
 							</Button>

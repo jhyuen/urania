@@ -4,7 +4,7 @@ import CommentEnterArea from './CommentEnterArea.js'
 import PropTypes from 'prop-types';
 import './CommentPanel.css';
 import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from "sweetalert2";
 
 
