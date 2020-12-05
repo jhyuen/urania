@@ -10,8 +10,8 @@ class AdminView extends Component {
     super(props);
     this.state = {
       data			: [],
-      dataSource: [],
-      filter    : '',
+      dataSource	: [],
+      filter    	: '',
       loading		: true,
       pageCount		: 0,
       fetchIdRef	: 0,
@@ -25,13 +25,10 @@ class AdminView extends Component {
 		var get_snippets_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/snippetList"; 
 		var data = await fetch(get_snippets_url)
 		var snippetData = await data.json()
-		//console.log(snippetData.viewerPasswordStatus)
-		console.log(snippetData.list)
-    console.log(this.state.filter)
 		this.setState({ data: snippetData.list,
                     dataSource: snippetData.list.filter(snippet =>
                                 snippet.snippetID.includes(this.state.filter)),
-                    //dataSource: snippetData.list,
+                    			//dataSource: snippetData.list,
                     loading: false  })
 	}
 	
@@ -50,7 +47,6 @@ class AdminView extends Component {
 		        showLoaderOnConfirm: true,	
 		        preConfirm: async (daysOld) => {
 		          		daysOld = parseFloat(daysOld)
-						console.log("days old", daysOld)
 						if(daysOld >= 0 ) {
 							var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
 							var update_url = base_url + "/delete_stale_snippets";
@@ -78,7 +74,6 @@ class AdminView extends Component {
   handleDelete = async (snippetID) => {
 	var base_url = "https://e061bpd3ph.execute-api.us-east-2.amazonaws.com/beta/";
 	var update_url = base_url + snippetID + "/delete_snippet";
-	console.log(snippetID)
 	await fetch(update_url, {
 		  method: 'POST',
 		  //body: JSON.stringify({enable: val}),
@@ -90,7 +85,6 @@ class AdminView extends Component {
 	      console.log("error", error);
 	      alert("An error occured, please try again later.");
 	  });
-    console.log('delete')
     this.setState({ loading: true })
     this.fetchAllSnippets()
   }
