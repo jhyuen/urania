@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestSnippetDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">TestSnippetDAO.java</span></div><h1>TestSnippetDAO.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.junit.Test;
+
+import urania.snippetSystem.db.SnippetDAO;
+import urania.snippetSystem.model.Snippet;
+
+<span class="fc" id="L14">public class TestSnippetDAO {</span>
+
+	@Test
+	public void testFindSnippet() {
+<span class="fc" id="L18">	    SnippetDAO sd = new SnippetDAO();</span>
+	    try {
+<span class="fc" id="L20">			Snippet s = new Snippet(&quot;asfedv&quot;);</span>
+<span class="fc" id="L21">			boolean b = sd.createSnippet(s);</span>
+<span class="fc" id="L22">	    	Snippet snippet = sd.getSnippet(&quot;asfedv&quot;);</span>
+<span class="fc" id="L23">	    	System.out.println(&quot;snippet &quot; + snippet.snippetID + &quot; =&gt; &quot; + snippet.snippetText + &quot; =&gt; &quot; + snippet.timeStamp);</span>
+<span class="fc" id="L24">	    	b = sd.deleteSnippet(&quot;asfedv&quot;);</span>
+<span class="pc" id="L25">	    } catch (Exception e) {</span>
+<span class="nc" id="L26">	    	fail (&quot;didn't work:&quot; + e.getMessage());</span>
+	    }
+<span class="fc" id="L28">	}</span>
+	
+	@Test
+	public void testCreateSnippet() {
+<span class="fc" id="L32">	    SnippetDAO sd = new SnippetDAO();</span>
+	    try {
+	    	// can add it
+<span class="fc" id="L35">	    	String id = UUID.randomUUID().toString();</span>
+<span class="fc" id="L36">	    	Snippet snippet = new Snippet(id);</span>
+<span class="fc" id="L37">	    	boolean b = sd.createSnippet(snippet);</span>
+<span class="fc" id="L38">	    	System.out.println(&quot;add constant: &quot; + b);</span>
+<span class="fc" id="L39">	    	assertTrue (b);</span>
+	    	
+	    	// can retrieve it
+<span class="fc" id="L42">	    	Snippet s2 = sd.getSnippet(snippet.snippetID);</span>
+<span class="fc" id="L43">	    	System.out.println(&quot;C2:&quot; + s2.snippetID);</span>
+	    	
+	    	// can delete it
+<span class="fc" id="L46">	    	assertTrue (sd.deleteSnippet(id));</span>
+<span class="pc" id="L47">	    } catch (Exception e) {</span>
+<span class="nc" id="L48">	    	fail (&quot;didn't work:&quot; + e.getMessage());</span>
+	    }
+<span class="fc" id="L50">	}</span>
+	
+	@Test
+	public void testUpdateSnippetText() {
+<span class="fc" id="L54">		SnippetDAO sd = new SnippetDAO();</span>
+		try {
+<span class="fc" id="L56">			Snippet snippet = new Snippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L57">			boolean b = sd.createSnippet(snippet);</span>
+
+			// change snippet &quot;abcd123&quot; to have snippet text &quot;updated text&quot;
+<span class="fc" id="L60">			b = sd.updateSnippetText(&quot;abcd123&quot;, &quot;updated text&quot;);</span>
+<span class="fc" id="L61">	    	assertTrue (b);</span>
+	    	
+	    	// Check that text is changed
+<span class="fc" id="L64">	    	snippet = sd.getSnippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L65">	    	System.out.println(&quot;Updated Snippet: &quot; + snippet.snippetID + &quot; - text =&gt; &quot; + snippet.snippetText);</span>
+<span class="fc" id="L66">	    	assertEquals (&quot;updated text&quot;, snippet.snippetText);</span>
+	    	
+	    	// change snippet &quot;abcd123&quot; back to &quot;original text&quot;
+<span class="fc" id="L69">			b = sd.updateSnippetText(&quot;abcd123&quot;, &quot;original text&quot;);</span>
+<span class="fc" id="L70">	    	assertTrue (b);</span>
+			
+<span class="pc" id="L72">		} catch (Exception e) {</span>
+<span class="nc" id="L73">			fail (&quot;couldn't update snippet text: &quot; + e.getMessage());</span>
+		}
+<span class="fc" id="L75">	}</span>
+
+	@Test
+	public void testUpdateSnippetInfo() {
+<span class="fc" id="L79">		SnippetDAO sd = new SnippetDAO();</span>
+		try {
+<span class="fc" id="L81">			Snippet snippet = new Snippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L82">			boolean b = sd.createSnippet(snippet);</span>
+
+			// change snippet &quot;abcd123&quot; to have snippet text &quot;updated text&quot;
+<span class="fc" id="L85">			b = sd.updateSnippetInfo(&quot;abcd123&quot;, &quot;updated info&quot;);</span>
+<span class="fc" id="L86">	    	assertTrue (b);</span>
+	    	
+	    	// Check that text is changed
+<span class="fc" id="L89">	    	snippet = sd.getSnippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L90">	    	System.out.println(&quot;Updated Snippet: &quot; + snippet.snippetID + &quot; - text =&gt; &quot; + snippet.snippetInfo);</span>
+<span class="fc" id="L91">	    	assertEquals (&quot;updated info&quot;, snippet.snippetInfo);</span>
+	    	
+	    	// change snippet &quot;abcd123&quot; back to &quot;original text&quot;
+<span class="fc" id="L94">			b = sd.updateSnippetText(&quot;abcd123&quot;, &quot;original info&quot;);</span>
+<span class="fc" id="L95">	    	assertTrue (b);</span>
+			
+<span class="pc" id="L97">		} catch (Exception e) {</span>
+<span class="nc" id="L98">			fail (&quot;couldn't update snippet info: &quot; + e.getMessage());</span>
+		}
+<span class="fc" id="L100">	}</span>
+
+	@Test
+	public void testEnableSnippetPassword() {
+<span class="fc" id="L104">		SnippetDAO sd = new SnippetDAO();</span>
+		try {
+<span class="fc" id="L106">			Snippet s = new Snippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L107">			boolean b = sd.createSnippet(s);</span>
+	    	// Check that password is disabled
+<span class="fc" id="L109">	    	Snippet snippet = sd.getSnippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L110">	    	System.out.println(&quot;Updated Snippet: &quot; + snippet.snippetID + &quot; - enablePassword =&gt; &quot; + snippet.viewerPasswordEnabled);</span>
+<span class="fc" id="L111">	    	assertFalse (snippet.viewerPasswordEnabled);</span>
+
+			// update snippet to enable password 
+<span class="fc" id="L114">			b = sd.enableSnippetPassword(&quot;abcd123&quot;, true);</span>
+<span class="fc" id="L115">	    	assertTrue (b);</span>
+	    	
+	    	// Check that password is enabled
+<span class="fc" id="L118">	    	snippet = sd.getSnippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L119">	    	System.out.println(&quot;Updated Snippet: &quot; + snippet.snippetID + &quot; - enablePassword =&gt; &quot; + snippet.viewerPasswordEnabled);</span>
+<span class="fc" id="L120">	    	assertTrue (snippet.viewerPasswordEnabled);</span>
+	    	
+	    	// change snippet &quot;abcd123&quot; back to viewer password disabled
+<span class="fc" id="L123">			b = sd.enableSnippetPassword(&quot;abcd123&quot;, false);</span>
+<span class="fc" id="L124">	    	assertTrue (b);</span>
+	    	
+	    	// Check that password is disabled
+<span class="fc" id="L127">	    	snippet = sd.getSnippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L128">	    	System.out.println(&quot;Updated Snippet: &quot; + snippet.snippetID + &quot; - enablePassword =&gt; &quot; + snippet.viewerPasswordEnabled);</span>
+<span class="fc" id="L129">	    	assertFalse (snippet.viewerPasswordEnabled);</span>
+			
+<span class="pc" id="L131">		} catch (Exception e) {</span>
+<span class="nc" id="L132">			fail (&quot;couldn't enable snippet password: &quot; + e.getMessage());</span>
+		}
+<span class="fc" id="L134">	}</span>
+
+	@Test
+	public void testDeleteSnippet() {
+<span class="fc" id="L138">		SnippetDAO sd = new SnippetDAO();</span>
+		try {
+			// Get a non-existent snippet &quot;DNE_Snippet&quot;
+<span class="fc" id="L141">	    	Snippet snippet = sd.getSnippet(&quot;DNE_Snippet&quot;);</span>
+<span class="fc" id="L142">	    	assertEquals (snippet, null);</span>
+
+	    	// Create &quot;DNE_Snippet&quot;
+<span class="fc" id="L145">	    	Snippet dne_snippet = new Snippet(&quot;DNE_Snippet&quot;);</span>
+<span class="fc" id="L146">	    	boolean b = sd.createSnippet(dne_snippet);</span>
+<span class="fc" id="L147">	    	assertTrue (b);</span>
+	    	
+	    	// Check that &quot;DNE_Snippet&quot; was created
+<span class="fc" id="L150">	    	snippet = sd.getSnippet(&quot;DNE_Snippet&quot;);</span>
+<span class="fc" id="L151">	    	assertNotEquals (snippet, null);</span>
+	    	
+	    	// Delete Snippet
+<span class="fc" id="L154">	    	b = sd.deleteSnippet(&quot;DNE_Snippet&quot;);</span>
+<span class="fc" id="L155">	    	assertTrue (b);</span>
+
+			// Get a non-existent snippet &quot;DNE_Snippet&quot;
+<span class="fc" id="L158">	    	snippet = sd.getSnippet(&quot;DNE_Snippet&quot;);</span>
+<span class="fc" id="L159">	    	assertEquals (snippet, null);</span>
+			
+<span class="pc" id="L161">		} catch (Exception e) {</span>
+<span class="nc" id="L162">			fail (&quot;couldn't create/delete snippet: &quot; + e.getMessage());</span>
+		}
+<span class="fc" id="L164">	}</span>
+	
+	@Test
+	public void testGetAllSnippets() {
+<span class="fc" id="L168">		SnippetDAO sd = new SnippetDAO();</span>
+		try {
+<span class="fc" id="L170">			Snippet snippet = new Snippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L171">			boolean b = sd.createSnippet(snippet);</span>
+<span class="fc" id="L172">			snippet = new Snippet(&quot;efgh&quot;);</span>
+<span class="fc" id="L173">			b = sd.createSnippet(snippet);</span>
+			// Get all snippets
+<span class="fc" id="L175">	    	List&lt;Snippet&gt; allSnippets = sd.getAllSnippets();</span>
+
+<span class="fc" id="L177">			boolean hasABCD123 = false;</span>
+<span class="fc" id="L178">			boolean hasEFGH = false;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			for (Snippet s : allSnippets) {</span>
+<span class="fc" id="L180">				System.out.println(&quot;found snippet &quot; + s.snippetID);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">				if (s.snippetID.equals(&quot;abcd123&quot;)) { hasABCD123 = true; }</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">				if (s.snippetID.equals(&quot;efgh&quot;)) { hasEFGH = true; }</span>
+			}
+
+<span class="fc" id="L185">			assertTrue(&quot;abcd123 Needs to exist in the snippet table for this test case to work.&quot;, hasABCD123);</span>
+<span class="fc" id="L186">			assertTrue(&quot;efgh Needs to exist in the snippet table (from tutorial) for this test case to work.&quot;, hasEFGH);</span>
+<span class="fc" id="L187">	    	b = sd.deleteSnippet(&quot;abcd123&quot;);</span>
+<span class="fc" id="L188">	    	b = sd.deleteSnippet(&quot;efgh&quot;);</span>
+			
+<span class="pc" id="L190">		} catch (Exception e) {</span>
+<span class="nc" id="L191">			fail (&quot;couldn't list all snippets: &quot; + e.getMessage());</span>
+		}
+		
+<span class="fc" id="L194">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

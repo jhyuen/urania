@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CommentDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem.db</a> &gt; <span class="el_source">CommentDAO.java</span></div><h1>CommentDAO.java</h1><pre class="source lang-java linenums">package urania.snippetSystem.db;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import urania.snippetSystem.model.Comment;
+
+/**
+ * Comment Data Access Object
+ * 
+ * Note that CAPITALIZATION matters regarding the table name. If you create with 
+ * a capital &quot;Constants&quot; then it must be &quot;Constants&quot; in the SQL queries.
+ * 
+ * @author heineman
+ *
+ */
+public class CommentDAO { 
+
+	java.sql.Connection conn;
+	
+<span class="fc" id="L25">	final String tblName = &quot;UraniaSchema.Comment&quot;;   // Exact capitalization</span>
+
+<span class="fc" id="L27">    public CommentDAO () {</span>
+    	try  {
+<span class="fc" id="L29">    		conn = DatabaseUtil.connect();</span>
+<span class="pc" id="L30">    	} catch (Exception e) {</span>
+<span class="nc" id="L31">    		conn = null;</span>
+    	}
+<span class="fc" id="L33">    }</span>
+
+    public Comment getComment(String commentId) throws Exception {
+        
+        try {
+<span class="fc" id="L38">            Comment comment = null;</span>
+<span class="fc" id="L39">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM &quot; + tblName + &quot; WHERE commentId=?;&quot;);</span>
+<span class="fc" id="L40">            ps.setString(1,  commentId);</span>
+<span class="fc" id="L41">            ResultSet resultSet = ps.executeQuery();</span>
+            
+<span class="fc bfc" id="L43" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L44">                comment = generateComment(resultSet);</span>
+            }
+<span class="fc" id="L46">            resultSet.close();</span>
+<span class="fc" id="L47">            ps.close();</span>
+            
+<span class="fc" id="L49">            return comment;</span>
+
+<span class="nc" id="L51">        } catch (Exception e) {</span>
+<span class="nc" id="L52">        	e.printStackTrace();</span>
+<span class="nc" id="L53">            throw new Exception(&quot;Failed in getting comment: &quot; + e.getMessage());</span>
+        }
+    }
+    
+    public boolean deleteCommentCommentID(String commentID) throws Exception {
+        try {
+<span class="fc" id="L59">            PreparedStatement ps = conn.prepareStatement(&quot;DELETE FROM &quot; + tblName + &quot; WHERE commentId = ?;&quot;);</span>
+<span class="fc" id="L60">            ps.setString(1, commentID);</span>
+<span class="fc" id="L61">            int numAffected = ps.executeUpdate();</span>
+<span class="fc" id="L62">            ps.close();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            return (numAffected == 1);</span>
+<span class="nc" id="L64">        } catch (Exception e) {</span>
+<span class="nc" id="L65">            throw new Exception(&quot;Failed to delete comment: &quot; + e.getMessage());</span>
+        }
+    	//return false;
+    }
+
+    public boolean deleteCommentSnippetID(String snippetID) throws Exception {
+        try {
+<span class="fc" id="L72">            PreparedStatement ps = conn.prepareStatement(&quot;DELETE FROM &quot; + tblName + &quot; WHERE snippetId = ?;&quot;);</span>
+<span class="fc" id="L73">            ps.setString(1, snippetID);</span>
+<span class="fc" id="L74">            int numAffected = ps.executeUpdate();</span>
+<span class="fc" id="L75">            ps.close();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            return (numAffected &gt;= 1);</span>
+<span class="nc" id="L77">        } catch (Exception e) {</span>
+<span class="nc" id="L78">            throw new Exception(&quot;Failed to delete comment: &quot; + e.getMessage());</span>
+        }
+    	//return false;
+    }
+
+
+    public boolean createComment(Comment comment) throws Exception {
+        try {
+<span class="fc" id="L86">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM &quot; + tblName + &quot; WHERE commentId = ?;&quot;);</span>
+<span class="fc" id="L87">            ps.setString(1, comment.commentID);</span>
+<span class="fc" id="L88">            ResultSet resultSet = ps.executeQuery();</span>
+            
+            // already present?
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L92">                Comment c = generateComment(resultSet);</span>
+<span class="nc" id="L93">                resultSet.close();</span>
+<span class="nc" id="L94">                return false;</span>
+            }
+
+<span class="fc" id="L97">            ps = conn.prepareStatement(&quot;INSERT INTO &quot; + tblName + &quot; (snippetId,commentId,timeStamp,commentText,startLine,startChar,endLine,endChar) values(?,?,?,?,?,?,?,?);&quot;);</span>
+            
+<span class="fc" id="L99">            ps.setString(1,  comment.snippetID);</span>
+<span class="fc" id="L100">            ps.setString(2,  comment.commentID);</span>
+<span class="fc" id="L101">            ps.setObject(3,  Timestamp.from(comment.timeStamp));</span>
+<span class="fc" id="L102">            ps.setString(4, comment.commentText);</span>
+<span class="fc" id="L103">            ps.setInt(5, comment.startLine);</span>
+<span class="fc" id="L104">            ps.setInt(6, comment.startIndex);</span>
+<span class="fc" id="L105">            ps.setInt(7, comment.endLine);</span>
+<span class="fc" id="L106">            ps.setInt(8, comment.endIndex);</span>
+<span class="fc" id="L107">            ps.execute();</span>
+<span class="fc" id="L108">            return true;</span>
+
+<span class="fc" id="L110">        } catch (Exception e) {</span>
+<span class="fc" id="L111">            throw new Exception(&quot;Failed to insert comment: &quot; + e.getMessage());</span>
+        }
+    }
+
+    public List&lt;Comment&gt; getAllComments(String snippetID) throws Exception {
+<span class="fc" id="L116">        List&lt;Comment&gt; allComments = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L118">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM &quot; + tblName + &quot; WHERE snippetId = ?;&quot;);</span>
+<span class="fc" id="L119">            ps.setString(1, snippetID);</span>
+<span class="fc" id="L120">            ResultSet resultSet = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L123">                Comment c = generateComment(resultSet);</span>
+<span class="fc" id="L124">                allComments.add(c);</span>
+            }
+<span class="fc" id="L126">            resultSet.close();</span>
+<span class="fc" id="L127">            ps.close();</span>
+<span class="fc" id="L128">            return allComments;</span>
+
+<span class="nc" id="L130">        } catch (Exception e) {</span>
+<span class="nc" id="L131">            throw new Exception(&quot;Failed in getting comments: &quot; + e.getMessage());</span>
+        }
+    }
+    
+    public boolean deleteStaleSnippetComments (List&lt;String&gt; snippetIds) throws Exception {
+    	try {		
+    		
+<span class="nc" id="L138">    		String snippetIdString = &quot; ( &quot;;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">            for(int i=0;i&lt;snippetIds.size();i++) {</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">            	if (i==snippetIds.size()-1) {</span>
+<span class="nc" id="L141">            		snippetIdString = snippetIdString + &quot; \'&quot; + snippetIds.get(i) + &quot;\' &quot;;</span>
+<span class="nc" id="L142">            	} else {</span>
+<span class="nc" id="L143">            		snippetIdString = snippetIdString + &quot; \'&quot; + snippetIds.get(i) + &quot;\' , &quot;;</span>
+            	}
+            }
+            
+<span class="nc" id="L147">            snippetIdString = snippetIdString + &quot; ) &quot;;</span>
+            
+            
+<span class="nc" id="L150">            PreparedStatement ps = conn.prepareStatement(&quot;DELETE FROM &quot; + tblName + &quot; WHERE snippetId IN &quot; + snippetIdString + &quot;;&quot;);</span>
+            
+            //ps.setString(1, snippetIdString);
+<span class="nc" id="L153">            ps.executeUpdate();	</span>
+<span class="nc" id="L154">            ps.close();</span>
+            
+<span class="nc" id="L156">            return true;</span>
+
+<span class="nc" id="L158">        } catch (Exception e) {</span>
+<span class="nc" id="L159">            throw new Exception(&quot;Failed to delete stale snippet comments: &quot; + e.getMessage());</span>
+        }
+    }
+    
+    private Comment generateComment(ResultSet resultSet) throws Exception {
+      
+<span class="fc" id="L165">      String snippetID    = resultSet.getString(&quot;snippetId&quot;);</span>
+<span class="fc" id="L166">      String commentID    = resultSet.getString(&quot;commentId&quot;);</span>
+<span class="fc" id="L167">      Instant timeStamp   = resultSet.getTimestamp(&quot;timeStamp&quot;).toInstant();;</span>
+<span class="fc" id="L168">      String commentText  = resultSet.getString(&quot;commentText&quot;);</span>
+<span class="fc" id="L169">      int startLine       = resultSet.getInt(&quot;startLine&quot;);</span>
+<span class="fc" id="L170">      int startIndex      = resultSet.getInt(&quot;startChar&quot;);</span>
+<span class="fc" id="L171">      int endLine         = resultSet.getInt(&quot;endLine&quot;);</span>
+<span class="fc" id="L172">      int endIndex        = resultSet.getInt(&quot;endChar&quot;);</span>
+<span class="fc" id="L173">      return new Comment (snippetID, commentID, timeStamp, commentText, startLine, startIndex, endLine, endIndex);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

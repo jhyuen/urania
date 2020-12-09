@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DeleteSnippetHandlerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">DeleteSnippetHandlerTest.java</span></div><h1>DeleteSnippetHandlerTest.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import com.google.gson.Gson;
+
+import urania.snippetSystem.db.CommentDAO;
+import urania.snippetSystem.db.SnippetDAO;
+import urania.snippetSystem.http.DeleteCommentRequest;
+import urania.snippetSystem.http.DeleteCommentResponse;
+import urania.snippetSystem.http.DeleteSnippetRequest;
+import urania.snippetSystem.http.DeleteSnippetResponse;
+import urania.snippetSystem.model.Comment;
+import urania.snippetSystem.model.Snippet;
+
+/**
+ * A simple test harness for locally invoking your Lambda function handler.
+ */
+<span class="fc" id="L22">public class DeleteSnippetHandlerTest extends LambdaTest {</span>
+
+    DeleteSnippetResponse testSuccessInput(String incoming) throws IOException {
+<span class="fc" id="L25">        DeleteSnippetHandler handler = new DeleteSnippetHandler();</span>
+<span class="fc" id="L26">        DeleteSnippetRequest req = new Gson().fromJson(incoming, DeleteSnippetRequest.class);</span>
+
+<span class="fc" id="L28">        DeleteSnippetResponse resp = handler.handleRequest(req, createContext(&quot;create&quot;));</span>
+<span class="fc" id="L29">        Assert.assertEquals(200, resp.httpCode);</span>
+<span class="fc" id="L30">        return resp;</span>
+    }
+
+    void testFailInput(String incoming, int failureCode) throws IOException {
+<span class="fc" id="L34">        DeleteSnippetHandler handler = new DeleteSnippetHandler();</span>
+<span class="fc" id="L35">        DeleteSnippetRequest req = new Gson().fromJson(incoming, DeleteSnippetRequest.class);</span>
+
+<span class="fc" id="L37">        DeleteSnippetResponse resp = handler.handleRequest(req, createContext(&quot;create&quot;));</span>
+<span class="fc" id="L38">        Assert.assertEquals(failureCode, resp.httpCode);</span>
+<span class="fc" id="L39">    }</span>
+    
+    @Test public void testShouldBeOk () {
+        // create a test snippet
+<span class="fc" id="L43">        SnippetDAO sd = new SnippetDAO() ;</span>
+<span class="fc" id="L44">        Snippet snippet = new Snippet(&quot;test_snippetId&quot;);</span>
+        try {
+<span class="fc" id="L46">            sd.createSnippet(snippet);</span>
+<span class="pc" id="L47">        } catch (Exception ioe) {</span>
+<span class="nc" id="L48">            Assert.fail(&quot;Create snippet failed:&quot; + ioe.getMessage());</span>
+        }
+        
+        // delete snippet
+<span class="fc" id="L52">        DeleteSnippetRequest dsr = new DeleteSnippetRequest(&quot;test_snippetId&quot;);</span>
+<span class="fc" id="L53">        String SAMPLE_INPUT_STRING = new Gson().toJson(dsr);</span>
+        
+<span class="fc" id="L55">        DeleteSnippetResponse response = null;</span>
+        try {
+<span class="fc" id="L57">            response = testSuccessInput(SAMPLE_INPUT_STRING);</span>
+<span class="pc" id="L58">        } catch (IOException ioe) {</span>
+<span class="nc" id="L59">            Assert.fail(&quot;Invalid:&quot; + ioe.getMessage());</span>
+        }
+<span class="fc" id="L61">    }</span>
+    
+    @Test public void testExtra() {
+        // create a test snippet
+<span class="fc" id="L65">        SnippetDAO sd = new SnippetDAO() ;</span>
+<span class="fc" id="L66">        Snippet snippet = new Snippet(&quot;test_snippetId&quot;);</span>
+        try {
+<span class="fc" id="L68">            sd.createSnippet(snippet);</span>
+<span class="pc" id="L69">        } catch (Exception ioe) {</span>
+<span class="nc" id="L70">            Assert.fail(&quot;Create snippet failed:&quot; + ioe.getMessage());</span>
+        }
+
+<span class="fc" id="L73">        String SAMPLE_INPUT_STRING = &quot;{\&quot;id\&quot;: \&quot;test_snippetId\&quot;, \&quot;nonsence\&quot;: 0}&quot;;</span>
+
+        try {
+<span class="fc" id="L76">            testSuccessInput(SAMPLE_INPUT_STRING);</span>
+<span class="pc" id="L77">        } catch (IOException ioe) { </span>
+<span class="nc" id="L78">            Assert.fail(&quot;Invalid:&quot; + ioe.getMessage());</span>
+        }
+<span class="fc" id="L80">    }</span>
+
+    @Test
+    public void testNothing() {
+<span class="fc" id="L84">        String SAMPLE_INPUT_STRING = new Gson().toJson(new DeleteCommentRequest());</span>
+
+        try {
+<span class="fc" id="L87">            testFailInput(SAMPLE_INPUT_STRING, 400);</span>
+<span class="pc" id="L88">        } catch (IOException ioe) {</span>
+<span class="nc" id="L89">            Assert.fail(&quot;Invalid:&quot; + ioe.getMessage());</span>
+        }
+<span class="fc" id="L91">    }</span>
+
+    @Test public void testBadJson() { 
+<span class="fc" id="L94">        String SAMPLE_INPUT_STRING = &quot;{\&quot;sdsd\&quot;: \&quot;e3\&quot;, \&quot;hgfgdfgdfg\&quot;: \&quot;this is not a number\&quot;}&quot;;</span>
+
+        try {
+<span class="fc" id="L97">            testFailInput(SAMPLE_INPUT_STRING, 400); }</span>
+<span class="nc" id="L98">        catch (IOException ioe) {</span>
+<span class="nc" id="L99">            Assert.fail(&quot;Invalid:&quot; + ioe.getMessage());</span>
+        }
+<span class="fc" id="L101">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

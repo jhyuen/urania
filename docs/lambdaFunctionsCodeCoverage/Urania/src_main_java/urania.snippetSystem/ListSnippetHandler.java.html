@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ListSnippetHandler.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">ListSnippetHandler.java</span></div><h1>ListSnippetHandler.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+
+import urania.snippetSystem.db.SnippetDAO;
+import urania.snippetSystem.http.ListSnippetRequest;
+import urania.snippetSystem.http.ListSnippetResponse;
+import urania.snippetSystem.model.Snippet;
+
+import java.util.List;
+
+<span class="fc" id="L14">public class ListSnippetHandler implements RequestHandler&lt;ListSnippetRequest, ListSnippetResponse&gt; {</span>
+	
+	LambdaLogger logger;
+	
+	List&lt;Snippet&gt; getAllSnippets () throws Exception {
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">		if (logger != null) { logger.log(&quot;in getAllSnippets&quot;); }</span>
+<span class="fc" id="L20">		SnippetDAO dao = new SnippetDAO();</span>
+<span class="fc" id="L21">		return dao.getAllSnippets();</span>
+	}
+
+    @Override
+    public ListSnippetResponse handleRequest(ListSnippetRequest req, Context context) {
+<span class="fc" id="L26">        logger = context.getLogger();</span>
+<span class="fc" id="L27">        logger.log(&quot;Trying to list all snippets!&quot;);</span>
+<span class="fc" id="L28">        logger.log(req.toString());</span>
+
+        ListSnippetResponse response;
+        try {
+<span class="fc" id="L32">        	List&lt;Snippet&gt; snippets = getAllSnippets();</span>
+<span class="fc" id="L33">			response = new ListSnippetResponse(snippets);</span>
+<span class="pc" id="L34">        } catch (Exception e) {</span>
+<span class="nc" id="L35">        	response = new ListSnippetResponse(&quot;Unable to get all snippets (&quot; + (e.getMessage() + &quot;).&quot;), 400);</span>
+        }
+
+<span class="fc" id="L38">        return response;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

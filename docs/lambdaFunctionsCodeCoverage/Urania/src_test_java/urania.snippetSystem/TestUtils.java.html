@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestUtils.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">TestUtils.java</span></div><h1>TestUtils.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+import org.joda.time.tz.FixedDateTimeZone;
+
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.Record;
+import com.amazonaws.services.dynamodbv2.model.StreamRecord;
+import com.amazonaws.services.lambda.runtime.events.DynamodbEvent;
+import com.amazonaws.services.lambda.runtime.events.S3Event;
+import com.amazonaws.services.lambda.runtime.events.SNSEvent;
+import com.amazonaws.services.s3.event.S3EventNotification;
+import com.amazonaws.util.IOUtils;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+
+/**
+ * Helper utilities for testing Lambda functions.
+ */
+<span class="nc" id="L37">public class TestUtils {</span>
+
+<span class="nc" id="L39">    private static final ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L40">    private static final ObjectMapper snsEventMapper = new ObjectMapper();</span>
+<span class="nc" id="L41">    private static final ObjectMapper dynamodbEventMapper = new ObjectMapper();</span>
+
+    static {
+<span class="nc" id="L44">        mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);</span>
+<span class="nc" id="L45">        mapper.setPropertyNamingStrategy(new UpperCaseRecordsPropertyNamingStrategy());</span>
+<span class="nc" id="L46">        mapper.registerModule(new TestJacksonMapperModule());</span>
+
+<span class="nc" id="L48">        snsEventMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);</span>
+<span class="nc" id="L49">        snsEventMapper.setPropertyNamingStrategy(PropertyNamingStrategy.PASCAL_CASE_TO_CAMEL_CASE);</span>
+<span class="nc" id="L50">        snsEventMapper.registerModule(new TestJacksonMapperModule());</span>
+
+<span class="nc" id="L52">        dynamodbEventMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);</span>
+<span class="nc" id="L53">        dynamodbEventMapper.setPropertyNamingStrategy(new UpperCaseRecordsPropertyNamingStrategy());</span>
+<span class="nc" id="L54">        dynamodbEventMapper.registerModule(new TestJacksonMapperModule());</span>
+<span class="nc" id="L55">        dynamodbEventMapper.addMixIn(Record.class, DynamodbEventMixin.RecordMixin.class);</span>
+<span class="nc" id="L56">        dynamodbEventMapper.addMixIn(StreamRecord.class, DynamodbEventMixin.StreamRecordMixin.class);</span>
+<span class="nc" id="L57">        dynamodbEventMapper.addMixIn(AttributeValue.class, DynamodbEventMixin.AttributeValueMixIn.class);</span>
+    }
+
+<span class="nc" id="L60">    private static final DateTimeFormatter dateTimeFormatter =</span>
+<span class="nc" id="L61">            ISODateTimeFormat.dateTime()</span>
+<span class="nc" id="L62">                        .withZone(new FixedDateTimeZone(&quot;GMT&quot;, &quot;GMT&quot;, 0, 0));</span>
+
+    /**
+     * Helper method that parses a JSON object from a resource on the classpath
+     * as an instance of the provided type.
+     *
+     * @param resource the path to the resource (relative to this class)
+     * @param clazz the type to parse the JSON into
+     */
+    public static &lt;T&gt; T parse(String resource, Class&lt;T&gt; clazz)
+            throws IOException {
+
+<span class="nc" id="L74">        InputStream stream = TestUtils.class.getResourceAsStream(resource);</span>
+        try {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            if (clazz == S3Event.class) {</span>
+<span class="nc" id="L77">                String json = IOUtils.toString(stream);</span>
+<span class="nc" id="L78">                S3EventNotification event = S3EventNotification.parseJson(json);</span>
+
+                @SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L81">                T result = (T) new S3Event(event.getRecords());</span>
+<span class="nc" id="L82">                return result;</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            } else if (clazz == SNSEvent.class) {</span>
+<span class="nc" id="L85">                return snsEventMapper.readValue(stream, clazz);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            } else if (clazz == DynamodbEvent.class) {</span>
+<span class="nc" id="L87">                return dynamodbEventMapper.readValue(stream, clazz);</span>
+            } else {
+<span class="nc" id="L89">                return mapper.readValue(stream, clazz);</span>
+            }
+        } finally {
+<span class="nc" id="L92">            stream.close();</span>
+        }
+    }
+
+    private static class TestJacksonMapperModule extends SimpleModule {
+
+        private static final long serialVersionUID = 1L;
+
+        public TestJacksonMapperModule() {
+<span class="nc" id="L101">            super(&quot;TestJacksonMapperModule&quot;);</span>
+
+<span class="nc" id="L103">            super.addSerializer(DateTime.class, new DateTimeSerializer());</span>
+<span class="nc" id="L104">            super.addDeserializer(DateTime.class, new DateTimeDeserializer());</span>
+<span class="nc" id="L105">        }</span>
+    }
+
+    private static class DateTimeSerializer extends JsonSerializer&lt;DateTime&gt; {
+
+        @Override
+        public void serialize(
+                DateTime value,
+                JsonGenerator gen,
+                SerializerProvider provider) throws IOException {
+
+<span class="nc" id="L116">            gen.writeString(dateTimeFormatter.print(value));</span>
+<span class="nc" id="L117">        }</span>
+    }
+
+    private static class DateTimeDeserializer
+            extends JsonDeserializer&lt;DateTime&gt; {
+
+        @Override
+        public DateTime deserialize(
+                JsonParser parser,
+                DeserializationContext context) throws IOException {
+
+<span class="nc" id="L128">            return dateTimeFormatter.parseDateTime(parser.getText());</span>
+        }
+    }
+
+    private static class UpperCaseRecordsPropertyNamingStrategy
+            extends PropertyNamingStrategy.PropertyNamingStrategyBase {
+
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public String translate(String propertyName) {
+<span class="nc bnc" id="L139" title="All 2 branches missed.">            if (propertyName.equals(&quot;records&quot;)) {</span>
+<span class="nc" id="L140">                return &quot;Records&quot;;</span>
+            }
+<span class="nc" id="L142">            return propertyName;</span>
+        }
+    }
+
+    private static interface DynamodbEventMixin {
+        public static final String L = &quot;L&quot;;
+        public static final String M = &quot;M&quot;;
+        public static final String BS = &quot;BS&quot;;
+        public static final String NS = &quot;NS&quot;;
+        public static final String SS = &quot;SS&quot;;
+        public static final String BOOL = &quot;BOOL&quot;;
+        public static final String NULL = &quot;NULL&quot;;
+        public static final String B = &quot;B&quot;;
+        public static final String N = &quot;N&quot;;
+        public static final String S = &quot;S&quot;;
+        public static final String OLD_IMAGE = &quot;OldImage&quot;;
+        public static final String NEW_IMAGE = &quot;NewImage&quot;;
+        public static final String STREAM_VIEW_TYPE = &quot;StreamViewType&quot;;
+        public static final String SEQUENCE_NUMBER = &quot;SequenceNumber&quot;;
+        public static final String SIZE_BYTES = &quot;SizeBytes&quot;;
+        public static final String KEYS = &quot;Keys&quot;;
+        public static final String AWS_REGION = &quot;awsRegion&quot;;
+        public static final String DYNAMODB = &quot;dynamodb&quot;;
+        public static final String EVENT_ID = &quot;eventID&quot;;
+        public static final String EVENT_NAME = &quot;eventName&quot;;
+        public static final String EVENT_SOURCE = &quot;eventSource&quot;;
+        public static final String EVENT_VERSION = &quot;eventVersion&quot;;
+        public static final String EVENT_SOURCE_ARN = &quot;eventSourceARN&quot;;
+        public static final String APPROXIMATE_CREATION_DATE_TIME = &quot;ApproximateCreationDateTime&quot;;
+
+        @JsonProperty(value = &quot;Records&quot;)
+        public List&lt;?&gt; getRecords();
+
+        static interface RecordMixin {
+            @JsonProperty(AWS_REGION) public String getAwsRegion();
+            @JsonProperty(AWS_REGION) public void setAwsRegion(String awsRegion);
+            @JsonProperty(DYNAMODB) public Object getDynamodb();
+            @JsonProperty(DYNAMODB) public void setDynamodb(Object dynamodb);
+            @JsonProperty(EVENT_ID) public String getEventID();
+            @JsonProperty(EVENT_ID) public void setEventID(String eventID);
+            @JsonProperty(EVENT_NAME) public String getEventName();
+            @JsonProperty(EVENT_NAME) public void setEventName(String eventName);
+            @JsonProperty(EVENT_SOURCE) public String getEventSource();
+            @JsonProperty(EVENT_SOURCE) public void setEventSource(String eventSource);
+            @JsonProperty(EVENT_VERSION) public String getEventVersion();
+            @JsonProperty(EVENT_VERSION) public void setEventVersion(String eventVersion);
+            @JsonProperty(EVENT_SOURCE_ARN) public String getEventSourceArn();
+            @JsonProperty(EVENT_SOURCE_ARN) public void setEventSourceArn(String eventSourceArn);
+        }
+
+        static interface StreamRecordMixin {
+
+            @JsonProperty(KEYS) public Map&lt;String, Object&gt; getKeys();
+            @JsonProperty(KEYS) public void setKeys(Map&lt;String, Object&gt; keys);
+            @JsonProperty(SIZE_BYTES) public Long getSizeBytes();
+            @JsonProperty(SIZE_BYTES) public void setSizeBytes(Long sizeBytes);
+            @JsonProperty(SEQUENCE_NUMBER) public String getSequenceNumber();
+            @JsonProperty(SEQUENCE_NUMBER) public void setSequenceNumber(String sequenceNumber);
+            @JsonProperty(STREAM_VIEW_TYPE) public String getStreamViewType();
+            @JsonProperty(STREAM_VIEW_TYPE) public void setStreamViewType(String streamViewType);
+            @JsonProperty(NEW_IMAGE) public Map&lt;String, Object&gt; getNewImage();
+            @JsonProperty(NEW_IMAGE) public void setNewImage(Map&lt;String, Object&gt; newImage);
+            @JsonProperty(OLD_IMAGE) public Map&lt;String, Object&gt; getOldImage();
+            @JsonProperty(OLD_IMAGE) public void setOldImage(Map&lt;String, Object&gt; oldImage);
+            @JsonProperty(APPROXIMATE_CREATION_DATE_TIME) public Date getApproximateCreationDateTime();
+            @JsonProperty(APPROXIMATE_CREATION_DATE_TIME) public void setApproximateCreationDateTime(Date approximateCreationDateTime);
+        }
+
+        static interface AttributeValueMixIn {
+            @JsonProperty(S) public String getS();
+            @JsonProperty(S) public void setS(String s);
+            @JsonProperty(N) public String getN();
+            @JsonProperty(N) public void setN(String n);
+            @JsonProperty(B) public ByteBuffer getB();
+            @JsonProperty(B) public void setB(ByteBuffer b);
+            @JsonProperty(NULL) public Boolean isNULL();
+            @JsonProperty(NULL) public void setNULL(Boolean nU);
+            @JsonProperty(BOOL) public Boolean getBOOL();
+            @JsonProperty(BOOL) public void setBOOL(Boolean bO);
+            @JsonProperty(SS) public List&lt;String&gt; getSS();
+            @JsonProperty(SS) public void setSS(List&lt;String&gt; sS);
+            @JsonProperty(NS) public List&lt;String&gt; getNS();
+            @JsonProperty(NS) public void setNS(List&lt;String&gt; nS);
+            @JsonProperty(BS) public List&lt;String&gt; getBS();
+            @JsonProperty(BS) public void setBS(List&lt;String&gt; bS);
+            @JsonProperty(M) public Map&lt;String, Object&gt; getM();
+            @JsonProperty(M) public void setM(Map&lt;String, Object&gt; val);
+            @JsonProperty(L) public List&lt;Object&gt; getL();
+            @JsonProperty(L) public void setL(List&lt;Object&gt; val);
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

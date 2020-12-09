@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseUtil.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem.db</a> &gt; <span class="el_source">DatabaseUtil.java</span></div><h1>DatabaseUtil.java</h1><pre class="source lang-java linenums">package urania.snippetSystem.db;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+<span class="nc" id="L6">public class DatabaseUtil {</span>
+
+	// DB user names and passwords (as well as the db endpoint) should never be stored directly in code.
+	//
+	// https://docs.aws.amazon.com/lambda/latest/dg/env_variables.html
+	//
+	// The above link shows how to ensure Lambda function has access to environment as well as local
+	public final static String jdbcTag = &quot;jdbc:mysql://&quot;;
+	public final static String rdsMySqlDatabasePort = &quot;3306&quot;;
+	public final static String multiQueries = &quot;?allowMultiQueries=true&quot;;
+	   
+	// Make sure matches Schema created from MySQL WorkBench
+	public final static String dbName = &quot;UraniaSchema&quot;;            
+	
+	// pooled across all usages.
+	static Connection conn;
+ 
+	/**
+	 * Singleton access to DB connection to share resources effectively across multiple accesses.
+	 */
+	protected static Connection connect() throws Exception {
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		if (conn != null) { return conn; }</span>
+		
+		// this is resistant to any SQL-injection attack.
+<span class="fc" id="L30">		String schemaName = dbName;</span>
+		
+		// These three environment variables must be set!
+<span class="fc" id="L33">		String dbUsername = System.getenv(&quot;dbUsername&quot;);</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">		if (dbUsername == null) {</span>
+<span class="nc" id="L35">			System.err.println(&quot;Environment variable dbUsername is not set!&quot;);</span>
+		}
+<span class="fc" id="L37">		String dbPassword = System.getenv(&quot;dbPassword&quot;);</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">		if (dbPassword == null) {</span>
+<span class="nc" id="L39">			System.err.println(&quot;Environment variable dbPassword is not set!&quot;);</span>
+		}
+<span class="fc" id="L41">		String rdsMySqlDatabaseUrl = System.getenv(&quot;rdsMySqlDatabaseUrl&quot;);</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">		if (rdsMySqlDatabaseUrl == null) {</span>
+<span class="nc" id="L43">			System.err.println(&quot;Environment variable rdsMySqlDatabaseUrl is not set!&quot;);</span>
+		}
+		
+		try {
+			//System.out.println(&quot;start connecting......&quot;);
+<span class="fc" id="L48">			Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</span>
+			
+<span class="fc" id="L50">			conn = DriverManager.getConnection(</span>
+<span class="fc" id="L51">					jdbcTag + rdsMySqlDatabaseUrl + &quot;:&quot; + rdsMySqlDatabasePort + &quot;/&quot; + schemaName + multiQueries,</span>
+<span class="fc" id="L52">					dbUsername,</span>
+<span class="fc" id="L53">					dbPassword);</span>
+<span class="fc" id="L54">			return conn;</span>
+<span class="nc" id="L55">		} catch (Exception ex) {</span>
+<span class="nc" id="L56">			System.err.println(&quot;DB-ERROR:&quot; + schemaName + &quot;,&quot; + dbUsername + &quot;,&quot; + dbPassword + &quot;,&quot; + rdsMySqlDatabaseUrl);</span>
+<span class="nc" id="L57">			throw new Exception(&quot;Failed in database connection&quot;);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

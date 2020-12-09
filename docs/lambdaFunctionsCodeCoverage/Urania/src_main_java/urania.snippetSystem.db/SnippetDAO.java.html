@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SnippetDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem.db</a> &gt; <span class="el_source">SnippetDAO.java</span></div><h1>SnippetDAO.java</h1><pre class="source lang-java linenums">package urania.snippetSystem.db;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import urania.snippetSystem.model.Snippet;
+import java.time.temporal.ChronoUnit;
+
+/**
+ * Snippet Data Access Object
+ * 
+ * Note that CAPITALIZATION matters regarding the table name. If you create with 
+ * a capital &quot;Constants&quot; then it must be &quot;Constants&quot; in the SQL queries.
+ * 
+ * @author urania
+ *
+ */
+public class SnippetDAO { 
+
+	java.sql.Connection conn;
+	
+<span class="fc" id="L27">	final double secondsInDay = (24*60*60);</span>
+	
+<span class="fc" id="L29">	final String tblName = &quot;UraniaSchema.Snippet&quot;;   // Exact capitalization</span>
+
+<span class="fc" id="L31">    public SnippetDAO () {</span>
+    	try  {
+<span class="fc" id="L33">    		conn = DatabaseUtil.connect();</span>
+<span class="pc" id="L34">    	} catch (Exception e) {</span>
+<span class="nc" id="L35">    		conn = null;</span>
+    	}
+<span class="fc" id="L37">    }</span>
+
+    public Snippet getSnippet(String uuid) throws Exception {
+        try {
+<span class="fc" id="L41">            Snippet snippet = null;</span>
+<span class="fc" id="L42">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM &quot; + tblName + &quot; WHERE snippetId=?;&quot;);</span>
+<span class="fc" id="L43">            ps.setString(1,  uuid);</span>
+<span class="fc" id="L44">            ResultSet resultSet = ps.executeQuery();</span>
+            
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L47">                snippet = generateSnippet(resultSet);</span>
+            }
+<span class="fc" id="L49">            resultSet.close();</span>
+<span class="fc" id="L50">            ps.close();</span>
+            
+<span class="fc" id="L52">            return snippet;</span>
+
+<span class="nc" id="L54">        } catch (Exception e) {</span>
+<span class="nc" id="L55">        	e.printStackTrace();</span>
+<span class="nc" id="L56">            throw new Exception(&quot;Failed in finding the snippet: &quot; + e.getMessage());</span>
+        }
+    }
+    
+    public boolean updateSnippetText (String snippetID, String snippetText) throws Exception {
+        try {
+<span class="fc" id="L62">        	String query = &quot;UPDATE &quot; + tblName + &quot; SET snippetText=? WHERE snippetId=?;&quot;;</span>
+<span class="fc" id="L63">        	PreparedStatement ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L64">            ps.setString(1, snippetText);</span>
+<span class="fc" id="L65">            ps.setString(2, snippetID);</span>
+<span class="fc" id="L66">            int numAffected = ps.executeUpdate();</span>
+<span class="fc" id="L67">            ps.close();</span>
+            
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            return (numAffected == 1);</span>
+<span class="nc" id="L70">        } catch (Exception e) {</span>
+<span class="nc" id="L71">            throw new Exception(&quot;Failed to update snippet text: &quot; + e.getMessage());</span>
+        }
+    }
+
+    public boolean updateSnippetInfo (String snippetID, String snippetInfo) throws Exception {
+        try {
+<span class="fc" id="L77">        	String query = &quot;UPDATE &quot; + tblName + &quot; SET snippetInfo=? WHERE snippetId=?;&quot;;</span>
+<span class="fc" id="L78">        	PreparedStatement ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L79">            ps.setString(1, snippetInfo);</span>
+<span class="fc" id="L80">            ps.setString(2, snippetID);</span>
+<span class="fc" id="L81">            int numAffected = ps.executeUpdate();</span>
+<span class="fc" id="L82">            ps.close();</span>
+            
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">            return (numAffected == 1);</span>
+<span class="nc" id="L85">        } catch (Exception e) {</span>
+<span class="nc" id="L86">            throw new Exception(&quot;Failed to update snippet info: &quot; + e.getMessage());</span>
+        }
+    }
+
+    public boolean enableSnippetPassword (String snippetID, Boolean enable) throws Exception {
+        try {
+<span class="fc" id="L92">        	String query = &quot;UPDATE &quot; + tblName + &quot; SET viewerPasswordStatus=? WHERE snippetId=?;&quot;;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        	int passStatus = (enable) ? 1 : 0;</span>
+<span class="fc" id="L94">        	PreparedStatement ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L95">            ps.setInt(1, passStatus);</span>
+<span class="fc" id="L96">            ps.setString(2, snippetID);</span>
+<span class="fc" id="L97">            int numAffected = ps.executeUpdate();</span>
+<span class="fc" id="L98">            ps.close();</span>
+            
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">            return (numAffected == 1);</span>
+<span class="nc" id="L101">        } catch (Exception e) {</span>
+<span class="nc" id="L102">            throw new Exception(&quot;Failed to update snippet password status: &quot; + e.getMessage());</span>
+        }
+    }
+    
+    public boolean deleteSnippet (String uuid) throws Exception {
+        try {
+<span class="fc" id="L108">            PreparedStatement ps = conn.prepareStatement(&quot;DELETE FROM &quot; + tblName + &quot; WHERE snippetId = ?;&quot;);</span>
+<span class="fc" id="L109">            ps.setString(1, uuid);</span>
+<span class="fc" id="L110">            int numAffected = ps.executeUpdate();</span>
+<span class="fc" id="L111">            ps.close();</span>
+            
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            return (numAffected == 1);</span>
+
+<span class="nc" id="L115">        } catch (Exception e) {</span>
+<span class="nc" id="L116">            throw new Exception(&quot;Failed to delete snippet: &quot; + e.getMessage());</span>
+        }
+    }
+
+    public List&lt;String&gt; deleteStaleSnippet (double daysOld) throws Exception {
+    	try {		
+<span class="nc" id="L122">    		List&lt;String&gt; deleteSnippetIds = new ArrayList&lt;&gt;();</span>
+    		
+<span class="nc" id="L124">    		PreparedStatement snippetsToBeDeletedPs = conn.prepareStatement(&quot;SELECT snippetId FROM &quot; + tblName + &quot; WHERE timeStamp &lt; ?;&quot;);</span>
+            
+    		// 86400 = seconds in a day
+<span class="nc" id="L127">    		int secondsOld = (int)(daysOld * 86400);</span>
+<span class="nc" id="L128">    		Instant newTime = Instant.now().minus(secondsOld, ChronoUnit.SECONDS);</span>
+<span class="nc" id="L129">            Timestamp timestamp = Timestamp.from(newTime);</span>
+            
+<span class="nc" id="L131">            snippetsToBeDeletedPs.setString(1, timestamp.toString());</span>
+            	
+<span class="nc" id="L133">            ResultSet resultSet = snippetsToBeDeletedPs.executeQuery();</span>
+            
+<span class="nc bnc" id="L135" title="All 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L136">            	String uuid  = resultSet.getString(&quot;snippetId&quot;);</span>
+<span class="nc" id="L137">            	deleteSnippetIds.add(uuid);</span>
+            }
+            
+<span class="nc" id="L140">            resultSet.close();</span>
+<span class="nc" id="L141">            snippetsToBeDeletedPs.close();</span>
+            
+<span class="nc" id="L143">            PreparedStatement ps = conn.prepareStatement(&quot;DELETE FROM &quot; + tblName + &quot; WHERE timeStamp &lt; ?;&quot;);</span>
+<span class="nc" id="L144">            ps.setString(1, timestamp.toString());</span>
+            
+<span class="nc" id="L146">            int numAffected = ps.executeUpdate();</span>
+<span class="nc" id="L147">            ps.close();</span>
+            
+<span class="nc" id="L149">            return deleteSnippetIds;</span>
+
+<span class="nc" id="L151">        } catch (Exception e) {</span>
+<span class="nc" id="L152">            throw new Exception(&quot;Failed to delete stale snippet: &quot; + e.getMessage());</span>
+        }
+    }
+
+    public boolean createSnippet (Snippet snippet) throws Exception {
+        try {
+<span class="fc" id="L158">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM &quot; + tblName + &quot; WHERE snippetId = ?;&quot;);</span>
+<span class="fc" id="L159">            ps.setString(1, snippet.snippetID);</span>
+<span class="fc" id="L160">            ResultSet resultSet = ps.executeQuery();</span>
+            
+            // already present?
+<span class="fc bfc" id="L163" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+                //Constant c = generateConstant(resultSet);
+<span class="fc" id="L165">                resultSet.close();</span>
+<span class="fc" id="L166">                return false;</span>
+            }
+
+<span class="fc" id="L169">            ps = conn.prepareStatement(&quot;INSERT INTO &quot; + tblName + &quot; (snippetId,snippetText,snippetInfo,timeStamp,languageSelected,viewerPassword,viewerPasswordStatus) values(?,?,?,?,?,?,?);&quot;);</span>
+<span class="fc" id="L170">            ps.setString(1,  snippet.snippetID);</span>
+<span class="fc" id="L171">            ps.setString(2,  snippet.snippetText);</span>
+<span class="fc" id="L172">            ps.setString(3,  snippet.snippetInfo);</span>
+<span class="fc" id="L173">            ps.setObject(4,  Timestamp.from(snippet.timeStamp));</span>
+<span class="fc" id="L174">            ps.setString(5,  snippet.languageSelected);</span>
+<span class="fc" id="L175">            ps.setString(6,  snippet.viewerPassword);</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">            int passStatus = snippet.viewerPasswordEnabled ? 1 : 0;</span>
+<span class="fc" id="L177">            ps.setObject(7,  passStatus);</span>
+<span class="fc" id="L178">            ps.execute();</span>
+<span class="fc" id="L179">            return true;</span>
+
+<span class="nc" id="L181">        } catch (Exception e) {</span>
+<span class="nc" id="L182">            throw new Exception(&quot;Failed to create snippet: &quot; + e.getMessage());</span>
+        }
+    }
+
+    public List&lt;Snippet&gt; getAllSnippets() throws Exception {
+<span class="fc" id="L187">        List&lt;Snippet&gt; allSnippets = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L189">            Statement statement = conn.createStatement();</span>
+<span class="fc" id="L190">            String query = &quot;SELECT * FROM &quot; + tblName + &quot;;&quot;;</span>
+<span class="fc" id="L191">            ResultSet resultSet = statement.executeQuery(query);</span>
+
+<span class="fc bfc" id="L193" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L194">                Snippet s = generateSnippet(resultSet);</span>
+<span class="fc" id="L195">                allSnippets.add(s);</span>
+            }
+<span class="fc" id="L197">            resultSet.close();</span>
+<span class="fc" id="L198">            statement.close();</span>
+<span class="fc" id="L199">            return allSnippets;</span>
+
+<span class="nc" id="L201">        } catch (Exception e) {</span>
+<span class="nc" id="L202">            throw new Exception(&quot;Failed in getting books: &quot; + e.getMessage());</span>
+        }
+    }
+    
+    private Snippet generateSnippet(ResultSet resultSet) throws Exception {
+<span class="fc" id="L207">        String uuid  = resultSet.getString(&quot;snippetId&quot;);</span>
+<span class="fc" id="L208">        String text = resultSet.getString(&quot;snippetText&quot;);</span>
+<span class="fc" id="L209">        String info = resultSet.getString(&quot;snippetInfo&quot;);</span>
+<span class="fc" id="L210">        Instant datetime = resultSet.getTimestamp(&quot;timeStamp&quot;).toInstant();</span>
+<span class="fc" id="L211">        String language = resultSet.getString(&quot;languageSelected&quot;);</span>
+<span class="fc" id="L212">        String password = resultSet.getString(&quot;viewerPassword&quot;);</span>
+<span class="fc" id="L213">        int passStatus = resultSet.getInt(&quot;viewerPasswordStatus&quot;);</span>
+
+
+<span class="fc" id="L216">        return new Snippet (uuid, text, info, datetime, language, password, passStatus);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

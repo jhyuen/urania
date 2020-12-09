@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CreateSnippetHandlerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">CreateSnippetHandlerTest.java</span></div><h1>CreateSnippetHandlerTest.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.google.gson.Gson;
+
+import urania.snippetSystem.http.CreateSnippetRequest;
+import urania.snippetSystem.http.CreateSnippetResponse;
+import urania.snippetSystem.http.DeleteSnippetRequest;
+import urania.snippetSystem.http.DeleteSnippetResponse;
+import urania.snippetSystem.model.Snippet;
+
+/**
+ * A simple test harness for locally invoking your Lambda function handler.
+ */
+<span class="fc" id="L21">public class CreateSnippetHandlerTest extends LambdaTest {</span>
+
+    CreateSnippetResponse testSuccessInput(String incoming) throws IOException {
+<span class="fc" id="L24">    	CreateSnippetHandler handler = new CreateSnippetHandler();</span>
+<span class="fc" id="L25">    	CreateSnippetRequest req = new Gson().fromJson(incoming, CreateSnippetRequest.class);</span>
+       
+<span class="fc" id="L27">        CreateSnippetResponse resp = handler.handleRequest(req, createContext(&quot;create&quot;));</span>
+<span class="fc" id="L28">        Assert.assertEquals(201, resp.httpCode);</span>
+<span class="fc" id="L29">        return resp;</span>
+    }
+	
+    void testFailInput(String incoming, int failureCode) throws IOException {
+<span class="nc" id="L33">    	CreateSnippetHandler handler = new CreateSnippetHandler();</span>
+<span class="nc" id="L34">    	CreateSnippetRequest req = new Gson().fromJson(incoming, CreateSnippetRequest.class);</span>
+
+<span class="nc" id="L36">    	CreateSnippetResponse resp = handler.handleRequest(req, createContext(&quot;create&quot;));</span>
+<span class="nc" id="L37">        Assert.assertEquals(failureCode, resp.httpCode);</span>
+<span class="nc" id="L38">    }</span>
+
+    @Test
+    public void testShouldBeOk () {
+<span class="fc" id="L42">        CreateSnippetRequest csr = new CreateSnippetRequest();</span>
+<span class="fc" id="L43">        String SAMPLE_INPUT_STRING = new Gson().toJson(csr);</span>
+        
+<span class="fc" id="L45">        CreateSnippetResponse response = null;</span>
+        try {
+<span class="fc" id="L47">        	response = testSuccessInput(SAMPLE_INPUT_STRING);</span>
+<span class="pc" id="L48">        } catch (IOException ioe) {</span>
+<span class="nc" id="L49">        	Assert.fail(&quot;Invalid:&quot; + ioe.getMessage());</span>
+        }
+        
+<span class="fc" id="L52">        DeleteSnippetRequest dsr = new DeleteSnippetRequest(response.snippetId);</span>
+<span class="fc" id="L53">        DeleteSnippetResponse d_resp = new DeleteSnippetHandler().handleRequest(dsr, createContext(&quot;delete&quot;));</span>
+<span class="fc" id="L54">        Assert.assertEquals(d_resp.httpCode, 200);</span>
+<span class="fc" id="L55">    }</span>
+    
+    @Test
+    public void testExtraInput() {
+<span class="fc" id="L59">		String SAMPLE_INPUT_STRING = &quot;{\&quot;sdsd\&quot;: \&quot;e3\&quot;, \&quot;hgfgdfgdfg\&quot;: \&quot;this is not a number\&quot;}&quot;;</span>
+        
+<span class="fc" id="L61">        CreateSnippetResponse response = null;</span>
+        try {
+<span class="fc" id="L63">        	response = testSuccessInput(SAMPLE_INPUT_STRING);</span>
+<span class="pc" id="L64">        } catch (IOException ioe) {</span>
+<span class="nc" id="L65">        	Assert.fail(&quot;Invalid:&quot; + ioe.getMessage());</span>
+        }
+        
+<span class="fc" id="L68">        DeleteSnippetRequest dsr = new DeleteSnippetRequest(response.snippetId);</span>
+<span class="fc" id="L69">        DeleteSnippetResponse d_resp = new DeleteSnippetHandler().handleRequest(dsr, createContext(&quot;delete&quot;));</span>
+<span class="fc" id="L70">        Assert.assertEquals(d_resp.httpCode, 200);</span>
+<span class="fc" id="L71">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

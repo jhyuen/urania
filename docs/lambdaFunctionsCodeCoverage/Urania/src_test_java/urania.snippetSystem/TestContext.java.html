@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestContext.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">TestContext.java</span></div><h1>TestContext.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+import com.amazonaws.services.lambda.runtime.ClientContext;
+import com.amazonaws.services.lambda.runtime.CognitoIdentity;
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
+/**
+ * A simple mock implementation of the {@code Context} interface. Default
+ * values are stubbed out, and setters are provided so you can customize
+ * the context before passing it to your function.
+ */
+<span class="fc" id="L13">public class TestContext implements Context {</span>
+
+<span class="fc" id="L15">    private String awsRequestId = &quot;EXAMPLE&quot;;</span>
+    private ClientContext clientContext;
+<span class="fc" id="L17">    private String functionName = &quot;EXAMPLE&quot;;</span>
+    private CognitoIdentity identity;
+<span class="fc" id="L19">    private String logGroupName = &quot;EXAMPLE&quot;;</span>
+<span class="fc" id="L20">    private String logStreamName = &quot;EXAMPLE&quot;;</span>
+<span class="fc" id="L21">    private LambdaLogger logger = new TestLogger();</span>
+<span class="fc" id="L22">    private int memoryLimitInMB = 128;</span>
+<span class="fc" id="L23">    private int remainingTimeInMillis = 15000;</span>
+<span class="fc" id="L24">    private String functionVersion = &quot;EXAMPLE&quot;;</span>
+<span class="fc" id="L25">    private String invokedFunctionArn = &quot;EXAMPLE&quot;;</span>
+
+    @Override
+    public String getAwsRequestId() {
+<span class="nc" id="L29">        return awsRequestId;</span>
+    }
+
+    public void setAwsRequestId(String value) {
+<span class="nc" id="L33">        awsRequestId = value;</span>
+<span class="nc" id="L34">    }</span>
+
+    @Override
+    public ClientContext getClientContext() {
+<span class="nc" id="L38">        return clientContext;</span>
+    }
+
+    public void setClientContext(ClientContext value) {
+<span class="nc" id="L42">        clientContext = value;</span>
+<span class="nc" id="L43">    }</span>
+
+    @Override
+    public String getFunctionName() {
+<span class="nc" id="L47">        return functionName;</span>
+    }
+
+    public void setFunctionName(String value) {
+<span class="fc" id="L51">        functionName = value;</span>
+<span class="fc" id="L52">    }</span>
+
+    @Override
+    public CognitoIdentity getIdentity() {
+<span class="nc" id="L56">        return identity;</span>
+    }
+
+    public void setIdentity(CognitoIdentity value) {
+<span class="nc" id="L60">        identity = value;</span>
+<span class="nc" id="L61">    }</span>
+
+    @Override
+    public String getLogGroupName() {
+<span class="nc" id="L65">        return logGroupName;</span>
+    }
+
+    public void setLogGroupName(String value) {
+<span class="nc" id="L69">        logGroupName = value;</span>
+<span class="nc" id="L70">    }</span>
+
+    @Override
+    public String getLogStreamName() {
+<span class="nc" id="L74">        return logStreamName;</span>
+    }
+
+    public void setLogStreamName(String value) {
+<span class="nc" id="L78">        logStreamName = value;</span>
+<span class="nc" id="L79">    }</span>
+
+    @Override
+    public LambdaLogger getLogger() {
+<span class="fc" id="L83">        return logger;</span>
+    }
+
+    public void setLogger(LambdaLogger value) {
+<span class="nc" id="L87">        logger = value;</span>
+<span class="nc" id="L88">    }</span>
+
+    @Override
+    public int getMemoryLimitInMB() {
+<span class="nc" id="L92">        return memoryLimitInMB;</span>
+    }
+
+    public void setMemoryLimitInMB(int value) {
+<span class="nc" id="L96">        memoryLimitInMB = value;</span>
+<span class="nc" id="L97">    }</span>
+
+    @Override
+    public int getRemainingTimeInMillis() {
+<span class="nc" id="L101">        return remainingTimeInMillis;</span>
+    }
+
+    public void setRemainingTimeInMillis(int value) {
+<span class="nc" id="L105">        remainingTimeInMillis = value;</span>
+<span class="nc" id="L106">    }</span>
+
+    @Override
+    public String getFunctionVersion() {
+<span class="nc" id="L110">        return functionVersion;</span>
+    }
+
+    public void setFunctionVersion(String value) {
+<span class="nc" id="L114">        functionVersion = value;</span>
+<span class="nc" id="L115">    }</span>
+
+    @Override
+    public String getInvokedFunctionArn() {
+<span class="nc" id="L119">        return invokedFunctionArn;</span>
+    }
+
+    public void setInvokedFunctionArn(String value) {
+<span class="nc" id="L123">        invokedFunctionArn = value;</span>
+<span class="nc" id="L124">    }</span>
+
+    /**
+     * A simple {@code LambdaLogger} that prints everything to stderr.
+     */
+    private static class TestLogger implements LambdaLogger {
+
+        @Override
+        public void log(String message) {
+<span class="fc" id="L133">            System.err.println(message);</span>
+<span class="fc" id="L134">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

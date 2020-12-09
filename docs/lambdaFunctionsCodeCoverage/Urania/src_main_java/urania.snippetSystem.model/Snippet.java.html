@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Snippet.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem.model</a> &gt; <span class="el_source">Snippet.java</span></div><h1>Snippet.java</h1><pre class="source lang-java linenums">package urania.snippetSystem.model;
+
+import java.time.Instant;
+import java.util.UUID;
+
+public class Snippet {
+	public final String snippetID;
+	public String snippetText;
+	public String snippetInfo;
+	public final Instant timeStamp;
+	public String languageSelected;
+	public final String viewerPassword;
+	public boolean viewerPasswordEnabled;
+	
+<span class="fc" id="L15">	public Snippet(String uuid) {</span>
+<span class="fc" id="L16">		this.snippetID = uuid;</span>
+<span class="fc" id="L17">		this.viewerPassword = UUID.randomUUID().toString();</span>
+<span class="fc" id="L18">		this.viewerPasswordEnabled = false;</span>
+<span class="fc" id="L19">		this.snippetText = &quot;&quot;;</span>
+<span class="fc" id="L20">		this.snippetInfo = &quot;&quot;;</span>
+<span class="fc" id="L21">		this.languageSelected = &quot;Python&quot;;</span>
+<span class="fc" id="L22">		this.timeStamp = Instant.now();</span>
+<span class="fc" id="L23">	}</span>
+
+<span class="fc" id="L25">	public Snippet (String snippetID, String snippetText, String snippetInfo, Instant datetime, String lang, String pass, int passStatus) {</span>
+<span class="fc" id="L26">		this.snippetID = snippetID;</span>
+<span class="fc" id="L27">		this.snippetText = snippetText;</span>
+<span class="fc" id="L28">		this.snippetInfo = snippetInfo;</span>
+<span class="fc" id="L29">		this.timeStamp = datetime;</span>
+<span class="fc" id="L30">		this.languageSelected = lang;</span>
+<span class="fc" id="L31">		this.viewerPassword = pass;</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		this.viewerPasswordEnabled = (passStatus == 1) ? true : false;</span>
+<span class="fc" id="L33">	}</span>
+	
+	/**
+	 * Equality of Constants determined by name alone.
+	 */
+//	public boolean equals (Object o) {
+//		if (o == null) { return false; }
+//		
+//		if (o instanceof Constant) {
+//			Constant other = (Constant) o;
+//			return name.equals(other.name);
+//		}
+//		
+//		return false;  // not a Constant
+//	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DeleteCommentResponse.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem.http</a> &gt; <span class="el_source">DeleteCommentResponse.java</span></div><h1>DeleteCommentResponse.java</h1><pre class="source lang-java linenums">package urania.snippetSystem.http;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import urania.snippetSystem.model.Comment;
+import urania.snippetSystem.model.Snippet;
+
+public class DeleteCommentResponse {
+	
+	public final List&lt;Comment&gt; list;
+	public final String   response;
+	public final int      httpCode;
+	
+<span class="nc" id="L16">	public DeleteCommentResponse (String s, int code) {</span>
+<span class="nc" id="L17">		this.list = new ArrayList&lt;Comment&gt;();</span>
+<span class="nc" id="L18">	    this.response     = s;</span>
+<span class="nc" id="L19">	    this.httpCode     = code;</span>
+<span class="nc" id="L20">	}</span>
+	
+<span class="fc" id="L22">	public DeleteCommentResponse (int code) {</span>
+<span class="fc" id="L23">		this.list = new ArrayList&lt;Comment&gt;();</span>
+<span class="fc" id="L24">	    this.response     = &quot;Failed to get comments.&quot;;</span>
+<span class="fc" id="L25">	    this.httpCode     = code;</span>
+<span class="fc" id="L26">	}</span>
+	
+	// 200 means success
+<span class="fc" id="L29">	public DeleteCommentResponse(Snippet snippet, List&lt;Comment&gt; comments) {</span>
+<span class="fc" id="L30">		this.list = comments;</span>
+<span class="fc" id="L31">	    this.response     = &quot;Got comments with the same id&quot;;</span>
+<span class="fc" id="L32">	    this.httpCode     = 201;</span>
+<span class="fc" id="L33">	}</span>
+  
+    public String toString() {
+<span class="nc" id="L36">        return &quot;DeleteComment(&quot; + response + &quot;)&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

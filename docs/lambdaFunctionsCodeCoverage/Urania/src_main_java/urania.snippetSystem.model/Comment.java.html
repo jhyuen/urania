@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Comment.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem.model</a> &gt; <span class="el_source">Comment.java</span></div><h1>Comment.java</h1><pre class="source lang-java linenums">package urania.snippetSystem.model;
+
+import java.time.Instant;
+
+/**
+ * In most cases the response is the name of the constant that was being created.
+ * 
+ * if an error of some sort, then the response describes that error.
+ *  
+ */
+
+public class Comment {
+	public final String snippetID;
+	public final String commentID;
+	public final Instant timeStamp;
+	public final String commentText;
+	public int startLine;
+	public int startIndex;
+	public int endLine;
+	public int endIndex;
+	
+<span class="fc" id="L22">	public Comment (String snippetID, String commentID, String commentText, int sL, int sI, int eL, int eI) {</span>
+<span class="fc" id="L23">		this.snippetID = snippetID;</span>
+<span class="fc" id="L24">		this.commentID = commentID; //UUID.randomUUID().toString();</span>
+<span class="fc" id="L25">		this.timeStamp = Instant.now();</span>
+<span class="fc" id="L26">		this.commentText = commentText;</span>
+<span class="fc" id="L27">		this.startLine = sL;</span>
+<span class="fc" id="L28">		this.startIndex = sI;</span>
+<span class="fc" id="L29">		this.endLine = eL;</span>
+<span class="fc" id="L30">		this.endIndex = eI;</span>
+<span class="fc" id="L31">	}</span>
+	
+<span class="fc" id="L33">	 public Comment (String snippetID, String commentID, Instant timestamp, String commentText, int sL, int sI, int eL, int eI) {</span>
+<span class="fc" id="L34">	    this.snippetID = snippetID;</span>
+<span class="fc" id="L35">	    this.commentID = commentID; //UUID.randomUUID().toString();</span>
+<span class="fc" id="L36">	    this.timeStamp = timestamp;</span>
+<span class="fc" id="L37">	    this.commentText = commentText;</span>
+<span class="fc" id="L38">	    this.startLine = sL;</span>
+<span class="fc" id="L39">	    this.startIndex = sI;</span>
+<span class="fc" id="L40">	    this.endLine = eL;</span>
+<span class="fc" id="L41">	    this.endIndex = eI;</span>
+<span class="fc" id="L42">	  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

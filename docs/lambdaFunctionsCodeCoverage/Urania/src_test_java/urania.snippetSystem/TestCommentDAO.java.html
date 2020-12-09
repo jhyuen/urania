@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestCommentDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">TestCommentDAO.java</span></div><h1>TestCommentDAO.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.junit.Test;
+
+import urania.snippetSystem.db.CommentDAO;
+import urania.snippetSystem.db.SnippetDAO;
+import urania.snippetSystem.model.Comment;
+import urania.snippetSystem.model.Snippet;
+
+<span class="fc" id="L16">public class TestCommentDAO {</span>
+
+	@Test
+	public void testFindComment() {
+<span class="fc" id="L20">	    CommentDAO cd = new CommentDAO();</span>
+	    try {
+<span class="fc" id="L22">			Comment testComment = new Comment(&quot;testSnippetId&quot;, &quot;testCommentId&quot;, &quot;testCommentText&quot;, 0, 0, 1, 1);</span>
+<span class="fc" id="L23">			cd.createComment(testComment);</span>
+<span class="fc" id="L24">	    	Comment comment = cd.getComment(&quot;testCommentId&quot;);</span>
+<span class="fc" id="L25">	    	System.out.println(&quot;comment &quot; + comment.snippetID + &quot; =&gt; &quot; + comment.commentID + &quot; =&gt; &quot; + comment.commentText);</span>
+<span class="fc" id="L26">	    	cd.deleteCommentCommentID(&quot;testCommentId&quot;);</span>
+<span class="pc" id="L27">	    } catch (Exception e) {</span>
+<span class="nc" id="L28">	    	fail (&quot;didn't work:&quot; + e.getMessage());</span>
+	    }
+<span class="fc" id="L30">	}</span>
+	
+	@Test
+	public void testCreateComment() {
+<span class="fc" id="L34">		CommentDAO cd = new CommentDAO();</span>
+	    try {
+	    	// can add it
+<span class="fc" id="L37">	    	Comment testComment = new Comment(&quot;testSnippetId&quot;, &quot;testCommentId&quot;, &quot;testCommentText&quot;, 0, 0, 1, 1);</span>
+<span class="fc" id="L38">	    	assertTrue(cd.createComment(testComment));</span>
+	    	
+	    	// can retrieve it
+<span class="fc" id="L41">	    	Comment comment = cd.getComment(testComment.commentID);</span>
+<span class="fc" id="L42">	    	assertEquals(&quot;testSnippetId&quot;, comment.snippetID);</span>
+<span class="fc" id="L43">	    	assertEquals(&quot;testCommentId&quot;, comment.commentID);</span>
+<span class="fc" id="L44">	    	assertEquals(&quot;testCommentText&quot;, comment.commentText);</span>
+<span class="fc" id="L45">	    	assertEquals(0, comment.startLine);</span>
+<span class="fc" id="L46">	    	assertEquals(0, comment.startIndex);</span>
+<span class="fc" id="L47">	    	assertEquals(1, comment.endLine);</span>
+<span class="fc" id="L48">	    	assertEquals(1, comment.endIndex);</span>
+	    	
+	    	// can delete it
+<span class="fc" id="L51">	    	assertTrue (cd.deleteCommentSnippetID(&quot;testSnippetId&quot;));</span>
+<span class="pc" id="L52">	    } catch (Exception e) {</span>
+<span class="nc" id="L53">	    	fail (&quot;didn't work:&quot; + e.getMessage());</span>
+	    }
+<span class="fc" id="L55">	}</span>
+	
+	@Test
+	public void testDeleteCommentCommentID() {
+<span class="fc" id="L59">		CommentDAO cd = new CommentDAO();</span>
+		try {
+			// Get a non-existent comment &quot;DNE_Comment&quot;
+<span class="fc" id="L62">	    	Comment comment= cd.getComment(&quot;DNE_Comment&quot;);</span>
+<span class="fc" id="L63">	    	assertEquals(comment, null);</span>
+
+	    	// Create test comment
+<span class="fc" id="L66">	    	Comment test_comment = new Comment(&quot;testSnippetId&quot;, &quot;testCommentId&quot;, &quot;testCommentText&quot;, 0, 0, 1, 1);</span>
+<span class="fc" id="L67">	    	assertTrue (cd.createComment(test_comment));</span>
+	    	
+	    	// Check that test comment was created
+<span class="fc" id="L70">	    	comment = cd.getComment(&quot;testCommentId&quot;);</span>
+<span class="fc" id="L71">	    	assertNotEquals (comment, null);</span>
+	    	
+	    	// Delete Comment
+<span class="fc" id="L74">	    	assertTrue(cd.deleteCommentCommentID(&quot;testCommentId&quot;));</span>
+
+			// Get a non-existent test comment
+<span class="fc" id="L77">	    	comment = cd.getComment(&quot;testCommentId&quot;);</span>
+<span class="fc" id="L78">	    	assertEquals (comment, null);</span>
+			
+<span class="pc" id="L80">		} catch (Exception e) {</span>
+<span class="nc" id="L81">			fail (&quot;couldn't create/delete comment: &quot; + e.getMessage());</span>
+		}
+<span class="fc" id="L83">	}</span>
+	
+	@Test
+	public void testDeleteCommentSnippetID() {
+<span class="fc" id="L87">		CommentDAO cd = new CommentDAO();</span>
+		try {
+			// Get a non-existent comment &quot;DNE_Comment&quot;
+<span class="fc" id="L90">	    	Comment comment= cd.getComment(&quot;DNE_Comment&quot;);</span>
+<span class="fc" id="L91">	    	assertEquals(comment, null);</span>
+
+	    	// Create test comment
+<span class="fc" id="L94">	    	Comment test_comment = new Comment(&quot;testSnippetId&quot;, &quot;testCommentId&quot;, &quot;testCommentText&quot;, 0, 0, 1, 1);</span>
+<span class="fc" id="L95">	    	assertTrue (cd.createComment(test_comment));</span>
+	    	
+	    	// Check that test comment was created
+<span class="fc" id="L98">	    	comment = cd.getComment(&quot;testCommentId&quot;);</span>
+<span class="fc" id="L99">	    	assertNotEquals (comment, null);</span>
+	    	
+	    	// Delete Comment
+<span class="fc" id="L102">	    	assertTrue(cd.deleteCommentSnippetID(&quot;testSnippetId&quot;));</span>
+
+			// Get a non-existent test comment
+<span class="fc" id="L105">	    	comment = cd.getComment(&quot;testCommentId&quot;);</span>
+<span class="fc" id="L106">	    	assertEquals (comment, null);</span>
+			
+<span class="pc" id="L108">		} catch (Exception e) {</span>
+<span class="nc" id="L109">			fail (&quot;couldn't create/delete snippet: &quot; + e.getMessage());</span>
+		}
+<span class="fc" id="L111">	}</span>
+	
+	@Test
+	public void testGetAllComments() {
+<span class="fc" id="L115">		CommentDAO cd = new CommentDAO();</span>
+		try {
+<span class="fc" id="L117">			Comment test_comment = new Comment(&quot;testSnippetId&quot;, &quot;testCommentId&quot;, &quot;testCommentText&quot;, 0, 0, 1, 1);</span>
+<span class="fc" id="L118">			cd.createComment(test_comment);</span>
+<span class="fc" id="L119">			Comment test_comment_two = new Comment(&quot;testSnippetId&quot;, &quot;testComment2Id&quot;, &quot;test2CommentText&quot;, 0, 0, 1, 1);</span>
+<span class="fc" id="L120">			cd.createComment(test_comment_two);</span>
+			
+			// Get all comments
+<span class="fc" id="L123">	    	List&lt;Comment&gt; allComments = cd.getAllComments(&quot;testSnippetId&quot;);</span>
+
+<span class="fc" id="L125">			boolean hasTestComment1 = false;</span>
+<span class="fc" id="L126">			boolean hasTestComment2 = false;</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">			for (Comment c : allComments) {</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">				if (c.snippetID.equals(&quot;testSnippetId&quot;)) { </span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">					if(c.commentID.contentEquals(&quot;testCommentId&quot;)) { hasTestComment1 = true; } </span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">					else if(c.commentID.contentEquals(&quot;testComment2Id&quot;)){ hasTestComment2 = true;}</span>
+				}
+			}
+
+<span class="fc" id="L134">			assertTrue(hasTestComment1);</span>
+<span class="fc" id="L135">			assertTrue(hasTestComment2);</span>
+<span class="fc" id="L136">	    	assertTrue(cd.deleteCommentSnippetID(&quot;testSnippetId&quot;));</span>
+			
+<span class="pc" id="L138">		} catch (Exception e) {</span>
+<span class="nc" id="L139">			fail (&quot;couldn't list all comments: &quot; + e.getMessage());</span>
+		}
+		
+<span class="fc" id="L142">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CreateSnippetHandler.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">CreateSnippetHandler.java</span></div><h1>CreateSnippetHandler.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+
+import urania.snippetSystem.db.SnippetDAO;
+import urania.snippetSystem.http.CreateSnippetRequest;
+import urania.snippetSystem.http.CreateSnippetResponse;
+import urania.snippetSystem.model.Snippet;
+
+import java.util.UUID;
+
+<span class="fc" id="L14">public class CreateSnippetHandler implements RequestHandler&lt;CreateSnippetRequest, CreateSnippetResponse&gt; {</span>
+	
+	LambdaLogger logger;
+	
+	Snippet createSnippet () throws Exception {
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">		if (logger != null) { logger.log(&quot;in createSnippet&quot;); }</span>
+<span class="fc" id="L20">		SnippetDAO dao = new SnippetDAO();</span>
+		
+		// check if generated snippet UUID exists
+<span class="fc" id="L23">		String newUUID = UUID.randomUUID().toString();</span>
+<span class="fc" id="L24">		Snippet exist = dao.getSnippet(newUUID);</span>
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">		if (exist == null) {</span>
+<span class="fc" id="L26">			Snippet snippet = new Snippet(newUUID);</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">			if (dao.createSnippet(snippet)) {</span>
+<span class="fc" id="L28">				return snippet;</span>
+			} else {
+<span class="nc" id="L30">				return null;</span>
+			}
+			//return dao.createSnippet(snippet);
+		} else {
+<span class="nc" id="L34">			return null;</span>
+		}
+	}
+
+    @Override
+    public CreateSnippetResponse handleRequest(CreateSnippetRequest req, Context context) {
+<span class="fc" id="L40">        logger = context.getLogger();</span>
+<span class="fc" id="L41">        logger.log(&quot;Trying to create a new snippet!&quot;);</span>
+<span class="fc" id="L42">        logger.log(req.toString());</span>
+
+        CreateSnippetResponse response;
+        try {
+<span class="fc" id="L46">        	Snippet snippet = createSnippet();</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        	if (snippet != null) {</span>
+<span class="fc" id="L48">        		response = new CreateSnippetResponse(snippet);</span>
+<span class="fc" id="L49">        	} else {</span>
+<span class="nc" id="L50">        		response = new CreateSnippetResponse(422);</span>
+        	}
+<span class="nc" id="L52">        } catch (Exception e) {</span>
+<span class="nc" id="L53">        	response = new CreateSnippetResponse(&quot;Unable to create a new snippet (&quot; + (e.getMessage() + &quot;).&quot;), 400);</span>
+        }
+
+<span class="fc" id="L56">        return response;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

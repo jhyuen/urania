@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DeleteSnippetHandler.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">DeleteSnippetHandler.java</span></div><h1>DeleteSnippetHandler.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+
+import urania.snippetSystem.db.CommentDAO;
+import urania.snippetSystem.db.SnippetDAO;
+import urania.snippetSystem.http.DeleteSnippetRequest;
+import urania.snippetSystem.http.DeleteSnippetResponse;
+
+<span class="fc" id="L12">public class DeleteSnippetHandler implements RequestHandler&lt;DeleteSnippetRequest, DeleteSnippetResponse&gt; {</span>
+	
+	LambdaLogger logger;
+	
+	boolean deleteSnippet (String uuid) throws Exception {
+<span class="pc bpc" id="L17" title="1 of 2 branches missed.">		if (logger != null) { logger.log(&quot;in deleteSnippet&quot;); }</span>
+<span class="fc" id="L18">		SnippetDAO dao = new SnippetDAO();</span>
+		
+<span class="fc" id="L20">		return dao.deleteSnippet(uuid);</span>
+	}
+	
+	boolean deleteComments (String uuid) throws Exception {
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">		if (logger != null) { logger.log(&quot;in deleteComments&quot;); }</span>
+<span class="fc" id="L25">		CommentDAO dao = new CommentDAO();</span>
+<span class="fc" id="L26">		return dao.deleteCommentSnippetID(uuid);</span>
+	}
+
+    @Override
+    public DeleteSnippetResponse handleRequest(DeleteSnippetRequest req, Context context) {
+<span class="fc" id="L31">        logger = context.getLogger();</span>
+<span class="fc" id="L32">        logger.log(&quot;Trying to delete a new snippet!&quot;);</span>
+<span class="fc" id="L33">        logger.log(req.toString());</span>
+
+        DeleteSnippetResponse response;
+        try {
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        	if (deleteSnippet(req.id)) {</span>
+<span class="fc" id="L38">        		deleteComments(req.id);</span>
+<span class="fc" id="L39">        		response = new DeleteSnippetResponse(req.id);</span>
+<span class="fc" id="L40">        	} else {</span>
+<span class="fc" id="L41">        		response = new DeleteSnippetResponse(400);</span>
+        	}
+<span class="pc" id="L43">        } catch (Exception e) {</span>
+<span class="nc" id="L44">        	response = new DeleteSnippetResponse(&quot;Unable to delete a new snippet (&quot; + (e.getMessage() + &quot;).&quot;), 400);</span>
+        }
+
+<span class="fc" id="L47">        return response;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

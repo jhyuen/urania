@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ListSnippetHandlerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem</a> &gt; <span class="el_source">ListSnippetHandlerTest.java</span></div><h1>ListSnippetHandlerTest.java</h1><pre class="source lang-java linenums">package urania.snippetSystem;
+
+import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.google.gson.Gson;
+
+import urania.snippetSystem.GetSnippetHandler;
+import urania.snippetSystem.ListSnippetHandler;
+import urania.snippetSystem.db.SnippetDAO;
+import urania.snippetSystem.http.CreateCommentRequest;
+import urania.snippetSystem.http.CreateSnippetRequest;
+import urania.snippetSystem.http.CreateSnippetResponse;
+import urania.snippetSystem.http.DeleteSnippetRequest;
+import urania.snippetSystem.http.DeleteSnippetResponse;
+import urania.snippetSystem.http.GetSnippetRequest;
+import urania.snippetSystem.http.GetSnippetResponse;
+import urania.snippetSystem.http.ListSnippetRequest;
+import urania.snippetSystem.http.ListSnippetResponse;
+import urania.snippetSystem.model.Snippet;
+
+/**
+ * A simple test harness for locally invoking your Lambda function handler.
+ */
+<span class="fc" id="L29">public class ListSnippetHandlerTest extends LambdaTest {</span>
+
+    ListSnippetResponse testSuccessInput(String incoming) throws IOException {
+<span class="fc" id="L32">    	ListSnippetHandler handler = new ListSnippetHandler();</span>
+<span class="fc" id="L33">    	ListSnippetRequest req = new Gson().fromJson(incoming, ListSnippetRequest.class);</span>
+       
+<span class="fc" id="L35">        ListSnippetResponse resp = handler.handleRequest(req, createContext(&quot;get&quot;));</span>
+<span class="fc" id="L36">        Assert.assertEquals(200, resp.httpCode);</span>
+<span class="fc" id="L37">        return resp;</span>
+    }
+	
+    void testFailInput(String incoming, int failureCode) throws IOException {
+<span class="nc" id="L41">    	ListSnippetHandler handler = new ListSnippetHandler();</span>
+<span class="nc" id="L42">    	ListSnippetRequest req = new Gson().fromJson(incoming, ListSnippetRequest.class);</span>
+
+<span class="nc" id="L44">    	ListSnippetResponse resp = handler.handleRequest(req, createContext(&quot;get&quot;));</span>
+<span class="nc" id="L45">        Assert.assertEquals(failureCode, resp.httpCode);</span>
+<span class="nc" id="L46">    }</span>
+
+    @Test
+    public void testShouldBeOk () {
+<span class="fc" id="L50">    	ListSnippetRequest gsr = new ListSnippetRequest();</span>
+<span class="fc" id="L51">        String SAMPLE_INPUT_STRING = new Gson().toJson(gsr);</span>
+        
+        try {
+<span class="fc" id="L54">        	testSuccessInput(SAMPLE_INPUT_STRING);</span>
+<span class="pc" id="L55">        } catch (IOException ioe) {</span>
+<span class="nc" id="L56">        	Assert.fail(&quot;Invalid:&quot; + ioe.getMessage());</span>
+        }
+<span class="fc" id="L58">    }</span>
+    
+    @Test
+    public void testExtraInput() {
+<span class="fc" id="L62">    	String SAMPLE_INPUT_STRING = &quot;{\&quot;sdsd\&quot;: \&quot;e3\&quot;, \&quot;hgfgdfgdfg\&quot;: \&quot;this is not a number\&quot;}&quot;;</span>
+		
+        try {
+<span class="fc" id="L65">        	testSuccessInput(SAMPLE_INPUT_STRING);</span>
+<span class="pc" id="L66">        } catch (IOException ioe) {</span>
+<span class="nc" id="L67">        	Assert.fail(&quot;Invalid:&quot; + ioe.getMessage());</span>
+        }
+<span class="fc" id="L69">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

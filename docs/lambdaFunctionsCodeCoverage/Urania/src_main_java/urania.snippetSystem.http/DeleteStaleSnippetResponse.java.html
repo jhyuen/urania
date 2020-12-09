@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DeleteStaleSnippetResponse.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem.http</a> &gt; <span class="el_source">DeleteStaleSnippetResponse.java</span></div><h1>DeleteStaleSnippetResponse.java</h1><pre class="source lang-java linenums">package urania.snippetSystem.http;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import urania.snippetSystem.model.Comment;
+import urania.snippetSystem.model.Snippet;
+
+/**
+ * In most cases the response is the name of the constant that was being created.
+ * 
+ * if an error of some sort, then the response describes that error.
+ *  
+ */
+public class DeleteStaleSnippetResponse {
+	
+	public final List&lt;Snippet&gt; list;
+	public final String response;
+	public final int httpCode;
+	
+<span class="nc" id="L21">	public DeleteStaleSnippetResponse (String s, int code) {</span>
+<span class="nc" id="L22">		this.list = new ArrayList&lt;Snippet&gt;();</span>
+<span class="nc" id="L23">		this.response = s;</span>
+<span class="nc" id="L24">		this.httpCode = code;</span>
+<span class="nc" id="L25">	}</span>
+	
+<span class="nc" id="L27">	public DeleteStaleSnippetResponse (int code) {</span>
+<span class="nc" id="L28">		this.list = new ArrayList&lt;Snippet&gt;();</span>
+<span class="nc" id="L29">		this.response = &quot;Failed to delete stale snippets.&quot;;</span>
+<span class="nc" id="L30">		this.httpCode = code;</span>
+<span class="nc" id="L31">	}</span>
+	
+	// 200 means success
+<span class="nc" id="L34">	public DeleteStaleSnippetResponse (String daysOld, List&lt;Snippet&gt; snippets) {</span>
+<span class="nc" id="L35">		this.list = snippets;</span>
+<span class="nc" id="L36">		this.response = &quot;Deleted snippets that are &quot; + daysOld + &quot; days old&quot;;</span>
+<span class="nc" id="L37">		this.httpCode = 200;</span>
+<span class="nc" id="L38">	}</span>
+	
+	public String toString() {
+<span class="nc" id="L41">		return &quot;Response(&quot; + response + &quot;)&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>

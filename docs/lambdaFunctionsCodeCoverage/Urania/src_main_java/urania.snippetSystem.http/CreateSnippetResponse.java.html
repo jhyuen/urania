@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CreateSnippetResponse.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Dec 5, 2020 9:14:57 AM)</a> &gt; <a href="../../index.html" class="el_group">Urania</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">urania.snippetSystem.http</a> &gt; <span class="el_source">CreateSnippetResponse.java</span></div><h1>CreateSnippetResponse.java</h1><pre class="source lang-java linenums">package urania.snippetSystem.http;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import urania.snippetSystem.model.Comment;
+import urania.snippetSystem.model.Snippet;
+
+/**
+ * In most cases the response is the name of the constant that was being created.
+ * 
+ * if an error of some sort, then the response describes that error.
+ *  
+ */
+public class CreateSnippetResponse {
+	public final String snippetId;
+	public final String snippetInfo;
+	public final String snippetText;
+	public final Instant timeStamp;
+	public final String viewerPassword;
+	public final boolean viewerPasswordEnabled;
+	public final String languageSelected;
+	public final List&lt;Comment&gt; list;
+	public final String response;
+	public final int httpCode;
+	
+<span class="nc" id="L28">	public CreateSnippetResponse (String s, int code) {</span>
+<span class="nc" id="L29">		this.snippetId = &quot;&quot;;</span>
+<span class="nc" id="L30">		this.snippetInfo = &quot;&quot;;</span>
+<span class="nc" id="L31">		this.snippetText = &quot;&quot;;</span>
+<span class="nc" id="L32">		this.viewerPassword = &quot;&quot;;</span>
+<span class="nc" id="L33">		this.languageSelected = &quot;&quot;;</span>
+<span class="nc" id="L34">		this.timeStamp = Instant.now();</span>
+<span class="nc" id="L35">		this.viewerPasswordEnabled = false;</span>
+<span class="nc" id="L36">		this.list = new ArrayList&lt;Comment&gt;();</span>
+<span class="nc" id="L37">		this.response = s;</span>
+<span class="nc" id="L38">		this.httpCode = code;</span>
+<span class="nc" id="L39">	}</span>
+	
+<span class="nc" id="L41">	public CreateSnippetResponse (int code) {</span>
+<span class="nc" id="L42">		this.snippetId = &quot;&quot;;</span>
+<span class="nc" id="L43">		this.snippetInfo = &quot;&quot;;</span>
+<span class="nc" id="L44">		this.snippetText = &quot;&quot;;</span>
+<span class="nc" id="L45">		this.viewerPassword = &quot;&quot;;</span>
+<span class="nc" id="L46">		this.languageSelected = &quot;&quot;;</span>
+<span class="nc" id="L47">		this.timeStamp = Instant.now();</span>
+<span class="nc" id="L48">		this.viewerPasswordEnabled = false;</span>
+<span class="nc" id="L49">		this.list = new ArrayList&lt;Comment&gt;();</span>
+<span class="nc" id="L50">		this.response = &quot;Failed to create a new snippet.&quot;;</span>
+<span class="nc" id="L51">		this.httpCode = code;</span>
+<span class="nc" id="L52">	}</span>
+	
+	// 201 means success
+<span class="fc" id="L55">	public CreateSnippetResponse(Snippet snippet) {</span>
+<span class="fc" id="L56">		this.snippetId = snippet.snippetID;</span>
+<span class="fc" id="L57">		this.snippetInfo = snippet.snippetInfo;</span>
+<span class="fc" id="L58">		this.snippetText = snippet.snippetText;</span>
+<span class="fc" id="L59">		this.viewerPassword = snippet.viewerPassword;</span>
+<span class="fc" id="L60">		this.languageSelected = snippet.languageSelected;</span>
+<span class="fc" id="L61">		this.timeStamp = snippet.timeStamp;</span>
+<span class="fc" id="L62">		this.viewerPasswordEnabled = snippet.viewerPasswordEnabled;</span>
+<span class="fc" id="L63">		this.list = new ArrayList&lt;Comment&gt;();</span>
+<span class="fc" id="L64">		this.response = &quot;Created a new snippet with ID: &quot; + snippet.snippetID;</span>
+<span class="fc" id="L65">		this.httpCode = 201;</span>
+<span class="fc" id="L66">	}</span>
+	
+	public String toString() {
+<span class="nc" id="L69">		return &quot;Response(&quot; + response + &quot;)&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>java (Dec 5, 2020 9:14:57 AM)</div></body></html>
